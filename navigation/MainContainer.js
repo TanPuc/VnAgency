@@ -30,10 +30,8 @@ function MainContainer() {
               iconName = focused ? 'map' : 'map-outline';
 
             }
-
-            // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
-          },
+          }
         })}
         tabBarOptions={{
           activeTintColor: 'tomato',
