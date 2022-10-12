@@ -1,20 +1,48 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useFonts } from 'expo-font';
+import Welcome from './components/Welcome.js';
+import GetStarted from './components/GetStarted.js';
+import SignUp from './components/SignUp.js';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    stantic: require('./assets/fonts/Stantic.ttf'),
+    museo100: require('./assets/fonts/MuseoSans-100.otf'),
+    museo300: require('./assets/fonts/MuseoSans-300.otf'),
+    museo500: require('./assets/fonts/MuseoSans_500.otf'),
+    museo700: require('./assets/fonts/MuseoSans_700.otf'),
+    SourceSansPro_Regular: require('./assets/fonts/SourceSansPro-Regular.ttf'),
+    SourceSansPro_Italic: require('./assets/fonts/SourceSansPro-Italic.ttf'),
+    SourceSansPro_Bold: require('./assets/fonts/SourceSansPro-Bold.ttf'),
+    SourceSansPro_Black: require('./assets/fonts/SourceSansPro-Black.ttf'),
+    SourceSansPro_Light: require('./assets/fonts/SourceSansPro-Light.ttf'),
+    SourceSansPro_ExtraLight: require('./assets/fonts/SourceSansPro-ExtraLight.ttf'),
+  });
+
+  if(!fontsLoaded) return null;
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+        <Stack.Navigator screenOptions={{
+            headerShown: false
+          }}>
+          <Stack.Screen
+            name = "Welcome"
+            component = {Welcome}
+          />
+          <Stack.Screen
+            name = "GetStarted"
+            component = {GetStarted}
+          />
+          <Stack.Screen
+            name = "SignUp"
+            component = {SignUp}
+          />
+        </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
