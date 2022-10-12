@@ -1,7 +1,8 @@
 import * as React from 'react';
+import { BottomTabBar, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { View, Text, StyleSheet } from 'react-native';
 
 // Screens
 import HomeScreen from './screens/HomeScreen.js';
@@ -13,38 +14,46 @@ const mapName = "Map";
 
 const Tab = createBottomTabNavigator();
 
-function MainContainer() {
+function BottomNavBar() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName={homeName}
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            let rn = route.name;
-
-            if (rn === homeName) {
-              iconName = focused ? 'home' : 'home-outline';
-
-            } else if (rn === mapName) {
-              iconName = focused ? 'map' : 'map-outline';
-
-            }
-            return <Ionicons name={iconName} size={size} color={color} />;
-          }
-        })}
-        tabBarOptions={{
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'grey',
-          labelStyle: { paddingBottom: 10, fontSize: 10 },
-          style: { padding: 10, height: 70}
-        }}>
-
-        <Tab.Screen name={homeName} component={HomeScreen} />
-        <Tab.Screen name={mapName} component={MapScreen} />
-
+        screenOptions={{
+          headerShown:false,
+          tabBarStyle: {
+            borderTopLeftRadius:25, 
+            borderTopRightRadius:25,
+            backgroundColor:'#00c0b2'
+          },
+          tabBarInactiveTintColor: '#007a88',
+          tabBarActiveTintColor: '#fb6d79'
+        }}
+        >
+        <Tab.Screen 
+          name={homeName}
+          component={HomeScreen}
+          options={{
+          tabBarIcon: ({color, size}) =>
+            <Ionicons name='home-outline' color = {color} size = {size}/>
+          }}
+            />
+        <Tab.Screen 
+          name={mapName} 
+          component={MapScreen} 
+          options={{
+          tabBarIcon: ({color, size}) =>
+            <Ionicons name='map-outline' color = {color} size = {size}/>
+          }}
+          />
       </Tab.Navigator>
     </NavigationContainer>
+  );
+};
+
+function MainContainer() {
+  return (
+    // Header(),
+    BottomNavBar()
   );
 }
 
