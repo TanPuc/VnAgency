@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
+import { StatusBar } from 'react-native';
 import Welcome from './components/Welcome.js';
 import GetStarted from './components/GetStarted.js';
 import SignUp from './components/SignUp.js';
@@ -27,6 +28,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
+        <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
         <Stack.Navigator screenOptions={{
             headerShown: false
           }}>

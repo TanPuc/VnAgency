@@ -17,33 +17,35 @@ const InputArea = ({
                 <Icon name={iconName} style={{
                     fontSize: 27, 
                     color: '#ff757c', 
-                    marginLeft: '2%',
-                    justifyContent: 'flex-start',
-                    alignItems: 'flex-start', 
-                    marginRight: '-3%'}} 
+                    marginLeft: '4%',
+                    justifyContent: 'center',
+                    alignItems: 'center', 
+                    marginRight: '-5%',
+                    }} 
                 />
-                <TextInput 
-                    width={230}
-                    flexWrap={'wrap'}
-                    secureTextEntry={hidePassword}
-                    autoCorrect={false}
-                    onFocus={() => {
-                        onFocus();
-                        setIsFocused(true);
-                    }}
-                    onBlur={() => {
-                        setIsFocused(false);
-                    }}
-                    style={{
-                        flex: 1,
-                    }}
-                    {...props}
-                />
+                <View style={{paddingVertical: 0}}>
+                    <TextInput 
+                        width={285}
+                        height={30}
+                        flexWrap={'wrap'}
+                        secureTextEntry={hidePassword}
+                        autoCorrect={false}
+                        onFocus={() => {
+                            onFocus();
+                            setIsFocused(true);
+                        }}
+                        onBlur={() => {
+                            setIsFocused(false);
+                        }}
+                        allowFontScaling={true}
+                        style={{paddingVertical: 0}}
+                        {...props}
+                    />
+                </View>
                 {password && (
                     <Icon name= {hidePassword ? "eye-outline" : "eye-off-outline"} onPress={() => setHidePassword(!hidePassword)} style={{
-                        position: 'absolute',
-                        right: 15,
                         fontSize: 27,
+                        justifyContent: 'flex-start',
                         color: '#ff757c',
                     }} />
                 )}
@@ -81,10 +83,11 @@ const styles = StyleSheet.create({
         height: 55,
         backgroundColor: 'white',
         flexDirection: 'row',
-        paddingHorizontal: 15,
+        paddingHorizontal: 1,
         borderColor: 'white',
         borderWidth: 1,
         borderRadius: 60,
+        justifyContent: 'flex-start',
         alignItems: 'center',
     },
 })

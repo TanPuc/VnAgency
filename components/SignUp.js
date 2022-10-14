@@ -1,136 +1,166 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, Image, KeyboardAvoidingView, Platform, Keyboard } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import InputArea from './InputArea.js'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function SignUp({ navigation }) {
+  const [inputs, setInputs] = React.useState({
+    fullname: '',
+    email: '',
+    password: ''
+  });
+  const validate = () => {
+    Keyboard.dismiss();
+  };
   return (
     <SafeAreaView>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={{
-          fontSize: 45,
-          fontFamily: 'SourceSansPro_Bold',
-          textAlign: 'center',
-        }}>Đăng ký</Text>
-        <Text></Text>
-        <View style={{
-          paddingHorizontal: '17%',
-        }}>
-          <Text style={{
-            fontSize: 19,
-            fontFamily: 'SourceSansPro_ExtraLight',
-            textAlign: 'center',
-          }}>Chúng tôi cần thông tin về bạn để tạo tài khoản</Text>
-        </View>
-        <View style={{
-          marginVertical: 20, 
-          marginHorizontal: 20,
-        }}>
-          <InputArea iconName="account-outline" placeholder="Họ và tên" style={styles.InputArea} error="Tên không hợp lệ" />
-          <InputArea iconName="email-outline" placeholder="Địa chỉ Email" style={styles.InputArea} error="Tên không hợp lệ" />
-          <InputArea iconName="lock-outline" placeholder="Mật khẩu" style={styles.InputArea} password error="Tên không hợp lệ"/>
-          <TouchableOpacity style={styles.RegisterButton}>
-            <Text style={styles.RegisterTitle}>Tạo tài khoản</Text>
-          </TouchableOpacity>
-        </View>
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
+          <View style={styles.heading}>
+            <Text style={styles.title}>Đăng ký</Text>
+            <Text style={styles.subtitle}>Chúng tôi cần thông tin về bạn để tạo tài khoản</Text>
+          </View>
+
+          <View style={styles.inputArea}>
+            <InputArea iconName="account-outline" placeholder="Họ và tên" style={styles.textInput}  />
+            <InputArea iconName="email-outline" placeholder="Địa chỉ Email" style={styles.textInput}  />
+            <InputArea iconName="lock-outline" placeholder="Mật khẩu" style={styles.textInput} password />
+            <TouchableOpacity style={styles.signUpBtn}>
+              <Text style={{
+                fontFamily: 'SourceSansPro_Bold',
+                fontSize: '18',
+                color: 'white',
+              }}>Tạo tài khoản</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.connect}>
+            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+              <View style={{flex: 1, height: 1, backgroundColor: 'grey', marginLeft: '10%'}} />
+              <View>
+                <Text style={{width: 150, textAlign: 'center', fontFamily: 'SourceSansPro_Light', fontSize: 17, color: 'grey'}}>Hoặc tiếp tục với</Text>
+              </View>
+              <View style={{flex: 1, height: 1, backgroundColor: 'grey', marginRight: '10%'}} />
+            </View>
+            <TouchableOpacity style={styles.withFacebook}>
+              <Icon name="facebook" style={{
+                fontSize: 37,
+                color: 'white',
+                marginLeft: '2%',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                position: 'absolute',
+                left: 15,
+              }}></Icon>
+              <Text style={{
+                color: 'white',
+                fontFamily: 'SourceSansPro_Bold',
+                fontSize: 15,
+                alignSelf: 'center',
+              }}>Tiếp tục với Facebook</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.withGoogle}>
+              <Image source={require('../assets/google.png')} style={{
+                position: 'absolute',
+                left: 15,
+                width: 45,
+                height: 45,
+              }}></Image>
+              <Text style={{
+                color: 'black',
+                fontFamily: 'SourceSansPro_Bold',
+                fontSize: 15,
+                alignSelf: 'center',
+              }}>Tiếp tục với Google</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={{marginTop: '5%'}}>
+              <Text style={{
+                fontFamily: 'SourceSansPro_Regular',
+                fontSize: 16,
+              }}>Đã có tài khoản? <Text style={{fontSize: 16, color: '#ff757c', fontFamily: 'SourceSansPro_Bold'}}>Đăng nhập</Text></Text>
+            </TouchableOpacity>
+            <View>
+
+            </View>
+          </View>
+        </KeyboardAvoidingView>
       </ScrollView>
-      <View style={{
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        paddingHorizontal: '8%',
-        paddingTop: '0%',
-      }}>
-        <Text style={{
-          fontFamily: 'SourceSansPro_Light',
-          fontSize: 16,
-        }}>{"\n"}--------  Hoặc tiếp tục với  --------{"\n"}</Text>
-        <TouchableOpacity style={{
-          height: 55,
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'row',
-          width: '100%',
-          backgroundColor: '#7880c4',
-          borderRadius: 60,
-          marginBottom: '5%',
-        }}>
-          <Icon name="facebook" style={{
-            fontSize: 37,
-            color: 'white',
-            marginLeft: '2%',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-            position: 'absolute',
-            left: 15,
-          }}></Icon>
-          <Text style={{
-            color: 'white',
-            fontFamily: 'SourceSansPro_Bold',
-            fontSize: 15,
-            alignItems: 'center',
-            alignSelf: 'center',
-          }}>Tiếp tục với Facebook</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={{
-          height: 55,
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'row',
-          width: '100%',
-          borderColor: 'black',
-          borderWidth: 1,
-          borderRadius: 60,
-        }}>
-          <Icon name="google" style={{
-            fontSize: 37,
-            marginLeft: '2%',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-            position: 'absolute',
-            left: 15,
-          }}></Icon>
-          <Text style={{
-            color: 'black',
-            fontFamily: 'SourceSansPro_Bold',
-            fontSize: 15,
-            alignItems: 'center',
-            alignSelf: 'center',
-          }}>Tiếp tục với Google</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={{
-            fontFamily: 'SourceSansPro_Regular',
-            fontSize: 16,
-          }}>{"\n\n"}Đã có tài khoản? <Text style={{fontSize: 16, color: '#ff757c', fontFamily: 'SourceSansPro_Regular'}}>Đăng nhập</Text></Text>
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
     container: {
-      paddingTop: '6%',
-      justifyContent: 'flex-start',
-      alignItems: 'stretch',
+      flexGrow: 1,
+      justifyContent: 'center',
+      alignContent: 'center',
+    },
+    heading: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center', 
       paddingHorizontal: '3%',
+      paddingTop: '13%',
     },
-    InputArea: {
-      paddingLeft: '10%',
-      marginVertical: '6%',
+    title: {
+      fontFamily: 'SourceSansPro_Bold',
+      fontSize: 45,
+      textAlign: 'center',
     },
-    RegisterButton: {
+    subtitle: {
+      fontSize: 20,
+      fontFamily: 'SourceSansPro_ExtraLight',
+      textAlign: 'center',
+      paddingHorizontal: '15%',
+      paddingVertical: '3%',
+    },
+    inputArea: {
+      flex: 1,
+      alignContent: 'center',
+      paddingHorizontal: '6%',
+      paddingTop: '6%',
+    },
+    textInput: {
+      paddingHorizontal: '8%',
+    },
+    signUpBtn: {
+      flex: 1,
       height: 55,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#ff757c',
+      borderRadius: 50,
+      marginTop: '2%',
+    },
+    connect: {
+      flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      width: '100%',
-      backgroundColor: '#ff757c',
-      borderRadius: 60,
+      paddingHorizontal: '6%',
+      paddingTop: '6%',
     },
-    RegisterTitle: {
-      fontFamily: 'SourceSansPro_Bold',
-      fontSize: 18,
-      color: 'white',
+    withFacebook: {
+      flex: 1,
+      height: 57,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'row',
+      width: '100%',
+      backgroundColor: '#7880c4',
+      borderRadius: 50,
+      marginTop: '3%',
+    },
+    withGoogle: {
+      flex: 1,
+      height: 57,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'row',
+      width: '100%',
+      borderColor: 'black',
+      borderWidth: 1,
+      borderRadius: 50,
+      marginTop: '3%',
     },
 })

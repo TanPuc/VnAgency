@@ -1,12 +1,11 @@
-import { StyleSheet, View, Text, Image } from 'react-native'
+import { StyleSheet, View, Text, Image, StatusBar } from 'react-native'
 import React from 'react'
 
 export default function Welcome({ navigation }) {
-    setTimeout(() => {
-        navigation.replace('SignUp');
-    }, 100);
+    setTimeout(() => {navigation.replace('SignUp');}, 1300);
     return (
         <View style={styles.container}>
+            <StatusBar barStyle = "dark-content" hidden = {true} translucent = {true}/>
             <Image source={require('../assets/travel.png')} style={styles.icon} />
             <Text style={styles.hello1}>
                 Vn<Text style={styles.hello2}>Agency</Text>
@@ -19,7 +18,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        paddingTop: '75%',
+        justifyContent: 'center',
     },
     icon: {
         width: 170,
