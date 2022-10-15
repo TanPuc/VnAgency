@@ -1,14 +1,23 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View, Image, KeyboardAvoidingView, Platform, Keyboard } from 'react-native'
-import React from 'react'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, Image, Keyboard } from 'react-native'
+import React, { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import InputArea from './InputArea.js'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { auth } from './Firebase.js'
 
 export default function SignIn({ navigation }) {
   const [inputs, setInputs] = React.useState({
     email: '',
     password: '',
   });
+  
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+        if(user) navigation.replace('Home');
+    })
+    return unsubscribe;
+  }, [])
+
   const [errors, setErrors] = React.useState({})
   const validate = () => {
     Keyboard.dismiss();
@@ -18,12 +27,25 @@ export default function SignIn({ navigation }) {
       vaild = false;
     } else if(!inputs.email.match(/\S+@\S+\.\S+/)) {
       handleError('Định dạng email không chính xác', 'email');
+      vaild = false;
     }
 
     if(!inputs.password) {
       handleError('Vui lòng nhập mật khẩu', 'password');
+      vaild = false;
     } else if(inputs.password.length < 5) {
       handleError('Mật khẩu phải có tối thiểu 6 kí tự', 'password');
+      vaild = false;
+    }
+
+    if(vaild) {
+        auth
+        .signInWithEmailAndPassword(inputs.email, inputs.password)
+        .then(userCredentials => {
+            const user = userCredentials.user;
+            console.log("Logged in with: ", user.email);
+        })
+        .catch(error => alert(error.message))
     }
   };
 
@@ -65,7 +87,7 @@ export default function SignIn({ navigation }) {
             onChangeText={(text) => handleOnChange(text, 'password')}
             password
         />
-        <TouchableOpacity activeOpacity={0.7} style={styles.forgotPassBtn}>
+        <TouchableOpacity activeOpacity={0.7} style={styles.forgotPassBtn} onPress={() => navigation.replace('ResetPassword')}>
             <Text style={{
             fontFamily: 'SourceSansPro_Bold',
             fontSize: 15,
