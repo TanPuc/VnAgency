@@ -5,9 +5,10 @@ import { useFonts } from 'expo-font';
 import { StatusBar } from 'react-native';
 
 import Welcome from './components/Welcome.js';
-import GetStarted from './components/GetStarted.js';
 import SignUp from './components/SignUp.js';
 import SignIn from './components/SignIn.js';
+import ResetPassword from './components/ResetPassword.js';
+import Home from './components/Home.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,16 +40,20 @@ export default function App() {
             component = {Welcome}
           />
           <Stack.Screen
-            name = "GetStarted"
-            component = {GetStarted}
-          />
-          <Stack.Screen
             name = "SignUp"
             component = {SignUp}
           />
           <Stack.Screen
             name = "SignIn"
             component = {SignIn}
+          />
+          <Stack.Screen
+            name = "ResetPassword"
+            component = {ResetPassword}
+          />
+          <Stack.Screen
+            name = "Home"
+            component = {Home}
           />
         </Stack.Navigator>
     </NavigationContainer>
