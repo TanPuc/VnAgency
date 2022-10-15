@@ -1,8 +1,9 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View, Image, KeyboardAvoidingView, Platform, Keyboard } from 'react-native'
-import React from 'react'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, Image, Keyboard } from 'react-native'
+import React, { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import InputArea from './InputArea.js'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { auth } from './Firebase.js'
 
 export default function SignUp({ navigation }) {
   const [inputs, setInputs] = React.useState({
@@ -11,6 +12,14 @@ export default function SignUp({ navigation }) {
     password: '',
   });
   const [errors, setErrors] = React.useState({})
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+        if(user) navigation.replace('SignIn');
+    })
+    return unsubscribe;
+  }, [])
+
   const validate = () => {
     Keyboard.dismiss();
     let vaild = true;
@@ -19,16 +28,32 @@ export default function SignUp({ navigation }) {
       vaild = false;
     } else if(!inputs.email.match(/\S+@\S+\.\S+/)) {
       handleError('Định dạng email không chính xác', 'email');
+      vaild = false;
     }
 
     if(!inputs.fullname) {
       handleError('Vui lòng nhập họ tên', 'fullname');
+      vaild = false;
     }
 
     if(!inputs.password) {
       handleError('Vui lòng nhập mật khẩu', 'password');
+      vaild = false;
     } else if(inputs.password.length < 5) {
       handleError('Mật khẩu phải có tối thiểu 6 kí tự', 'password');
+      vaild = false;
+    }
+
+    if(vaild) {
+      auth
+        .createUserWithEmailAndPassword(inputs.email, inputs.password)
+        .then((userCredential) => {
+          userCredential.user.sendEmailVerification();
+          console.log("Signed up");
+          auth.signOut();
+          alert("Email xác nhận đã được gửi đi. Vui lòng kiểm tra hòm thư của bạn");
+        })
+        .catch(error => alert(error.message))
     }
   };
 
@@ -45,7 +70,7 @@ export default function SignUp({ navigation }) {
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.heading}>
           <Text style={styles.title}>Đăng ký</Text>
-          <Text style={styles.subtitle}>Chúng tôi cần thông tin về bạn để tạo tài khoản</Text>
+          <Text style={styles.subtitle}>Chúng tôi cần thêm thông tin về bạn để tạo tài khoản</Text>
         </View>
 
         <View style={styles.inputArea}>
