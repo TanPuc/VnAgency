@@ -21,13 +21,11 @@ function BottomNavBar() {
         screenOptions={{
           headerShown:false,
           tabBarStyle: {
-            borderTopLeftRadius:25, 
-            borderTopRightRadius:25,
-            backgroundColor:'#00c0b2'
+            backgroundColor:'white'
           },
           tabBarInactiveTintColor: '#007a88',
           tabBarActiveTintColor: '#fb6d79'
-        }}
+        }}  
         >
         <Tab.Screen 
           name={homeName}
