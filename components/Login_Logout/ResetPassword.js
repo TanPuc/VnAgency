@@ -1,8 +1,8 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, Keyboard } from 'react-native'
 import React, { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import InputArea from './InputArea.js'
-import { auth } from './Firebase.js'
+import InputArea from '../assets/InputArea.js'
+import { auth } from '../assets/Firebase.js'
 
 export default function ResetPassword({ navigation }) {
   const [inputs, setInputs] = React.useState({email: ''});

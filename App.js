@@ -4,11 +4,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'react-native';
 
-import Welcome from './components/Welcome.js';
-import SignUp from './components/SignUp.js';
-import SignIn from './components/SignIn.js';
-import ResetPassword from './components/ResetPassword.js';
-import Home from './components/Home.js';
+import Welcome from './components/Login_Logout/Welcome.js';
+import SignUp from './components/Login_Logout/SignUp.js';
+import SignIn from './components/Login_Logout/SignIn.js';
+import ResetPassword from './components/Login_Logout/ResetPassword.js';
+import Home from './components/Home_Screen/Home.js';
 
 const Stack = createNativeStackNavigator();
 

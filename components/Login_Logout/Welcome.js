@@ -6,7 +6,7 @@ export default function Welcome({ navigation }) {
     return (
         <View style={styles.container}>
             <StatusBar barStyle = "dark-content" hidden = {true} translucent = {true}/>
-            <Image source={require('../assets/travel.png')} style={styles.icon} />
+            <Image source={require('../../assets/travel.png')} style={styles.icon} />
             <Text style={styles.hello1}>Vn<Text style={styles.hello2}>Agency</Text>
             </Text>
         </View>

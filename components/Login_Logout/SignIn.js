@@ -1,9 +1,9 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, Image, Keyboard } from 'react-native'
 import React, { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import InputArea from './InputArea.js'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { auth } from './Firebase.js'
+import InputArea from '../assets/InputArea.js'
+import { auth } from '../assets/Firebase.js'
 
 export default function SignIn({ navigation }) {
   const [inputs, setInputs] = React.useState({
@@ -130,7 +130,7 @@ export default function SignIn({ navigation }) {
             }}>Tiếp tục với Facebook</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.withGoogle}>
-            <Image source={require('../assets/google.png')} style={{
+            <Image source={require('../../assets/google.png')} style={{
             position: 'absolute',
             left: 15,
             width: 45,

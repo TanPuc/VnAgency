@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { auth } from './Firebase'
+import { auth } from '../assets/Firebase.js'
 
 export default function Home({ navigation }) {
   const handleSignOut = () => {
