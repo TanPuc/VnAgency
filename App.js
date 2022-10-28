@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'react-native';
 
@@ -8,10 +10,49 @@ import Welcome from './components/Login_Logout/Welcome.js';
 import SignUp from './components/Login_Logout/SignUp.js';
 import SignIn from './components/Login_Logout/SignIn.js';
 import ResetPassword from './components/Login_Logout/ResetPassword.js';
-import Home from './components/Home_Screen/Home.js';
 
-const Stack = createNativeStackNavigator();
+import HomeScreen from './components/Main_Screen/HomeScreen.js';
+import MapScreen from './components/Main_Screen/MapScreen.js';
+import QRScan from './components/Main_Screen/QRScan.js';
 
+const MainScreenTab = createBottomTabNavigator();
+const MainScreenComponent = () => (
+  <MainScreenTab.Navigator initialRouteName='MainScreenTab' screenOptions={{
+    headerShown: false,
+    tabBarStyle: {
+      backgroundColor: 'white'
+    },
+    tabBarInactiveTintColor: '#007a88',
+    tabBarActiveTintColor: '#fb6d79'
+  }}>
+    <MainScreenTab.Screen 
+      name="Trang chủ" 
+      component={HomeScreen} 
+      options = {{
+      tabBarIcon: ({color, size}) =>
+        <Ionicons name='home-outline' color = {color} size = {size}/>
+      }}
+    />
+    <MainScreenTab.Screen
+      name = "Bản đồ"
+      component = {MapScreen} 
+      options = {{
+      tabBarIcon: ({color, size}) =>
+        <Ionicons name='map-outline' color = {color} size = {size}/>
+      }}
+    />
+    <MainScreenTab.Screen
+      name = "QR Code"
+      component={QRScan}
+      options = {{
+      tabBarIcon: ({color, size}) =>
+        <Ionicons name='qr-code-outline' color = {color} size = {size}/>
+      }}
+    />
+  </MainScreenTab.Navigator>
+)
+
+const WelcomeStack = createNativeStackNavigator();
 export default function App() {
   const [fontsLoaded] = useFonts({
     stantic: require('./assets/fonts/Stantic.ttf'),
@@ -32,30 +73,31 @@ export default function App() {
   return (
     <NavigationContainer>
         <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
-        <Stack.Navigator screenOptions={{
+        
+        <WelcomeStack.Navigator initialRouteName='WelcomeStack' screenOptions={{
             headerShown: false
           }}>
-          <Stack.Screen
+          <WelcomeStack.Screen
             name = "Welcome"
             component = {Welcome}
           />
-          <Stack.Screen
+          <WelcomeStack.Screen
             name = "SignUp"
             component = {SignUp}
           />
-          <Stack.Screen
+          <WelcomeStack.Screen
             name = "SignIn"
             component = {SignIn}
           />
-          <Stack.Screen
+          <WelcomeStack.Screen
             name = "ResetPassword"
             component = {ResetPassword}
           />
-          <Stack.Screen
-            name = "Home"
-            component = {Home}
+          <WelcomeStack.Screen
+            name = "MainScreen"
+            component = {MainScreenComponent}
           />
-        </Stack.Navigator>
+        </WelcomeStack.Navigator>
     </NavigationContainer>
   );
 }
