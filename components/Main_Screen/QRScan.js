@@ -14,12 +14,12 @@ export default function QRScan({ navigation }) {
     }) ()
   }
 
-  const isFocused = useIsFocused();
-
   useEffect(() => {
     setScanned(false);
     askForCameraPermisson();
   }, []);
+
+  const isFocused = useIsFocused();
 
   const handleBarCodeScanned = ({ data }) => {
     Linking.openURL(data);
