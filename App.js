@@ -10,6 +10,7 @@ import Welcome from './components/Login_Logout/Welcome.js';
 import SignUp from './components/Login_Logout/SignUp.js';
 import SignIn from './components/Login_Logout/SignIn.js';
 import ResetPassword from './components/Login_Logout/ResetPassword.js';
+import OnBoard from './components/Login_Logout/OnBoard.js';
 
 import HomeScreen from './components/Main_Screen/HomeScreen.js';
 import MapScreen from './components/Main_Screen/MapScreen.js';
@@ -43,7 +44,7 @@ const MainScreenComponent = () => (
     />
     <MainScreenTab.Screen
       name = "QR Code"
-      component={QRScan}
+      component = {QRScan}
       options = {{
       tabBarIcon: ({color, size}) =>
         <Ionicons name='qr-code-outline' color = {color} size = {size}/>
@@ -80,6 +81,10 @@ export default function App() {
           <WelcomeStack.Screen
             name = "Welcome"
             component = {Welcome}
+          />
+          <WelcomeStack.Screen
+            name = "OnBoard"
+            component = {OnBoard}
           />
           <WelcomeStack.Screen
             name = "SignUp"

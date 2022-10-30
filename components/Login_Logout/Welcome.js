@@ -2,7 +2,7 @@ import { StyleSheet, View, Text, Image, StatusBar } from 'react-native'
 import React from 'react'
 
 export default function Welcome({ navigation }) {
-    setTimeout(() => {navigation.replace('SignIn');}, 1300);
+    setTimeout(() => {navigation.replace('OnBoard');}, 1300);
     return (
         <View style={styles.container}>
             <StatusBar barStyle = "dark-content" hidden = {true} translucent = {true}/>
