@@ -4,7 +4,7 @@
     "slug": "VnAgency",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/travel.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",

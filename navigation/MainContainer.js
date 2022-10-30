@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { BottomTabBar, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { View, Text, StyleSheet } from 'react-native';
 
 // Screens
 import HomeScreen from './screens/HomeScreen.js';

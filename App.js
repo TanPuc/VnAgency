@@ -1,12 +1,8 @@
-import * as React from 'react';
-import MainContainer from './navigation/MainContainer';
-import Crawling from './Testing/Crawling';
-import { StyleSheet, View, Text, Image } from 'react-native'
+import * as React from "react-native";
+import MainContainer from "./navigation/MainContainer";
 
-function App() {
+export default function App() {
   return (
     <MainContainer/>
-  );
+  )
 }
-
-export default App;
