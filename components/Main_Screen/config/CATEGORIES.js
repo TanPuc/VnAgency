@@ -4,16 +4,16 @@ export default [
   {
     id: 1,
     title: "Sights",
-    tours: [...TOURS, ...TOURS],
+    tours: [...TOURS],
   },
   {
     id: 2,
     title: "Tours",
-    tours: [...TOURS, ...TOURS, ...TOURS],
+    tours: [...TOURS],
   },
   {
     id: 3,
     title: "Advantures",
-    tours: [...TOURS, ...TOURS, ...TOURS, ...TOURS],
+    tours: [...TOURS],
   },
 ];

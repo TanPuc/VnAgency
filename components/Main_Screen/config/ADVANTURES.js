@@ -2,7 +2,7 @@ export default [
   {
     id: 1,
     title: "Kayaking",
-    image: require("../../../assets/advantures/kayaking-con.png"),
+    image: require("../../../assets/advantures/kayaking-icon.png"),
   },
   {
     id: 2,
