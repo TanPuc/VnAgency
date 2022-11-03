@@ -14,61 +14,17 @@ export default function HomeScreen({ navigation }) {
         .catch(error => alert(error.message))
     }
     return (
-        <View>
-            <View style = {styles.navbar}>
-            <ImageBackground source={require('../../assets/VnAgency.png')} style = {styles.navBarBG}>
-                <View style = {styles.searchBox}>
-                    <Text>Search</Text>
-                </View>
-                <Icon name='account-box-outline' styles={{
-                    fontSize: 37,
-                    color: 'white',
-                    marginLeft: '2%',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    position: 'absolute',
-                    left: 15,
-                }} onPress={handleSignOut}
-                />
-            </ImageBackground>
-            </View>
+        <View style={styles.container}>
+            <Button title="Test" onClicked={() => navigation.navigate(FlightTickets)}></Button>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    navbar:{
-        width: '100%',
-        height: '52%',
-        // borderColor: 'black',
-        // borderWidth: 1
-    },
-    navBarBG:{
-        paddingTop: '11%',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
+    container: {
+        flex: 1,
         alignItems: 'center',
-        width: '100%',
-        height: '100%',
+        justifyContent: 'center',
     },
-    avatar:{
-        fontSize: 37,
-        flex: 0.3,
-        marginRight: '5%',
-        height: 30,
-        width: 30,
-        borderRadius: 6,
-        backgroundColor: 'white'
-    },
-    searchBox:{
-        marginLeft: '15%',
-        marginRight: '10%',
-        flex: 3,
-        alignItems: 'center',
-        // borderColor: 'black',
-        // borderWidth: 1,
-        backgroundColor: 'white',
-        borderRadius: 15
-    }
 })
 

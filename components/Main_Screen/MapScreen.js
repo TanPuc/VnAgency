@@ -40,7 +40,7 @@ export default function MapScreen({ navigation }) {
         initialRegion={{
           latitude: 16.0545,
           longitude: 108.1917,
-          latitudeDelta: 0.5,
+          latitudeDelta: 0.05,
           longitudeDelta: 0.25,
         }}
         provider="google"
