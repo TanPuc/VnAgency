@@ -15,7 +15,6 @@ import OnBoard from './components/Login_Logout/OnBoard.js';
 import HomeScreen from './components/Main_Screen/HomeScreen.js';
 import MapScreen from './components/Main_Screen/MapScreen.js';
 import QRScan from './components/Main_Screen/QRScan.js';
-import FlightTickets from './components/Main_Screen/FlightBooking/FlightTickets.js';
 
 const MainScreenTab = createBottomTabNavigator();
 const MainScreenComponent = () => (
