@@ -15,6 +15,23 @@ import OnBoard from './components/Login_Logout/OnBoard.js';
 import HomeScreen from './components/Main_Screen/HomeScreen.js';
 import MapScreen from './components/Main_Screen/MapScreen.js';
 import QRScan from './components/Main_Screen/QRScan.js';
+import TourDetailScreen from './components/Main_Screen/TourDetailScreen.js';
+
+const HomeScreenStack = createNativeStackNavigator();
+const HomeScreenComponent = () => (
+  <HomeScreenStack.Navigator initialRouteName='HomeScreenStack' screenOptions={{
+    headerShown: false
+  }}>
+    <HomeScreenStack.Screen 
+      name = "HomeScreen"
+      component = {HomeScreen}
+    />
+    <HomeScreenStack.Screen 
+      name = "TourDetailScreen"
+      component = {TourDetailScreen}
+    />
+  </HomeScreenStack.Navigator>
+)
 
 const MainScreenTab = createBottomTabNavigator();
 const MainScreenComponent = () => (
@@ -28,7 +45,7 @@ const MainScreenComponent = () => (
   }}>
     <MainScreenTab.Screen 
       name="Trang chủ" 
-      component={HomeScreen} 
+      component={HomeScreenComponent}
       options = {{
       tabBarIcon: ({color, size}) =>
         <Ionicons name='home-outline' color = {color} size = {size}/>

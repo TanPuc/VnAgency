@@ -6,10 +6,10 @@ export default [
     images: [
     ],
     price: "$ 83",
-    duration: "3 hours",
+    duration: "1 day",
     rating: 4.8,
     description:
-      "Khu du lịch Sun World Bà Nà Hills toạ lạc ở huyện Hòa Vang, nằm cách trung tâm thành phố Đà Nẵng khoảng 25km về phía Tây Nam, nằm ở độ cao 1487m so với mực bước biển. Đây được xem là thiên đường nghỉ dưỡng đẳng cấp Châu Âu giữa lòng thành phố Đà Nẵng. Hàng năm, Bà Nà Hills thu hút hàng triệu lượt khách trong và ngoài nước ghé thăm. Các hình ảnh về Bà Nà Hills thường xuyên \"gây bão\" mạng xã hội và không ít lần góp mặt trong danh sách các điểm đến \"đáng ghé thăm\" nhất trên thế giới. Không quá lời chút nào nếu bảo rằng chuyến đi Đà Nẵng sẽ uổng phí biết bao nhiêu nếu như bạn \"lỡ hẹn\" với Bà Nà Hills.",
+      "Khu du lịch Sun World Bà Nà Hills toạ lạc ở huyện Hòa Vang, nằm cách trung tâm thành phố Đà Nẵng khoảng 25km về phía Tây Nam, nằm ở độ cao 1487m so với mực bước biển. Đây được xem là thiên đường đẳng cấp Châu Âu giữa lòng thành phố Đà Nẵng. Hàng năm, Bà Nà Hills thu hút hàng triệu lượt khách trong và ngoài nước ghé thăm.",
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ export default [
     duration: "3 hours",
     rating: 4.1,
     description:
-      "Công viên Châu Á - Asia Park là công viên chủ đề hấp dẫn mang đến một Châu Á thu nhỏ sôi động với đa dạng trải nghiệm, từ những trò chơi giải trí kỷ lục thế giới, show diễn hoành tráng, các công trình kiến trúc Châu Á ấn tượng đến tổ hợp vui chơi, giải trí, chợ đêm, mua sắm bậc nhất Đà Thành",
+      "Công viên Châu Á - Asia Park là công viên chủ đề hấp dẫn mang đến một Châu Á thu nhỏ sôi động với đa dạng trải nghiệm, từ những trò chơi giải trí kỷ lục thế giới, show diễn hoành tráng, các công trình kiến trúc Châu Á ấn tượng đến tổ hợp vui chơi, giải trí, chợ đêm, mua sắm bậc nhất Đà Thành.",
   },
   {
     id: 3,

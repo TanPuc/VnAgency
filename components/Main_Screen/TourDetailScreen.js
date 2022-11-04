@@ -3,10 +3,15 @@ import { Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, ImageBac
 import React from "react";
 import COLORS from "./config/COLORS";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import TOURS from "./config/TOURS";
 
 const SPACING = 10;
 
-const TourDetailScreen = ({ tour }) => {
+const TourDetailScreen = ({ navigation, route }) => {
+  const { tour_id } = route.params;
+
+  var tour = TOURS[tour_id];
+
   return (
     <>
       <ScrollView>
@@ -32,6 +37,7 @@ const TourDetailScreen = ({ tour }) => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
+                onPress={() => {navigation.navigate('HomeScreen')}}
               >
                 <Ionicons
                   name="chevron-back"
@@ -226,7 +232,7 @@ const TourDetailScreen = ({ tour }) => {
         <TouchableOpacity
           style={{
             backgroundColor: COLORS.primary,
-            padding: SPACING * 1.5,
+            padding: SPACING * 1,
             marginHorizontal: SPACING * 1.6,
             borderRadius: SPACING * 2,
             flexDirection: "row",
@@ -239,14 +245,14 @@ const TourDetailScreen = ({ tour }) => {
               fontSize: SPACING * 2,
               fontWeight: "bold",
               marginRight: SPACING * 7,
-              marginLeft: SPACING * 7,
+              marginLeft: SPACING * 8.2,
             }}
           >
             Book Now
           </Text>
           <Ionicons
             name="arrow-forward"
-            size={SPACING * 3}
+            size={SPACING * 2.5}
             color={COLORS.white}
           />
         </TouchableOpacity>

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import CATEGORIES from "./config/CATEGORIES";
 import COLORS from "./config/COLORS";
 import ADVANTURES from "./config/ADVANTURES";
+import TOURS from "./config/TOURS";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { auth } from "../assets/Firebase.js";
 
@@ -90,6 +91,7 @@ const HomeScreen = ({ navigation }) => {
                 marginRight: SPACING * 2,
               }}
               key={index}
+              onPress={() => {navigation.navigate('TourDetailScreen', { tour_id: tour.id - 1 })}}
             >
               <View
                 style={{
