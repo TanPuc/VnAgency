@@ -1,85 +1,24 @@
-// import * as React from 'react';
-// import MapView, { Marker } from 'react-native-maps';
-// import { StyleSheet, Text, View, Dimensions, Image} from 'react-native';
-// import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-
-// export default function MapScreen({ navigation }) {
-//   const [region, setRegion] = React.useState({
-//     latitude: 16.0545,
-//     longitude: 108.1917
-//   })
-//   return (
-//     <View style={{marginTop: 35, flex: 1}}>
-//       <GooglePlacesAutocomplete
-//       style={{
-//         marginRight:'20%', flex: 1
-//       }}
-//       placeholder='Search'
-//       fetchDetails={true}
-//       GooglePlacesDetailsQuery={{
-//         rankby:'distance'
-//       }}
-//       onPress={(data, details = null) => {
-//         // 'details' is provided when fetchDetails = true
-//         console.log(data, details);
-//       }}
-//       query={{
-//         key: 'AIzaSyDW_fIDJ_p2zNNDaHBsQPx4RyTOIVIUyBE',
-//         language: 'en',
-//         components: "country:vn",
-//         radius:50000,
-//         location: '${region.latitude}, ${region.longitude}'
-//       }}
-//       styles={{
-//         container:{flex: 0, position:'absolute', width:'100%', zIndex:1},
-//         listView: {backgroundColor: 'white'}
-//       }}
-//       />
-//       <MapView
-//         style={styles.map}
-//         initialRegion={{
-//           latitude: 16.0545,
-//           longitude: 108.1917,
-//           latitudeDelta: 0.05,
-//           longitudeDelta: 0.25,
-//         }}
-//         provider="google"
-//       >
-//           <Marker
-//             coordinate={{latitude: 16.063628, longitude: 108.161319}}
-//             title = 'home'
-//           >
-//             {/* <Image source={require('../../assets/marker.png')}/> */}
-//           </Marker>
-//       </MapView>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   map: {
-//     width: Dimensions.get('window').width,
-//     height: Dimensions.get('window').height,
-//   },
-// });
-
 import * as React from 'react';
 import { Component, useEffect, useState, setState } from 'react';
 import MapView from 'react-native-maps';
-import { StyleSheet, View, Dimensions, Button} from 'react-native';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { SafeAreaView, StyleSheet, View, Dimensions, StatusBar, Text, TouchableWithoutFeedback} from 'react-native';
+import { GooglePlacesAutocomplete, GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import * as Location from "expo-location"
+import {GOOGLE_API_KEY} from "../../environments";
+import Constants from 'expo-constants';
+import { BottomPopup } from '../assets/BottomPopup';
 // import mapStyle from "../../assets/mapStyle.json";
 
-// import Geolocation from "react-native-geolocation-service";
-
-
+const popupList = [
+  {
+    id: 1,
+    name: 'Task'
+  },
+  {
+    id: 2,
+    name: 'Message'
+  }
+]
 
 function MapScreen ({navigation}){
   const {width, height} = Dimensions.get("window");
@@ -93,12 +32,12 @@ function MapScreen ({navigation}){
     latitudeDelta : 0,
     longitudeDelta : 0,
   })
+  // const mapRef = useRef(second)
 
   //Getting user location
   useEffect(() => {
     (async () => {
       let {status} = await Location.requestForegroundPermissionsAsync();
-
       if (status !== "granted") {
         Alert.alert(
           "Permission not granted",
@@ -107,17 +46,14 @@ function MapScreen ({navigation}){
           { cancelable: false }
         );
       }
-
       let location = await Location.getCurrentPositionAsync();
-
-      console.log(Region.latDelta);
-
       setRegion({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
         latitudeDelta: LatitudeDelta,
         longitudeDelta: LongitudeDelta,
       })
+      // console.log(Region.latitudeDelta);
     })();
   }, []);
 
@@ -126,7 +62,18 @@ function MapScreen ({navigation}){
     console.log(Region.latitude, Region.longitude)
   }
 
+  let popupRef = React.createRef()
+
+  const onShowPopup = () => {
+    popupRef.show()
+  }
+
+  const onClosePopup = () => {
+    popupRef.close()
+  }
+
   if(Region.latitude != 0 && Region.longitude != 0)return (
+
     <View style={styles.container}>
 
       <MapView
@@ -147,21 +94,29 @@ function MapScreen ({navigation}){
             rankby:'distance'
           }}
           onPress={(data, details = null) => {
-            // 'details' is provided when fetchDetails = true
             console.log(data, details);
           }}
           query={{
-            key: 'AIzaSyDW_fIDJ_p2zNNDaHBsQPx4RyTOIVIUyBE',
+            key: {GOOGLE_API_KEY},
             language: 'en',
             components: "country:vn",
-            // radius:50000,
-            // location: '${Region.latitude}, ${Region.longitude}'
           }}
         />
-
       </View>
 
-    {/* <Button title='press me' onPress={Check()}></Button> */}
+      {/* <SafeAreaView> */}
+        <TouchableWithoutFeedback 
+          style = {styles.PopupBox}
+        onPress={onShowPopup}>
+            <Text>Show Popup</Text>
+        </TouchableWithoutFeedback>
+        <BottomPopup
+          title = "Demo Popup"
+          ref = {(target) => popupRef = target}
+          onTouchOutside = {onClosePopup}
+          data={popupList}
+        />
+      {/* </SafeAreaView> */}
 
     </View>
   );
@@ -184,13 +139,16 @@ const styles = StyleSheet.create({
     backgroundColor:'white',
     padding:2,
     borderRadius:8,
-    top:40
+    top: Constants.statusBarHeight,
   },
   input: {
     borderColor: "#888",
     borderWidth: 1
+  },
+  PopupBox: {
+    borderRadius: 10,
+    backgroundColor: "#000"
   }
 });
 
 export default MapScreen;
-
