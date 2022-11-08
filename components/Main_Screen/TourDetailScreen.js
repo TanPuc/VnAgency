@@ -227,6 +227,7 @@ const TourDetailScreen = ({ navigation, route }) => {
         </View>
       </ScrollView>
       <View
+        flexDirection='row'
         style={{ position: "absolute", bottom: SPACING * 2, width: "100%" }}
       >
         <TouchableOpacity
@@ -248,7 +249,7 @@ const TourDetailScreen = ({ navigation, route }) => {
               marginLeft: SPACING * 8.2,
             }}
           >
-            Book Now
+            Đặt vé
           </Text>
           <Ionicons
             name="arrow-forward"
