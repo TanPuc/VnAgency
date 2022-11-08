@@ -1,13 +1,15 @@
 import * as React from 'react';
-import { Component, useEffect, useState, setState } from 'react';
-import MapView from 'react-native-maps';
+import { Component, useEffect, useState} from 'react';
+import MapView, {Marker} from 'react-native-maps';
 import { SafeAreaView, StyleSheet, View, Dimensions, StatusBar, Text, TouchableWithoutFeedback} from 'react-native';
 import { GooglePlacesAutocomplete, GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import * as Location from "expo-location"
-import {GOOGLE_API_KEY} from "../../environments";
 import Constants from 'expo-constants';
 import { BottomPopup } from '../assets/BottomPopup';
+import MapViewDirections from 'react-native-maps-directions';
 // import mapStyle from "../../assets/mapStyle.json";
+
+
 
 const popupList = [
   {
@@ -20,22 +22,32 @@ const popupList = [
   }
 ]
 
-function MapScreen ({navigation}){
-  const {width, height} = Dimensions.get("window");
 
+const MapScreen = ({ navigation }) => {
+  const {width, height} = Dimensions.get("window");
   const AspectRatio = width / height;
   const LatitudeDelta = 0.0122;
   const LongitudeDelta = LatitudeDelta * AspectRatio;
   const [Region,setRegion] = useState({
-    latitude : 0,
-    longitude : 0,
-    latitudeDelta : 0,
-    longitudeDelta : 0,
+    latitude : null,
+    longitude : null,
+    latitudeDelta : null,
+    longitudeDelta : null,
   })
-  // const mapRef = useRef(second)
-
-  //Getting user location
+  const [Origin, setOrigin] = useState({
+    latitude: Region.latitude,
+    longitude: Region.longitude,
+  })
+  const [Destination, setDestination] = useState({
+    latitude: 0,
+    longitude: 0,
+  })
+  const ref = React.useRef();
+  const mapRef = React.useRef();
+  
+  
   useEffect(() => {
+    //Getting user location
     (async () => {
       let {status} = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
@@ -53,60 +65,72 @@ function MapScreen ({navigation}){
         latitudeDelta: LatitudeDelta,
         longitudeDelta: LongitudeDelta,
       })
-      // console.log(Region.latitudeDelta);
+      setOrigin({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      })
     })();
   }, []);
 
-  //checking current location
-  function Check(){
-    console.log(Region.latitude, Region.longitude)
-  }
+  //PopUp page
+  // let popupRef = React.createRef()
+  // const onShowPopup = () => {
+  //   popupRef.show()
+  // }
+  // const onClosePopup = () => {
+  //   popupRef.close()
+  // }
 
-  let popupRef = React.createRef()
+  //Adding direction
 
-  const onShowPopup = () => {
-    popupRef.show()
-  }
-
-  const onClosePopup = () => {
-    popupRef.close()
-  }
-
-  if(Region.latitude != 0 && Region.longitude != 0)return (
-
+  if(Region.latitude != null && Region.longitude != null)
+  return (  
     <View style={styles.container}>
-
       <MapView
         style={styles.map}
         provider={'google'}
         initialRegion={Region}
         showsMyLocationButton={true}
         showsUserLocation={true}
+        showsBuildings={true}
+        loadingEnabled={true}
       >
+        {/* <MapViewDirections
+          origin={Origin}
+          destination={Destination}
+          apiKey="AIzaSyDLrAg2LBoIvdFVMSecuZ7a6aoM7bAFJtI"
+          strokeWidth={3}
+          strokeColor="red"
+        ></MapViewDirections> */}
       </MapView>
 
-      {/* Search bar */}
-      <View style = {styles.searchContainer}>
-        <GooglePlacesAutocomplete
-          placeholder='Search'
-          fetchDetails={true}
-          GooglePlacesDetailsQuery={{
-            rankby:'distance'
+        {/* Search bar */}
+        <SafeAreaView style = {styles.searchContainer}> 
+          <GooglePlacesAutocomplete
+            placeholder='Tìm kiếm'
+            fetchDetails={true}
+            // GooglePlacesDetailsQuery={{rankby:'distance'}}
+            onPress={(data, details = null) => {
+              setDestination({
+                latitude: details.geometry.location.lat,
+                longitude: details.geometry.location.lng,
+              });
+              console.log(Destination.latitude, Destination.longitude); 
+              console.log(Origin, Destination);
           }}
-          onPress={(data, details = null) => {
-            console.log(data, details);
-          }}
-          query={{
-            key: {GOOGLE_API_KEY},
-            language: 'en',
-            components: "country:vn",
-          }}
-        />
-      </View>
-
-      {/* <SafeAreaView> */}
+            onFail={error => console.log(error)}
+            onNotFound={() => console.log('no results')}
+            query={{
+              key: 'AIzaSyDLrAg2LBoIvdFVMSecuZ7a6aoM7bAFJtI',
+              language: 'en',
+              components: "country:vn",
+            }}
+          />
+        </SafeAreaView>
+      
+      {/* <SafeAreaView style = {styles.PopupBox}>
         <TouchableWithoutFeedback 
-          style = {styles.PopupBox}
+          
         onPress={onShowPopup}>
             <Text>Show Popup</Text>
         </TouchableWithoutFeedback>
@@ -116,8 +140,7 @@ function MapScreen ({navigation}){
           onTouchOutside = {onClosePopup}
           data={popupList}
         />
-      {/* </SafeAreaView> */}
-
+      </SafeAreaView> */}
     </View>
   );
 }
@@ -130,6 +153,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   map: {
+    flex: 1,
     width: "100%",
     height: "100%",
   },
@@ -146,9 +170,16 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   PopupBox: {
-    borderRadius: 10,
+    width: 60,
+    height: 60,
+    justifyContent: 'center',
+    alignSelf: 'flex-end',
+    bottom: '16%',
+    marginRight: '2%',
+    borderRadius: 30,
     backgroundColor: "#000"
   }
 });
 
 export default MapScreen;
+
