@@ -45,7 +45,7 @@ export default [
     duration: "1 giờ",
     rating: 3.7,
     description:
-      "Fugiat anim excepteur reprehenderit velit ullamco officia. Non aliquip aliquip sunt magna laboris Lorem laboris ut ea. Tempor ad aliqua magna duis Lorem sunt anim cillum enim in.",
+      "Nằm dọc theo chiều dài của núi Hải Vân, là ranh giới giữa hai tỉnh Thừa Thiên Huế và Đà Nẵng, cách thành phố Huế 80km và cách thành phố Đà Nẵng 20km. Đèo cao 500m so với mực nước biển và có chiều dài khoảng 20km. Đèo Hải Vân là một trong những cung đường đèo ven biển đẹp nhất thế giới, là kiệt tác của tạo hoá ban tặng cho Việt Nam.",
   },
   {
     id: 5,
@@ -53,7 +53,7 @@ export default [
     image: require("../../../assets/places/dinhbanco.jpg"),
     images: [
     ],
-    price: "Free",
+    price: "Miễn phí",
     duration: "2 giờ",
     rating: 3.2,
     description:

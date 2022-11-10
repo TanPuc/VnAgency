@@ -7,6 +7,7 @@ import * as Location from "expo-location"
 import Constants from 'expo-constants';
 import { BottomPopup } from '../assets/BottomPopup';
 import MapViewDirections from 'react-native-maps-directions';
+import MARKERS from './config/MARKERS';
 
 const popupList = [
   {
@@ -119,6 +120,9 @@ const MapScreen = ({ navigation }) => {
             <MapView.Marker coordinate={Destination} />
           </View>
         )}
+        {MARKERS.map((marker, index) => (
+          <MapView.Marker key={index} title={marker.title} coordinate={marker.location} />
+        ))}
         <MapViewDirections
           origin={Origin}
           destination={Destination}
@@ -204,4 +208,3 @@ const styles = StyleSheet.create({
 });
 
 export default MapScreen;
-
