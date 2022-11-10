@@ -1,0 +1,42 @@
+export default [
+    {
+      id: 1,
+      title: 'Không gian hẹn hò lý tưởng',
+      time: '29/10/2022',
+      link: 'https://baodanang.vn/channel/5433/202210/khong-gian-hen-ho-ly-tuong-3928750/',
+      image: require("../../../assets/news/henholytuong.png"),
+      abstract: 'Nếu bạn thích không gian rộng rãi, thoáng mát để trò chuyện cùng người thương, bạn bè thì Trúc Xinh cà phê (101 Phạm Như Xương, quận Liên Chiểu) là điểm đến lý tưởng dành cho bạn.',
+    },
+    {
+      id: 2,
+      title: 'Chuẩn bị cho hội chợ du lịch quốc tế Đà Nẵng',
+      time: '09/11/2022',
+      link: 'https://baodanang.vn/du-lich-da-nang/202211/chuan-bi-cho-hoi-cho-du-lich-quoc-te-da-nang-3929414/',
+      image: require("../../../assets/news/hoichoquocte.png"),
+      abstract: 'Hội chợ du lịch quốc tế Đà Nẵng 2022 (VITM Đà Nẵng 2022) dự kiến diễn ra từ ngày 9 đến 11-12-2022 tại Trung tâm Hội chợ triển lãm thành phố với sự tham dự của nhiều doanh nghiệp du lịch, lữ hành trong nước và quốc tế.',
+    },
+    {
+      id: 3,
+      title: 'Đà Nẵng sẽ náo nhiệt trở lại với chuỗi sự kiện Hè đầy sôi động',
+      time: '22/06/2022',
+      link: 'https://www.vietnamplus.vn/da-nang-se-nao-nhiet-tro-lai-voi-chuoi-su-kien-he-day-soi-dong/800011.vnp',
+      image: require("../../../assets/news/chuoisukienhe.jpg"),
+      abstract: 'Từ 25/6-15/8, thành phố Đà Nẵng sẽ sôi động trở lại với hàng loạt sự kiện, lễ hội văn hóa, nghệ thuật hấp dẫn, quy mô lớn, đặc biệt là chuỗi sự kiện “Sống như ánh Mặt Trời-Take me to the Sun.”',
+    },
+    {
+      id: 4,
+      title: 'Trạm dừng chân ở Dune 45',
+      time: '15/10/2022',
+      link: 'https://baodanang.vn/channel/5433/202210/tram-dung-chan-o-dune-45-3926354/',
+      image: require("../../../assets/news/dune.jpg"),
+      abstract: 'Trên con đường vắng giữa trung tâm thành phố, Dune 45 (số 2 Thi Sách, quận Hải Châu) lắng đọng, yên bình nép mình trong khu vườn nhỏ cùng cây trái và ao cá.”',
+    },
+    {
+      id: 5,
+      title: 'Tàu du lịch biển trở lại Đà Nẵng sau hơn 2 năm',
+      time: '09/10/2022',
+      link: 'https://baodanang.vn/channel/5404/202210/tau-du-lich-bien-tro-lai-da-nang-sau-hon-2-nam-3925993/',
+      image: require("../../../assets/news/taudulichbien.jpg"),
+      abstract: 'Sáng 9-10, Sở Du lịch thành phố tổ chức đón tàu du lịch Le Lapeurouse do Công ty CP Vivu Journeys Việt Nam khai thác cập cảng Tiên Sa. Đây là tàu đầu tiên đưa khách du lịch đường biển đến Đà Nẵng sau thời gian dài gián đoạn vì Covid-19.”',
+    },
+]
