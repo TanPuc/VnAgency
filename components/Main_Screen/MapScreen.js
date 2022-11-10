@@ -19,6 +19,26 @@ const popupList = [
   }
 ]
 
+function toRadians(degrees) {
+  var pi = Math.PI;
+  return degrees * (pi / 180);
+}
+
+function haversine_distance(Origin, Destination) {
+  [lat1, lon1] = [Origin.latitude, Origin.longitude];
+  [lat2, lon2] = [Destination.latitude, Destination.longitude];
+  radius = 6371;
+
+  dlat = toRadians(lat2 - lat1);
+  dlon = toRadians(lon2 - lon1);
+  a = Math.sin(dlat / 2) * Math.sin(dlat / 2) +
+    Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) * 
+    Math.sin(dlon / 2) * Math.sin(dlon / 2);
+  c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  d = radius * c;
+
+  return d;
+}
 
 const MapScreen = ({ navigation }) => {
   const {width, height} = Dimensions.get("window");
@@ -77,6 +97,9 @@ const MapScreen = ({ navigation }) => {
 
   //Adding direction
   console.log(Origin, Destination);
+  if(Origin.latitude != null && Destination.latitude != 0) {
+    console.log(haversine_distance(Origin, Destination));
+  }
   
   if(Region.latitude != null && Region.longitude != null)
   return (  
@@ -90,12 +113,18 @@ const MapScreen = ({ navigation }) => {
         showsBuildings={true}
         loadingEnabled={true}
       >
+        {(Origin.latitude != null && Destination.latitude != 0 &&
+          <View>
+            <MapView.Marker coordinate={Origin} />
+            <MapView.Marker coordinate={Destination} />
+          </View>
+        )}
         <MapViewDirections
           origin={Origin}
           destination={Destination}
-          apikey="AIzaSyDLrAg2LBoIvdFVMSecuZ7a6aoM7bAFJtI"
-          strokeWidth={3}
-          strokeColor="red"
+          apikey="AIzaSyBipitWxuMF9DdTJRqWlVBrNoJMjgiJo3U"
+          strokeWidth={4}
+          strokeColor="#00b0ff"
         ></MapViewDirections>
       </MapView>
 
@@ -114,7 +143,7 @@ const MapScreen = ({ navigation }) => {
           onFail={error => console.log(error)}
           onNotFound={() => console.log('no results')}
           query={{
-            key: 'AIzaSyDLrAg2LBoIvdFVMSecuZ7a6aoM7bAFJtI',
+            key: 'AIzaSyBipitWxuMF9DdTJRqWlVBrNoJMjgiJo3U',
             language: 'en',
             components: "country:vn",
           }}

@@ -41,7 +41,7 @@ const TourDetailScreen = ({ navigation, route }) => {
               >
                 <Ionicons
                   name="chevron-back"
-                  color={COLORS.primary}
+                  color={COLORS.pink}
                   size={SPACING * 3}
                 />
               </TouchableOpacity>
@@ -126,7 +126,7 @@ const TourDetailScreen = ({ navigation, route }) => {
               >
                 {tour.price}
               </Text>
-              <Text>/person</Text>
+              <Text>/người</Text>
             </View>
           </View>
           <View style={{ marginVertical: SPACING * 2 }}>
@@ -136,18 +136,18 @@ const TourDetailScreen = ({ navigation, route }) => {
               >
                 <Text
                   style={{
-                    color: COLORS.primary,
+                    color: COLORS.pink,
                     fontWeight: "bold",
                     fontSize: SPACING * 1.7,
                   }}
                 >
-                  Overview
+                  Tổng quan
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{ paddingVertical: SPACING, marginRight: SPACING * 2 }}
               >
-                <Text>Reviews</Text>
+                <Text>Đánh giá</Text>
               </TouchableOpacity>
             </View>
             <View style={{ marginBottom: SPACING * 2, flexDirection: "row" }}>
@@ -167,7 +167,7 @@ const TourDetailScreen = ({ navigation, route }) => {
                   <Ionicons
                     name="time"
                     size={SPACING * 3}
-                    color={COLORS.primary}
+                    color={COLORS.pink}
                   />
                 </View>
                 <View style={{ marginRight: SPACING * 2 }}>
@@ -178,7 +178,7 @@ const TourDetailScreen = ({ navigation, route }) => {
                       textTransform: "uppercase",
                     }}
                   >
-                    Duration
+                    Thời gian
                   </Text>
                   <Text style={{ fontSize: SPACING * 1.6, fontWeight: "700" }}>
                     {tour.duration}
@@ -201,7 +201,7 @@ const TourDetailScreen = ({ navigation, route }) => {
                   <Ionicons
                     name="star"
                     size={SPACING * 3}
-                    color={COLORS.primary}
+                    color={COLORS.pink}
                   />
                 </View>
                 <View style={{ marginRight: SPACING * 2 }}>
@@ -212,10 +212,10 @@ const TourDetailScreen = ({ navigation, route }) => {
                       textTransform: "uppercase",
                     }}
                   >
-                    Rating
+                    Đánh giá
                   </Text>
                   <Text style={{ fontSize: SPACING * 1.6, fontWeight: "700" }}>
-                    {tour.rating} out of 5
+                    {tour.rating} trên 5
                   </Text>
                 </View>
               </View>
@@ -228,16 +228,17 @@ const TourDetailScreen = ({ navigation, route }) => {
       </ScrollView>
       <View
         flexDirection='row'
-        style={{ position: "absolute", bottom: SPACING * 2, width: "100%" }}
+        style={{ position: "absolute", bottom: SPACING * 2, width: "100%", alignItems: 'center', justifyContent: 'center' }}
       >
-        <TouchableOpacity
+        <TouchableOpacity 
           style={{
-            backgroundColor: COLORS.primary,
+            backgroundColor: COLORS.green,
             padding: SPACING * 1,
-            marginHorizontal: SPACING * 1.6,
+            marginHorizontal: SPACING,
             borderRadius: SPACING * 2,
             flexDirection: "row",
             justifyContent: "center",
+            alignItems: 'center'
           }}
         >
           <Text
@@ -245,8 +246,34 @@ const TourDetailScreen = ({ navigation, route }) => {
               color: COLORS.white,
               fontSize: SPACING * 2,
               fontWeight: "bold",
-              marginRight: SPACING * 7,
-              marginLeft: SPACING * 8.2,
+              marginHorizontal: SPACING * 2,
+            }}
+          >
+            Dẫn đường
+          </Text>
+          <Ionicons
+            name="compass-outline"
+            size={SPACING * 2.5}
+            color={COLORS.white}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            backgroundColor: COLORS.pink,
+            padding: SPACING * 1,
+            marginHorizontal: SPACING,
+            borderRadius: SPACING * 2,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: 'center'
+          }}
+        >
+          <Text
+            style={{
+              color: COLORS.white,
+              fontSize: SPACING * 2,
+              fontWeight: "bold",
+              marginHorizontal: SPACING * 3.6,
             }}
           >
             Đặt vé

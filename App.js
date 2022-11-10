@@ -16,6 +16,8 @@ import HomeScreen from './components/Main_Screen/HomeScreen.js';
 import MapScreen from './components/Main_Screen/MapScreen.js';
 import QRScan from './components/Main_Screen/QRScan.js';
 import TourDetailScreen from './components/Main_Screen/TourDetailScreen.js';
+import HotelBooking from './components/Main_Screen/HotelBooking.js';
+import HotelBookingDetails from './components/Main_Screen/HotelBookingDetails.js';
 
 const HomeScreenStack = createNativeStackNavigator();
 const HomeScreenComponent = () => (
@@ -29,6 +31,14 @@ const HomeScreenComponent = () => (
     <HomeScreenStack.Screen 
       name = "TourDetailScreen"
       component = {TourDetailScreen}
+    />
+    <HomeScreenStack.Screen 
+      name = "HotelBooking"
+      component = {HotelBooking}
+    />
+    <HomeScreenStack.Screen 
+      name = "HotelBookingDetail"
+      component = {HotelBookingDetails}
     />
   </HomeScreenStack.Navigator>
 )
