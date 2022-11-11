@@ -18,8 +18,8 @@ const {width} = Dimensions.get('screen');
 import houses from './config/HOUSES';
 const HotelBooking = ({ navigation }) => {
   const optionsList = [
-    {title: 'Buy a Home', img: require('../../assets/hotels/house1.jpg')},
-    {title: 'Rent a Home', img: require('../../assets/hotels/house2.jpg')},
+    {title: 'Đặt phòng', img: require('../../assets/hotels/house1.jpg')},
+    {title: 'Thuê nhà', img: require('../../assets/hotels/house2.jpg')},
   ];
   const categoryList = ['Phổ biến', 'Gợi ý', 'Gần đây'];
 
@@ -65,7 +65,7 @@ const HotelBooking = ({ navigation }) => {
     return (
       <Pressable
         activeOpacity={0.8}
-        onPress={() => navigation.navigate('HotelBookingDetails', house)}>
+        onPress={() => {navigation.navigate('HotelBookingDetails', {house_id: house.id - 1})}}>
         <View style={style.card}>
           {/* House image */}
           <Image source={house.image} style={style.cardImage} />
@@ -81,8 +81,8 @@ const HotelBooking = ({ navigation }) => {
                 {house.title}
               </Text>
               <Text
-                style={{fontWeight: 'bold', color: COLORS.blue, fontSize: 16}}>
-                $1,500
+                style={{fontWeight: 'bold', color: COLORS.green, fontSize: 16}}>
+                {house.price}
               </Text>
             </View>
 
@@ -122,11 +122,18 @@ const HotelBooking = ({ navigation }) => {
       />
       {/* Header container */}
       <View style={style.header}>
-        <View>
-          <Text style={{color: COLORS.grey}}>Location</Text>
-          <Text style={{color: COLORS.dark, fontSize: 20, fontWeight: 'bold'}}>
-            Canada
-          </Text>
+        <Icon
+          name="arrow-back-ios"
+          size={20}
+          onPress={navigation.goBack}
+          style={{
+            paddingTop: 10,
+            paddingLeft: 10,
+          }}
+        />
+        <View style={{paddingRight: 12}}>
+          <Text style={{color: COLORS.grey, textAlign: 'right'}}>Vị trí</Text>
+          <Text style={{color: COLORS.green, fontSize: 20, fontWeight: 'bold'}}>Đà Nẵng</Text>
         </View>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -139,7 +146,7 @@ const HotelBooking = ({ navigation }) => {
           }}>
           <View style={style.searchInputContainer}>
             <Icon name="search" color={COLORS.grey} size={25} />
-            <TextInput placeholder="Search address, city, location" />
+            <TextInput placeholder="Tìm kiếm theo địa chỉ, thành phố" />
           </View>
 
           <View style={style.sortBtn}>
@@ -189,7 +196,7 @@ const style = StyleSheet.create({
     borderRadius: 12,
   },
   sortBtn: {
-    backgroundColor: COLORS.dark,
+    backgroundColor: COLORS.dark_green,
     height: 50,
     width: 50,
     borderRadius: 12,

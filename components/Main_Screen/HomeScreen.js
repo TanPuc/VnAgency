@@ -205,7 +205,7 @@ const HomeScreen = ({ navigation }) => {
                 color: COLORS.dark,
               }}
             >
-              Feeling Adventurous?
+              Tiện ích
             </Text>
             <TouchableOpacity>
               <Text
@@ -215,14 +215,14 @@ const HomeScreen = ({ navigation }) => {
                   color: COLORS.primary,
                 }}
               >
-                Show all
+                Hiện tất cả
               </Text>
             </TouchableOpacity>
           </View>
           <ScrollView
             horizontal
             pagingEnabled
-            style={{ marginVertical: SPACING * 2 }}
+            style={{ marginVertical: SPACING * 2, marginHorizontal: SPACING }}
             showsHorizontalScrollIndicator={false}
           >
             {ADVANTURES.map((adventure) => (
@@ -233,12 +233,13 @@ const HomeScreen = ({ navigation }) => {
                   padding: SPACING,
                   alignItems: "center",
                 }}
+                onPress={() => {navigation.navigate(adventure.navigation)}}
               >
-                <View style={{ width: SPACING * 3, height: SPACING * 3 }}>
-                  <Image
-                    source={adventure.image}
-                    resizeMode="contain"
-                    style={{ width: "100%", height: "100%" }}
+                <View style={{ width: SPACING * 3, height: SPACING * 3.2 }}>
+                  <Ionicons
+                    name={adventure.icon}
+                    color={COLORS.dark_green}
+                    size={SPACING * 3.2}
                   />
                 </View>
                 <Text
@@ -246,6 +247,7 @@ const HomeScreen = ({ navigation }) => {
                     textTransform: "uppercase",
                     fontSize: SPACING,
                     marginTop: SPACING,
+                    color: COLORS.dark,
                   }}
                 >
                   {adventure.title}

@@ -41,7 +41,7 @@ const TourDetailScreen = ({ navigation, route }) => {
               >
                 <Ionicons
                   name="chevron-back"
-                  color={COLORS.pink}
+                  color='black'
                   size={SPACING * 3}
                 />
               </TouchableOpacity>

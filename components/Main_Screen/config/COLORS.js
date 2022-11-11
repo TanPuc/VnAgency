@@ -8,5 +8,6 @@ export default {
   red: 'red',
   pink: '#ff757c',
   green: '#15bdb1',
+  dark_green: '#007a88',
   transparent: "rgba(0, 0, 0, 0.3)",
 };

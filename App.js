@@ -37,7 +37,7 @@ const HomeScreenComponent = () => (
       component = {HotelBooking}
     />
     <HomeScreenStack.Screen 
-      name = "HotelBookingDetail"
+      name = "HotelBookingDetails"
       component = {HotelBookingDetails}
     />
   </HomeScreenStack.Navigator>

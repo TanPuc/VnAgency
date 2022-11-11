@@ -12,10 +12,15 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from "@expo/vector-icons/Ionicons";
 import COLORS from './config/COLORS';
+import HOUSES from './config/HOUSES';
 const {width} = Dimensions.get('screen');
+
 const HotelBookingDetails = ({navigation, route}) => {
-  const house = route.params;
+  const { house_id } = route.params;
+
+  var house = HOUSES[house_id];
 
   const InteriorCard = ({interior}) => {
     return <Image source={interior} style={style.interiorImage} />;
@@ -25,7 +30,6 @@ const HotelBookingDetails = ({navigation, route}) => {
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* House image */}
-
         <View style={style.backgroundImageContainer}>
           <ImageBackground style={style.backgroundImage} source={house.image}>
             <View style={style.header}>
@@ -34,18 +38,19 @@ const HotelBookingDetails = ({navigation, route}) => {
                   name="arrow-back-ios"
                   size={20}
                   onPress={navigation.goBack}
+                  style={{paddingLeft: 9}}
                 />
               </View>
               <View style={style.headerBtn}>
-                <Icon name="favorite" size={20} color={COLORS.red} />
+                <Ionicons
+                  name="heart-outline"
+                  color='#fb6d79'
+                  size={30}
+                  style={{paddingLeft: 2}}
+                />
               </View>
             </View>
           </ImageBackground>
-
-          {/* Virtual Tag View */}
-          <View style={style.virtualTag}>
-            <Text style={{color: COLORS.white}}>Virtual tour</Text>
-          </View>
         </View>
 
         <View style={style.detailsContainer}>
@@ -58,7 +63,7 @@ const HotelBookingDetails = ({navigation, route}) => {
               <View style={style.ratingTag}>
                 <Text style={{color: COLORS.white}}>4.8</Text>
               </View>
-              <Text style={{fontSize: 13, marginLeft: 5}}>155 ratings</Text>
+              <Text style={{fontSize: 13, marginLeft: 5}}>155 đánh giá</Text>
             </View>
           </View>
 
@@ -100,16 +105,16 @@ const HotelBookingDetails = ({navigation, route}) => {
           <View style={style.footer}>
             <View>
               <Text
-                style={{color: COLORS.blue, fontWeight: 'bold', fontSize: 18}}>
-                $1,500
+                style={{color: COLORS.green, fontWeight: 'bold', fontSize: 18}}>
+                {house.price} / đêm
               </Text>
               <Text
                 style={{fontSize: 12, color: COLORS.grey, fontWeight: 'bold'}}>
-                Total Price
+                Tổng chi
               </Text>
             </View>
             <View style={style.bookNowBtn}>
-              <Text style={{color: COLORS.white}}>Book Now</Text>
+              <Text style={{color: COLORS.white, fontSize: 15}}>Đặt phòng</Text>
             </View>
           </View>
         </View>
@@ -149,7 +154,7 @@ const style = StyleSheet.create({
   ratingTag: {
     height: 30,
     width: 35,
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.green,
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
@@ -184,7 +189,7 @@ const style = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.dark,
+    backgroundColor: COLORS.dark_green,
     borderRadius: 10,
     paddingHorizontal: 20,
   },
