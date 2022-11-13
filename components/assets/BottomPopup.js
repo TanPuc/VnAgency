@@ -1,4 +1,4 @@
-import { Modal, Dimensions, TouchableWithoutFeedback, StyleSheet, View, Text } from "react-native";
+import { Modal, Dimensions, TouchableWithoutFeedback, StyleSheet, View, Text, TextInput } from "react-native";
 import * as React from "react";
 import { FlatList } from "react-native-gesture-handler";
 
@@ -39,13 +39,40 @@ export class BottomPopup extends React.Component {
                 <Text
                     style = {{
                         color: '#182E44',
-                        fontsize: 25,
-                        fontWeight: '500',
+                        fontSize: 25,
+                        fontWeight:'bold',
                         marginTop: 15,
                         marginBottom: 30,
+                        backgroundColor: 'transparent',
                     }}>
                         {title}
                     </Text>
+            </View>
+        )
+    }
+
+    renderInput = () => {
+        return (
+            <View>
+                <TextInput
+                    style={{
+                        height: 50, 
+                        margin: 12, 
+                        marginTop: 0,
+                        borderWidth: 1, 
+                        padding: 10,  
+                        shadowColor: '#171717',
+                        shadowOffset: {width: -2, height: 4}, 
+                        shadowOpacity: 0.2,
+                        shadowRadius: 3,
+                        borderRadius: 5,
+                        color: '#182E44',
+                    }}
+                    value={Number}
+                    placeholder="Nhập chi phí của bạn"
+                    placeholderTextColor={'#182E44'}
+                    autoFocus={true}
+                />
             </View>
         )
     }
@@ -101,7 +128,7 @@ export class BottomPopup extends React.Component {
                 onRequestClose={this.close}
             >
                 <View style={{
-                    flex: 1, 
+                    flex: 1,
                     backgroundColor: '#000000AA',
                     justifyContent: 'flex-end'
                 }}>
@@ -112,9 +139,11 @@ export class BottomPopup extends React.Component {
                         borderTopRightRadius: 10,
                         borderTopLeftRadius: 10,
                         paddingHorizontal: 10,
-                        maxHeight: deviceHeight * 0.4,
+                        // maxHeight: deviceHeight * 0.9,
+                        height: '90%',
                     }}>
                         {this.renderTitle()}
+                        {this.renderInput()}
                         {this.renderContent()}
                     </View>
 

@@ -53,8 +53,8 @@ const MainScreenComponent = () => (
     tabBarInactiveTintColor: '#007a88',
     tabBarActiveTintColor: '#fb6d79'
   }}>
-    <MainScreenTab.Screen 
-      name="Trang chủ" 
+    <MainScreenTab.Screen
+      name="Trang chủ"
       component={HomeScreenComponent}
       options = {{
       tabBarIcon: ({color, size}) =>
@@ -63,7 +63,7 @@ const MainScreenComponent = () => (
     />
     <MainScreenTab.Screen
       name = "Bản đồ"
-      component = {MapScreen} 
+      component = {MapScreen}
       options = {{
       tabBarIcon: ({color, size}) =>
         <Ionicons name='map-outline' color = {color} size = {size}/>
@@ -101,7 +101,6 @@ export default function App() {
   return (
     <NavigationContainer>
         <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
-        
         <WelcomeStack.Navigator initialRouteName='WelcomeStack' screenOptions={{
             headerShown: false
           }}>

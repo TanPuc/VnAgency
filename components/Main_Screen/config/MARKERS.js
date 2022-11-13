@@ -59,8 +59,8 @@ export default [
       id: 8,
       title:'Bãi biển Mỹ Khê ',
       location:{
-        latitude:'16.0616944',
-        longitude:'108.2469346',
+        latitude:'16.0562758',
+        longitude:'108.2478731',
       },
     },
     {
@@ -245,6 +245,142 @@ export default [
       location:{
         latitude:'16.065481',
         longitude:'108.1823309',
+      },
+    },
+    {
+      id: 32,
+      title:'Bảo tàng điêu khắc Chăm',
+      location:{
+        latitude:'16.0607079',
+        longitude:'108.2235466',
+      },
+    },
+    {
+      id: 33,
+      title:'Bảo tàng mĩ thuật Đà Nẵng',
+      location:{
+        latitude:'16.0712986',
+        longitude:'108.2177249',
+      },
+    },
+    {
+      id: 34,
+      title:'Chùa Pháp Lâm',
+      location:{
+        latitude:'16.0622908',
+        longitude:'108.2155449',
+      },
+    },
+    {
+      id: 35,
+      title:'Bảo tàng Hồ Chí Minh',
+      location:{
+        latitude:'16.0486814',
+        longitude:'108.217581',
+      },
+    },
+    {
+      id: 31,
+      title:'Tượng đài mẹ nhu',
+      location:{
+        latitude:'16.065481',
+        longitude:'108.1823309',
+      },
+    },
+    {
+      id: 36,
+      title:'Chùa Phổ Đà',
+      location:{
+        latitude:'16.0559509',
+        longitude:'108.2186556',
+      },
+    },
+    {
+      id: 37,
+      title:'Nhà Vọng Cảnh',
+      location:{
+        latitude:'16.065481',
+        longitude:'108.1823309',
+      },
+    },
+    {
+      id: 38,
+      title:'Sơn trà tịnh viên',
+      location:{
+        latitude:'16.1147325',
+        longitude:'108.2572469',
+      },
+    },
+    {
+      id: 39,
+      title:'Đức Maria Mẹ Sao Biển',
+      location:{
+        latitude:'16.0476243',
+        longitude:'108.2490122',
+      },
+    },
+    {
+      id: 40,
+      title:'Ngôi nhà đảo ngược Đà Nẵng',
+      location:{
+        latitude:'16.0388189',
+        longitude:'108.2448648',
+      },
+    },
+    {
+      id: 41,
+      title:'Chùa Bà Đa',
+      location:{
+        latitude:'16.0375656',
+        longitude:'108.2405163',
+      },
+    },
+    {
+      id: 42,
+      title:'Suối Lương',
+      location:{
+        latitude:'16.1566197',
+        longitude:'108.1093217',
+      },
+    },
+    {
+      id: 43,
+      title:'Công viên cầu vượt Ngã Ba Huế',
+      location:{
+        latitude:'16.062353',
+        longitude:'108.1788285',
+      },
+    },
+    {
+      id: 44,
+      title:'Thiện viện bồ đề',
+      location:{
+        latitude:'16.0654698',
+        longitude:'108.1725438',
+      },
+    },
+    {
+      id: 45,
+      title:'Mikazuki Water Park',
+      location:{
+        latitude:'16.0921823',
+        longitude:'108.1441563',
+      },
+    },
+    {
+      id: 46,
+      title:'Chợ Cồn',
+      location:{
+        latitude:'16.0680456',
+        longitude:'108.2143842',
+      },
+    },
+    {
+      id: 47,
+      title:'Chợ Hàn',
+      location:{
+        latitude:'16.0682581',
+        longitude:'108.224269',
       },
     },
 ]
