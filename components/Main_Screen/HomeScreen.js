@@ -7,6 +7,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { auth } from "../assets/Firebase.js";
 
 const WIDTH = Dimensions.get("screen").width;
+const HEIGHT = Dimensions.get('screen').height;
 const SPACING = 10;
 
 const HomeScreen = ({ navigation }) => {
@@ -19,6 +20,9 @@ const HomeScreen = ({ navigation }) => {
         console.log("Logged out");
     })
     .catch(error => alert(error.message))
+  }
+  const openDrawer = () => {
+
   }
 
   return (
@@ -40,6 +44,8 @@ const HomeScreen = ({ navigation }) => {
           >
             Trang chủ
           </Text>
+          
+          {/* Drawer */}
           <TouchableOpacity onPress={handleSignOut}>
             <Image
               style={{
@@ -50,6 +56,10 @@ const HomeScreen = ({ navigation }) => {
               source={require("../../assets/Avatar.png")}
             />
           </TouchableOpacity>
+          {/* Drawer */}
+
+
+          
         </View>
         <ScrollView style={{ marginVertical: SPACING * 2 }} horizontal>
           {CATEGORIES.map((category, index) => (
@@ -119,15 +129,25 @@ const HomeScreen = ({ navigation }) => {
                 </TouchableOpacity>
                 <Text
                   style={{
+                    position:'absolute',
                     fontSize: SPACING * 2,
                     color: COLORS.white,
                     fontWeight: "700",
                     marginLeft: SPACING,
+                    top:'90%',
                   }}
                 >
                   {tour.title}
                 </Text>
-              </View>
+                <Text style={{
+                    color: "white",
+                    fontSize: SPACING * 2,
+                    position:'absolute',
+                    fontFamily: 'SourceSansPro_Bold',
+                    left: '5%',
+                    top: '5%',
+                  }}><Text>Rate: </Text>{tour.rating}</Text>
+                </View>
               <Image
                 source={tour.image}
                 style={{ width: "100%", height: "100%" }}
@@ -157,23 +177,26 @@ const HomeScreen = ({ navigation }) => {
                 onPress={() => Linking.openURL(tour.link)}
               >
                 <Image source={tour.image} style={{
-                  width: WIDTH * 0.3,
-                  height: WIDTH * 0.5,
+                  width: WIDTH * 0.34,
+                  height: HEIGHT * 0.14,
                   resizeMode: 'stretch',
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}/>
                 <View>
-                  <Text style={{
-                    width: WIDTH * 0.6,
-                    paddingHorizontal: 15,
-                    paddingTop: 6,
-                    paddingBottom: 1,
-                    fontFamily: 'SourceSansPro_Bold',
-                    fontSize: 14.5,
-                  }}
-                  numberOfLines={2}
-                  >{tour.title}</Text>
+                  <View>
+                    <Text style={{
+                      width: WIDTH * 0.6,
+                      paddingHorizontal: 15,
+                      paddingTop: 6,
+                      paddingBottom: 1,
+                      fontFamily: 'SourceSansPro_Bold',
+                      fontSize: 14.5,
+                      color:"#fb6d79",
+                    }}
+                    numberOfLines={2}
+                    >{tour.title}</Text>
+                  </View>
                   <Text
                     style={{
                       width: WIDTH * 0.58,
@@ -181,6 +204,7 @@ const HomeScreen = ({ navigation }) => {
                       paddingVertical: 6,
                       fontFamily: 'SourceSansPro_Regular',
                       fontSize: 13.5,
+                      color:"#182e44",
                     }}
                     numberOfLines={3}
                   >{tour.abstract}</Text>
@@ -207,7 +231,7 @@ const HomeScreen = ({ navigation }) => {
             >
               Tiện ích
             </Text>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <Text
                 style={{
                   fontSize: SPACING * 1.4,
@@ -217,7 +241,7 @@ const HomeScreen = ({ navigation }) => {
               >
                 Hiện tất cả
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           <ScrollView
             horizontal

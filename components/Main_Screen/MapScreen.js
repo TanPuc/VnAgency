@@ -97,10 +97,10 @@ const MapScreen = ({ navigation }) => {
   }
 
   //Adding direction
-  // console.log(Origin, Destination);
-  if(Origin.latitude != null && Destination.latitude != 0) {
-    console.log(haversine_distance(Origin, Destination));
-  }
+  console.log(Origin, Destination);
+  // if(Origin.latitude != null && Destination.latitude != 0) {
+  //   console.log(haversine_distance(Origin, Destination));
+  // }
   if(Region.latitude != null && Region.longitude != null)
   return (
     <View style={styles.container}>
