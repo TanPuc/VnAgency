@@ -68,7 +68,7 @@ export class BottomPopup extends React.Component {
                         borderRadius: 5,
                         color: '#182E44',
                     }}
-                    value={Number}
+                    value={Number}  
                     placeholder="Nhập chi phí của bạn"
                     placeholderTextColor={'#182E44'}
                     autoFocus={true}

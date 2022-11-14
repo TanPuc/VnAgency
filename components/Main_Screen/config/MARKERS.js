@@ -12,7 +12,7 @@ export default [
   {
     id: 2,
     title: "Núi Ngũ Hành Sơn",
-    price: 0,
+    price: 50,
     rate: 0,
     location: {
       latitude: "15.9955056",
@@ -32,7 +32,7 @@ export default [
   {
     id: 4,
     title: "Làng cổ Phong Nam",
-    price: 0,
+    price: 25,
     rate: 0,
     location: {
       latitude: "15.9865505",
@@ -112,7 +112,7 @@ export default [
   {
     id: 12,
     title: "Chùa Linh Ứng",
-    price: 0,
+    price: 25,
     rate: 0,
     location: {
       latitude: "16.004104",
@@ -132,7 +132,7 @@ export default [
   {
     id: 14,
     title: "Bảo tàng Đà Nẵng",
-    price: 0,
+    price: 30,
     rate: 0,
     location: {
       latitude: "16.0763229",
@@ -142,7 +142,7 @@ export default [
   {
     id: 15,
     title: "Bảo tàng Đồng Đình",
-    price: 0,
+    price: 30,
     rate: 0,
     location: {
       latitude: "16.1014105",
@@ -152,7 +152,7 @@ export default [
   {
     id: 16,
     title: "Chợ đêm Sơn Trà",
-    price: 0,
+    price: 100,
     rate: 0,
     location: {
       latitude: "16.0615978",
@@ -162,7 +162,7 @@ export default [
   {
     id: 17,
     title: "Bảo tàng 3D Trick Eye",
-    price: 0,
+    price: 50,
     rate: 0,
     location: {
       latitude: "16.0954282",
@@ -242,7 +242,7 @@ export default [
   {
     id: 25,
     title: "Bà Nà hills",
-    price: 0,
+    price: 400,
     rate: 0,
     location: {
       latitude: "16.02654009999999",
@@ -252,7 +252,7 @@ export default [
   {
     id: 26,
     title: "Công viên Châu Á",
-    price: 0,
+    price: 300,
     rate: 0,
     location: {
       latitude: "16.0383924",
@@ -262,7 +262,7 @@ export default [
   {
     id: 27,
     title: "Helio center",
-    price: 0,
+    price: 150,
     rate: 0,
     location: {
       latitude: "16.0370877",
@@ -312,7 +312,7 @@ export default [
   {
     id: 32,
     title: "Bảo tàng điêu khắc Chăm",
-    price: 0,
+    price: 30,
     rate: 0,
     location: {
       latitude: "16.0607079",
@@ -322,7 +322,7 @@ export default [
   {
     id: 33,
     title: "Bảo tàng mĩ thuật Đà Nẵng",
-    price: 0,
+    price: 30,
     rate: 0,
     location: {
       latitude: "16.0712986",
@@ -342,21 +342,11 @@ export default [
   {
     id: 35,
     title: "Bảo tàng Hồ Chí Minh",
-    price: 0,
+    price: 30,
     rate: 0,
     location: {
       latitude: "16.0486814",
       longitude: "108.217581",
-    },
-  },
-  {
-    id: 31,
-    title: "Tượng đài mẹ nhu",
-    price: 0,
-    rate: 0,
-    location: {
-      latitude: "16.065481",
-      longitude: "108.1823309",
     },
   },
   {
@@ -402,7 +392,7 @@ export default [
   {
     id: 40,
     title: "Ngôi nhà đảo ngược Đà Nẵng",
-    price: 0,
+    price: 50,
     rate: 0,
     location: {
       latitude: "16.0388189",
@@ -452,7 +442,7 @@ export default [
   {
     id: 45,
     title: "Mikazuki Water Park",
-    price: 0,
+    price: 400,
     rate: 0,
     location: {
       latitude: "16.0921823",
@@ -462,7 +452,7 @@ export default [
   {
     id: 46,
     title: "Chợ Cồn",
-    price: 0,
+    price: 100,
     rate: 0,
     location: {
       latitude: "16.0680456",
@@ -472,7 +462,7 @@ export default [
   {
     id: 47,
     title: "Chợ Hàn",
-    price: 0,
+    price: 100,
     rate: 0,
     location: {
       latitude: "16.0682581",
