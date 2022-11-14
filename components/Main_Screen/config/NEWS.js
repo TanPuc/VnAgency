@@ -13,7 +13,7 @@ export default [
       time: '09/11/2022',
       link: 'https://baodanang.vn/du-lich-da-nang/202211/chuan-bi-cho-hoi-cho-du-lich-quoc-te-da-nang-3929414/',
       image: require("../../../assets/news/hoichoquocte.png"),
-      abstract: 'Thời gian: từ 9/12 đến 11/12/2022\nĐịa điểm: Trung tâm Hội chợ triển lãm thành phố',
+      abstract: '*Thời gian*: từ 9/12 đến 11/12/2022\nĐịa điểm: Trung tâm Hội chợ triển lãm thành phố',
     },
     {
       id: 3,

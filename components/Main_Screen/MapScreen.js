@@ -11,18 +11,6 @@ import MARKERS from './config/MARKERS';
 import mapStyle from '../assets/mapStyle.json';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-
-const popupList = [
-  {
-    id: 1,
-    name: 'Task'
-  },
-  {
-    id: 2,
-    name: 'Message'
-  }
-]
-
 function toRadians(degrees) {
   var pi = Math.PI;
   return degrees * (pi / 180);
@@ -172,7 +160,6 @@ const MapScreen = ({ navigation }) => {
           image = "require('../../assets/path.png')"
           ref = {(target) => popupRef = target}
           onTouchOutside = {onClosePopup}
-          data={popupList}
         />
       </SafeAreaView>
     </View>

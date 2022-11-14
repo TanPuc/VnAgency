@@ -111,7 +111,7 @@ const HomeScreen = ({ navigation }) => {
                   padding: SPACING,
                 }}
               >
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={{
                     alignSelf: "flex-end",
                     padding: SPACING / 2,
@@ -126,27 +126,80 @@ const HomeScreen = ({ navigation }) => {
                     color='#fb6d79'
                     size={SPACING * 3}
                   />
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    position:'absolute',
-                    fontSize: SPACING * 2,
-                    color: COLORS.white,
-                    fontWeight: "700",
-                    marginLeft: SPACING,
-                    top:'90%',
-                  }}
-                >
-                  {tour.title}
-                </Text>
-                <Text style={{
-                    color: "white",
-                    fontSize: SPACING * 2,
-                    position:'absolute',
-                    fontFamily: 'SourceSansPro_Bold',
-                    left: '5%',
-                    top: '5%',
-                  }}><Text>Rate: </Text>{tour.rating}</Text>
+                </TouchableOpacity> */}
+                <View style={{
+                  position: 'absolute',
+                  top:"95%",
+                  width: "80%",
+                  height: 30,
+                  paddingTop: 20,
+                  paddingBottom: 20,
+                  borderWidth: 1,
+                  borderColor: '#fb6d79',
+                  borderTopRightRadius: 25,
+                  borderWidth: 1,
+                  backgroundColor: "#fb6d79",
+                }}><Text style={{
+                        position:'absolute',
+                        fontSize: SPACING * 2,
+                        paddingTop: 5,
+                        color: COLORS.white,
+                        fontWeight: "bold",
+                        marginLeft: SPACING,
+                        top:'90%',
+                      }}
+                    >
+                      {tour.title}
+                    </Text>
+                </View>
+                <View style={{
+                  position: 'absolute',
+                  alignSelf:'flex-end',
+                  width: "40%",
+                  height: 30,
+                  paddingTop: 20,
+                  paddingBottom: 20,
+                  borderWidth: 1,
+                  borderColor: '#fb6d79',
+                  borderBottomLeftRadius: 25,
+                  borderWidth: 1,
+                  backgroundColor: "#fb6d79",
+                }}><Text style={{
+                  color: "white",
+                  fontSize: SPACING * 2,
+                  position:'absolute',
+                  fontFamily: 'SourceSansPro_Bold',
+                  paddingTop: 5,
+                  paddingLeft: 20,
+                  // left: '70%',
+                  // top: '90%',
+                }}><Text>Rate: </Text>{tour.rating}</Text></View>
+                <View style={{
+                  position: 'absolute',
+                  width: 70,
+                  height: 10,
+                  paddingTop: 20,
+                  paddingBottom: 20,
+                  borderWidth: 1,
+                  borderColor: '#fb6d79',
+                  borderBottomRightRadius: 25,
+                  borderWidth: 1,
+                  backgroundColor: "#fb6d79",
+                }}>
+                  <Text
+                    style={{
+                      width: 80,
+                      height: 50,
+                      position:'absolute',
+                      fontSize: SPACING * 2,
+                      fontWeight:'bold',
+                      color: COLORS.white,
+                      paddingLeft: SPACING,
+                      paddingTop: '5%',
+                      color: "#fff",
+                    }}
+                  ><Text>No.</Text>{tour.id}</Text>
+                </View>
                 </View>
               <Image
                 source={tour.image}

@@ -124,7 +124,7 @@ const TourDetailScreen = ({ navigation, route }) => {
                   color: COLORS.dark,
                 }}
               >
-                {tour.price}
+                {tour.price}<Text>.000đ</Text>
               </Text>
               <Text>/người</Text>
             </View>
