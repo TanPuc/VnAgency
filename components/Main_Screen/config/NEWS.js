@@ -1,0 +1,42 @@
+export default [
+    {
+      id: 1,
+      title: 'Lễ hội pháo hoa quốc tế Đà Nẵng',
+      time: '3/6-8/7/2023',
+      link: 'https://danangfantasticity.com/tin-tuc/tu-ngay-3-6-8-7-2023-le-hoi-phao-hoa-quoc-te-da-nang-nam-2023.html',
+      image: require("../../../assets/lehoiphaohoa.png"),
+      abstract: 'Thời gian: từ 3/6 đến 8/7\nĐịa điểm: Ven sông Hàn, Đà Nẵng',
+    },
+    {
+      id: 2,
+      title: 'Chuẩn bị cho hội chợ du lịch quốc tế Đà Nẵng',
+      time: '09/11/2022',
+      link: 'https://baodanang.vn/du-lich-da-nang/202211/chuan-bi-cho-hoi-cho-du-lich-quoc-te-da-nang-3929414/',
+      image: require("../../../assets/news/hoichoquocte.png"),
+      abstract: '*Thời gian*: từ 9/12 đến 11/12/2022\nĐịa điểm: Trung tâm Hội chợ triển lãm thành phố',
+    },
+    {
+      id: 3,
+      title: 'Nihon Matsuri 2022',
+      time: '27/11/2022',
+      link: 'https://www.facebook.com/tsubasa.club9/photos/a.1596062053965755/3288946944677249/',
+      image: require("../../../assets/nihonmatsuri.png"),
+      abstract: 'Thời gian: 27/11/2022\nĐịa điểm: Trung tâm hội chợ triển lãm Đà Nẵng',
+    },
+    {
+      id: 4,
+      title: 'NIPPON ƠI: Lễ Hội Anime, Manga, Cosplay Lớn Nhất Miền Trung',
+      time: '23/9-25/9/2022',
+      link: 'https://danangfantasticity.com/tin-tuc/nippon-oi-le-hoi-anime-manga-cosplay-lon-nhat-mien-trung-tai-danang-mikazuki.html',
+      image: require("../../../assets/nipponoi.png"),
+      abstract: 'Thời gian: 23/9 đến 25/9/2022\nĐịa điểm: Da Nang Mikazuki Japanese Resorts & Spa',
+    },
+    {
+      id: 5,
+      title: 'Carnival đường phố Sun Fest',
+      time: '25/6-24/7/2022',
+      link: 'https://vov.vn/van-hoa/soi-dong-le-hoi-carnival-duong-pho-da-nang-post952700.vov',
+      image: require("../../../assets/carnivalduongpho.png"),
+      abstract: 'Thời gian: 25/6 đến 24/7/2022\nĐịa điểm: cung đường giáp cầu Trần Thị Lý đến Công viên APEC',
+    },
+]
