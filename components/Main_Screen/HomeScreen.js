@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import CATEGORIES from "./config/CATEGORIES";
 import COLORS from "./config/COLORS";
 import ADVANTURES from "./config/ADVANTURES";
-import Knapsack from "./config/Knapsack";
+// import Knapsack from "./config/Knapsack";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { auth } from "../assets/Firebase.js";
 
@@ -112,7 +112,7 @@ const HomeScreen = ({ navigation }) => {
                   padding: SPACING,
                 }}
               >
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={{
                     alignSelf: "flex-end",
                     padding: SPACING / 2,
@@ -122,14 +122,14 @@ const HomeScreen = ({ navigation }) => {
                     alignItems: "center",
                     top: '20%',
                   }}
-                  onPress={() => console.log(Knapsack)}
+                  onPress={Knapsack}
                 >
                   <Ionicons
                     name="heart-outline"
                     color='#fb6d79'
                     size={SPACING * 3}
                   />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <View style={{
                   position: 'absolute',
                   top:"95%",
@@ -269,7 +269,7 @@ const HomeScreen = ({ navigation }) => {
             ))}
           </ScrollView>
         )}
-        {activeCategory === 0 && 
+        {activeCategory === 0 &&
         <View>
           <View
             style={{

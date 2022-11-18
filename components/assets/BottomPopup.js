@@ -1,8 +1,49 @@
-import { Modal, Dimensions, TouchableWithoutFeedback, StyleSheet, View, Text, TextInput } from "react-native";
+import { Modal, Dimensions, Button, TouchableWithoutFeedback, StyleSheet, View, Text, TextInput, TouchableOpacity} from "react-native";
 import * as React from "react";
 import { FlatList } from "react-native-gesture-handler";
+import MARKERS from "../Main_Screen/config/MARKERS";
 
 const deviceHeight = Dimensions.get("window").height;
+
+function max(a, b) {
+    return (a > b ? a : b);
+}
+
+function knapsack(W) {
+    const n = Object.keys(MARKERS).length - 1;
+    var dp = new Array(n + 1), val = new Array(n + 1), wt = new Array(n + 1);
+    for(var i=0;i<=n;i++) dp[i] = new Array(n + 1);
+
+    for(var i=1;i<=n;i++) {
+        wt[i] = MARKERS[i].id * 10000 - MARKERS[i].rate * 10000;
+        val[i] = MARKERS[i].id * 75000 - 378;
+    }
+
+    for(var i=0;i<=n;i++) {
+        for(var w=0;w<=W;w++){
+            if(i == 0 || w == 0) dp[i][w] = 0;
+            else if(wt[i - 1] <= w) {
+                dp[i][w] = max(val[i - 1] + dp[i - 1][w - wt[i - 1]], dp[i - 1][w]);
+            }
+            else dp[i][w] = dp[i-1][w];
+        }
+    }
+
+    var w = W, res = dp[n][W];
+    var trace = new Array(0);
+    for(var i=n;i>0 && res>0;i--) {
+        if(res == dp[i-1][w]) continue;
+        else {
+            trace.push(MARKERS[i-1].title);
+            res = res - val[i - 1];
+            w = w - wt[i - 1];
+        }
+    }
+
+    trace.reverse();
+
+    console.log(trace);
+}
 
 export class BottomPopup extends React.Component {
     constructor (props){
@@ -60,7 +101,7 @@ export class BottomPopup extends React.Component {
                         margin: 12, 
                         marginTop: 0,
                         borderWidth: 1, 
-                        padding: 10,  
+                        padding: 10,
                         shadowColor: '#171717',
                         shadowOffset: {width: -2, height: 4}, 
                         shadowOpacity: 0.2,
@@ -81,7 +122,7 @@ export class BottomPopup extends React.Component {
         const {data} = this.props
         return (
             <View>
-                <FlatList
+                {/* <FlatList
                     style={{marginBottom: 20}}
                     showsVerticalScrollIndicator={false}
                     data={data}
@@ -92,7 +133,22 @@ export class BottomPopup extends React.Component {
                     contentContainerStyle={{
                         paddingBottom: 40
                     }}>
-                </FlatList>
+                </FlatList> */}
+                <Button
+                  style={{
+                    alignSelf: "center",
+                    backgroundColor: "#71bc7c",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    top: '20%',
+                    width: '40%',
+                    height: '20%',
+                  }}
+                  title="Kết quả"
+                  onPress={knapsack(800000)}
+                >
+                    {/* <Text>Kết quả</Text> */}
+                </Button>
             </View>
         )
     }
@@ -118,7 +174,7 @@ export class BottomPopup extends React.Component {
 
     render() {
         let {show} = this.state
-        const {onTouchOutside, title} = this.props 
+        const {onTouchOutside, title} = this.props
 
         return (
             <Modal
@@ -140,7 +196,7 @@ export class BottomPopup extends React.Component {
                         borderTopLeftRadius: 10,
                         paddingHorizontal: 10,
                         // maxHeight: deviceHeight * 0.9,
-                        height: '90%',
+                        height: '60%',
                     }}>
                         {this.renderTitle()}
                         {this.renderInput()}

@@ -30,6 +30,43 @@ function haversine_distance(Origin, Destination) {
   return d;
 }
 
+function knapsack(W) {
+    const n = Object.keys(MARKERS).length - 1;
+    var dp = new Array(n + 1), val = new Array(n + 1), wt = new Array(n + 1);
+    for(var i=0;i<=n;i++) dp[i] = new Array(n + 1);
+
+    for(var i=1;i<=n;i++) {
+        wt[i] = MARKERS[i].id * 10000 - MARKERS[i].rate * 10000;
+        val[i] = MARKERS[i].id * 75000 - 378;
+    }
+
+    for(var i=0;i<=n;i++) {
+        for(var w=0;w<=W;w++){
+            if(i == 0 || w == 0) dp[i][w] = 0;
+            else if(wt[i - 1] <= w) {
+                dp[i][w] = max(val[i - 1] + dp[i - 1][w - wt[i - 1]], dp[i - 1][w]);
+            }
+            else dp[i][w] = dp[i-1][w];
+        }
+    }
+
+    var w = W, res = dp[n][W];
+    var trace = new Array(0);
+    for(var i=n;i>0 && res>0;i--) {
+        if(res == dp[i-1][w]) continue;
+        else {
+            // console.log(i - 1);
+            trace.push(i - 1);
+            res = res - val[i - 1];
+            w = w - wt[i - 1];
+        }
+    }
+
+    trace.reverse();
+
+    return trace;
+}
+
 const MapScreen = ({ navigation }) => {
   const {width, height} = Dimensions.get("window");
   const AspectRatio = width / height;
@@ -49,6 +86,8 @@ const MapScreen = ({ navigation }) => {
     latitude: 0,
     longitude: 0,
   })
+  const [value, onChangeText] = React.useState('Useless Multiline Placeholder');
+
   useEffect(() => {
     //Getting user location
     (async () => {
@@ -85,7 +124,7 @@ const MapScreen = ({ navigation }) => {
   }
 
   //Adding direction
-  console.log(Origin, Destination);
+  // console.log(Origin, Destination);
   // if(Origin.latitude != null && Destination.latitude != 0) {
   //   console.log(haversine_distance(Origin, Destination));
   // }
@@ -100,7 +139,7 @@ const MapScreen = ({ navigation }) => {
         showsUserLocation={true}
         showsBuildings={true}
         loadingEnabled={true}
-        customMapStyle={mapStyle}
+        // customMapStyle={mapStyle}
       >
         {(Origin.latitude != null && Destination.latitude != 0 &&
           <View>
@@ -108,9 +147,10 @@ const MapScreen = ({ navigation }) => {
             <MapView.Marker coordinate={Destination} />
           </View>
         )}
-        {MARKERS.map((marker, index) => (
+        {/* {MARKERS.map((marker, index) => (
           <MapView.Marker key={index} title={marker.title} coordinate={marker.location} />
-        ))}
+        ))} */}
+        
         <MapViewDirections
           origin={Origin}
           destination={Destination}
@@ -118,6 +158,7 @@ const MapScreen = ({ navigation }) => {
           strokeWidth={4}
           strokeColor="#00b0ff"
         ></MapViewDirections>
+        
       </MapView>
 
       {/* Search bar */}
@@ -200,7 +241,7 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignSelf: 'flex-start',
-    bottom:'81  %',
+    bottom:'1%',
     marginLeft:'5%',
     borderRadius: 8,
     backgroundColor: "white",
