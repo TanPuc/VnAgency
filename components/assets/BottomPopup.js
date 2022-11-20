@@ -145,7 +145,7 @@ export class BottomPopup extends React.Component {
                     height: '20%',
                   }}
                   title="Kết quả"
-                  onPress={knapsack(800000)}
+                  onPress={knapsack(800)}
                 >
                     {/* <Text>Kết quả</Text> */}
                 </Button>
