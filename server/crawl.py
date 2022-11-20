@@ -28,8 +28,6 @@ for link in urls:
 
     soup = BeautifulSoup(r.content, 'html.parser')
 
-    news = {}
-
     title = soup.title.text.split(" -")[0]
     abstract = soup.select_one("strong").text
     image = "https://baodanang.vn" + str(soup.findAll('img')[0]['src'])
@@ -47,7 +45,7 @@ for link in urls:
     }
 
     test = requests.get(image)
-    if(test.status_code == 200): 
+    if(test.status_code == 200):
         final.append(news)
 
 final.sort(key = lambda x: datetime.strptime(x['date'], '%d/%m/%Y'))
