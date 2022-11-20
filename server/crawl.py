@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+from datetime import datetime
 
 urls = set()
 
@@ -45,6 +46,10 @@ for link in urls:
     test = requests.get(image)
     if(test.status_code == 200): 
         final.append(news)
+
+final.sort(key = lambda x: datetime.strptime(x['date'], '%d/%m/%Y'))
+
+final.reverse()
 
 with open('NEWS.json', 'w', encoding="utf8") as file:
     json.dump(final, file, indent=4, ensure_ascii=False)
