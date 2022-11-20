@@ -231,7 +231,7 @@ const HomeScreen = ({ navigation }) => {
                 flexDirection='row'
                 onPress={() => Linking.openURL(tour.link)}
               >
-                <Image source={tour.image} style={{
+                <Image source={{uri: tour.image}} style={{
                   width: WIDTH * 0.34,
                   height: HEIGHT * 0.14,
                   resizeMode: 'stretch',
