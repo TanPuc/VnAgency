@@ -7,10 +7,13 @@ urls = set()
 
 final = []
 
-for i in range(1, 31):
+for i in range(1, 101):
     url = "https://baodanang.vn/du-lich-da-nang/?paged=" + str(i)
     
     r = requests.get(url)
+
+    if(r.status_code != 200):
+        break
 
     soup = BeautifulSoup(r.content, 'html.parser')
     
@@ -52,4 +55,4 @@ final.sort(key = lambda x: datetime.strptime(x['date'], '%d/%m/%Y'))
 final.reverse()
 
 with open('NEWS.json', 'w', encoding="utf8") as file:
-    json.dump(final, file, indent=4, ensure_ascii=False)
+    json.dump(final, file, indent=2, ensure_ascii=False)
