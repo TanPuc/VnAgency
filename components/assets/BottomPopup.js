@@ -1,4 +1,4 @@
-import { Modal, Dimensions, Button, TouchableWithoutFeedback, StyleSheet, View, Text, TextInput, TouchableOpacity} from "react-native";
+import { Keyboard, Modal, Dimensions, Button, TouchableWithoutFeedback, StyleSheet, View, Text, TextInput, TouchableOpacity} from "react-native";
 import * as React from "react";
 import { FlatList } from "react-native-gesture-handler";
 import MARKERS from "../Main_Screen/config/MARKERS";
@@ -77,16 +77,16 @@ export class BottomPopup extends React.Component {
         const {title} = this.props
         return (
             <View>
-                <Text
-                    style = {{
-                        color: '#182E44',
-                        fontSize: 25,
-                        fontWeight:'bold',
-                        marginTop: 15,
-                        marginBottom: 30,
-                        backgroundColor: 'transparent',
-                    }}>
-                        {title}
+                    <Text
+                        style = {{
+                            color: '#182E44',
+                            fontSize: 25,
+                            fontWeight:'bold',
+                            marginTop: 15,
+                            marginBottom: 30,
+                            backgroundColor: 'transparent',
+                        }}>
+                            {title}
                     </Text>
             </View>
         )
@@ -96,20 +96,21 @@ export class BottomPopup extends React.Component {
         return (
             <View>
                 <TextInput
+                keyboardType="number-pad"
                     style={{
-                        height: 50, 
-                        margin: 12, 
+                        height: 50,
+                        margin: 12,
                         marginTop: 0,
-                        borderWidth: 1, 
+                        borderWidth: 1,
                         padding: 10,
                         shadowColor: '#171717',
-                        shadowOffset: {width: -2, height: 4}, 
+                        shadowOffset: {width: -2, height: 4},
                         shadowOpacity: 0.2,
                         shadowRadius: 3,
                         borderRadius: 5,
                         color: '#182E44',
                     }}
-                    value={Number}  
+                    value={Number}
                     placeholder="Nhập chi phí của bạn"
                     placeholderTextColor={'#182E44'}
                     autoFocus={true}
@@ -145,7 +146,7 @@ export class BottomPopup extends React.Component {
                     height: '20%',
                   }}
                   title="Kết quả"
-                  onPress={knapsack(800)}
+                //   onPress={knapsack(800)}
                 >
                     {/* <Text>Kết quả</Text> */}
                 </Button>
