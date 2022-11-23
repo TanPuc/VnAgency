@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, Dimensions, Linking } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CATEGORIES from "./config/CATEGORIES";
 import COLORS from "./config/COLORS";
 import ADVANTURES from "./config/ADVANTURES";

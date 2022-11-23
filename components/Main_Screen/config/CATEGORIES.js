@@ -9,12 +9,12 @@ export default [
   },
   {
     id: 2,
-    title: "Sự kiện",
+    title: "Tin tức",
     tours: [...NEWS],
   },
-  // {
-  //   id: 3,
-  //   title: "Advantures",
-  //   tours: [...TOURS],
-  // },
+  {
+    id: 3,
+    title: "Sự kiện",
+    tours: [...EVENTS],
+  },
 ];
