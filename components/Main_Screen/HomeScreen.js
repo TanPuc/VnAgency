@@ -22,7 +22,6 @@ const HomeScreen = ({ navigation }) => {
     .catch(error => alert(error.message))
   }
   const openDrawer = () => {
-
   }
 
   return (
@@ -303,6 +302,7 @@ const HomeScreen = ({ navigation }) => {
             pagingEnabled
             style={{ marginVertical: SPACING * 2, marginHorizontal: SPACING }}
             showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
           >
             {ADVANTURES.map((adventure) => (
               <TouchableOpacity

@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Location from "expo-location"
 import { Component, useEffect, useState} from 'react';
 import MapView, {Marker} from 'react-native-maps';
-import { Image, SafeAreaView, StyleSheet, View, Dimensions, StatusBar, Text, TouchableWithoutFeedback} from 'react-native';
+import { FlatList, Image, SafeAreaView, StyleSheet, View, Dimensions, StatusBar, Text, TouchableWithoutFeedback, TouchableOpacity} from 'react-native';
 import { GooglePlacesAutocomplete, GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import { BottomPopup } from '../assets/BottomPopup';
 import Constants from 'expo-constants';
@@ -10,6 +10,35 @@ import MapViewDirections from 'react-native-maps-directions';
 import MARKERS from './config/MARKERS';
 import mapStyle from '../assets/mapStyle.json';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { ScrollView } from 'react-native-gesture-handler';
+
+
+//Khai báo tổng
+const placeData = [
+  {
+    id: 1,
+    place: 'Cafe',
+    selected: false,
+  },
+  {
+    id: 2,
+    place: 'Quán ăn',
+    selected: false,
+  },
+  {
+    id: 3,
+    place: 'Địa điểm check-in',
+    selected: false,
+  },
+  {
+    id: 4,
+    place: 'Quà lưu niệm',
+    selected: false,
+  },
+]
+//Khai báo tổng
+
+// Function các thứ
 
 function toRadians(degrees) {
   var pi = Math.PI;
@@ -66,6 +95,8 @@ function knapsack(W) {
 
     return trace;
 }
+// Function các thứ
+
 
 const MapScreen = ({ navigation }) => {
   const {width, height} = Dimensions.get("window");
@@ -88,8 +119,12 @@ const MapScreen = ({ navigation }) => {
   })
   const [value, onChangeText] = React.useState('Useless Multiline Placeholder');
 
+
+
+
+
+  //Getting user location
   useEffect(() => {
-    //Getting user location
     (async () => {
       let {status} = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
@@ -114,6 +149,8 @@ const MapScreen = ({ navigation }) => {
     })();
   }, []);
 
+
+
   //PopUp page
   let popupRef = React.createRef()
   const onShowPopup = () => {
@@ -123,6 +160,9 @@ const MapScreen = ({ navigation }) => {
     popupRef.close()
   }
 
+
+
+
   //Adding direction
   // console.log(Origin, Destination);
   // if(Origin.latitude != null && Destination.latitude != 0) {
@@ -131,6 +171,8 @@ const MapScreen = ({ navigation }) => {
   if(Region.latitude != null && Region.longitude != null)
   return (
     <View style={styles.container}>
+
+      {/* Map chính */}
       <MapView
         style={styles.map}
         provider={'google'}
@@ -147,10 +189,9 @@ const MapScreen = ({ navigation }) => {
             <MapView.Marker coordinate={Destination} />
           </View>
         )}
-        {/* {MARKERS.map((marker, index) => (
+        {MARKERS.map((marker, index) => (
           <MapView.Marker key={index} title={marker.title} coordinate={marker.location} />
-        ))} */}
-        
+        ))}
         <MapViewDirections
           origin={Origin}
           destination={Destination}
@@ -158,8 +199,8 @@ const MapScreen = ({ navigation }) => {
           strokeWidth={4}
           strokeColor="#00b0ff"
         ></MapViewDirections>
-        
       </MapView>
+      {/* Map chính */}
 
       {/* Search bar */}
       <SafeAreaView style = {styles.searchContainer}> 
@@ -183,7 +224,29 @@ const MapScreen = ({ navigation }) => {
           }}
         />
       </SafeAreaView>
-      
+    {/* Search bar */}
+
+      {/* Menu chọn type */}
+      <SafeAreaView style={styles.PlaceTypeList}>
+          {placeData.map((placeData, index) => (
+            <TouchableOpacity 
+              onPress={() => {
+                placeData.selected = placeData.selected == false ? true : false;
+                console.log(placeData.selected)
+              }}
+              key={index}
+              style ={[styles.TypeBox, placeData.selected ? styles.InactiveBox : styles.ActiveBox]}
+              >
+              <Text style={styles.TypeText}>{placeData.place}</Text>
+            </TouchableOpacity>
+          ))}
+      </SafeAreaView>
+      {/* Menu chọn type */}
+
+
+
+
+      {/* Lộ trình */}
       <SafeAreaView style = {styles.PopupBox}>
         <TouchableWithoutFeedback onPress={onShowPopup}>
             <Text style={{
@@ -191,10 +254,10 @@ const MapScreen = ({ navigation }) => {
               paddingLeft:'8%',
               fontSize: 15,
               fontStyle:'Bold',
-              color: '#c5c5c7',
+              color: '#888',
+              fontWeight:'bold',
             }}>Lộ trình <MaterialCommunityIcons name="map-marker-path" size={18}/> </Text>
 
-            
         </TouchableWithoutFeedback>
         <BottomPopup
           title = "Lộ trình du lịch"
@@ -203,19 +266,19 @@ const MapScreen = ({ navigation }) => {
           onTouchOutside = {onClosePopup}
         />
       </SafeAreaView>
+      {/* Lộ trình */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
   },
   map: {
-    flex: 1,
+    // flex: 1,
     width: "100%",
     height: "100%",
   },
@@ -233,8 +296,39 @@ const styles = StyleSheet.create({
   },
   input: {
     borderColor: "#888",
-    borderWidth: 1
+    borderWidth: 1,
   },
+  PlaceTypeList: {
+    top: Constants.statusBarHeight,
+    width: '100%',
+    position: 'absolute',
+    borderColor:'black',
+    borderWidth: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
+  TypeText: {
+    fontsize: 18,
+    color:'#888',
+    fontWeight:'bold'
+  },
+  TypeBox: {
+    top:'15%',
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 8,
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+  InactiveBox: {
+    backgroundColor: '#888',
+  },
+  ActiveBox: {
+    backgroundColor: 'white',
+  },
+
   PopupBox: {
     position:'absolute',
     width: 80,
@@ -249,7 +343,6 @@ const styles = StyleSheet.create({
     shadowOffset: {width: -2, height: 4},
     shadowOpacity: 0.2,
     shadowRadius: 3,
-    
   }
 });
 
