@@ -117,13 +117,14 @@ if __name__ == "__main__":
     # print("Finished!")
 
     params = {
-        'address': '1 hack drive, menlo park, CA' + '.json',
-        'access_token': 'pk.eyJ1IjoibjFwaHVjbHEiLCJhIjoiY2xhdjJjMnR3MDFtcDNzbXplMmhoYXV5YSJ9.CvficyLaeT4s1h7Cz8gtAA'
+        'lat': '16.042184',
+        'lon': '108.189757',
+        'appid': 'ceaa99195cc37176f4c97b6be2447471'
     }
 
-    base_url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'
+    base_url = 'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=44.34&lon=10.99&appid=ceaa99195cc37176f4c97b6be2447471'
 
-    r = requests.get(base_url, params=params).json()
+    r = requests.get(base_url).json()
     r.keys()
 
     print(r)

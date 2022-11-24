@@ -12,6 +12,8 @@ import mapStyle from '../assets/mapStyle.json';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import COLORS from './config/COLORS';
+import RESTS from './config/RESTAURANTS';
+import CAFE from './config/CAFE';
 
 //Khai báo tổng
 const placeData = [
@@ -44,6 +46,7 @@ function toRadians(degrees) {
   var pi = Math.PI;
   return degrees * (pi / 180);
 }
+
 function haversine_distance(Origin, Destination) {
   [lat1, lon1] = [Origin.latitude, Origin.longitude];
   [lat2, lon2] = [Destination.latitude, Destination.longitude];
@@ -95,7 +98,6 @@ function knapsack(W) {
 
     return trace;
 }
-// Function các thứ
 
 
 const MapScreen = ({ navigation }) => {
@@ -110,8 +112,10 @@ const MapScreen = ({ navigation }) => {
     longitudeDelta : null,
   })
   const [Origin, setOrigin] = useState({
-    latitude: Region.latitude,
-    longitude: Region.longitude,
+    // latitude: Region.latitude,
+    // longitude: Region.longitude,
+    latitude: 16.022690,
+    longitude: 108.209150,
   })
   const [Destination, setDestination] = useState({
     latitude: 0,
@@ -145,8 +149,6 @@ const MapScreen = ({ navigation }) => {
     })();
   }, []);
 
-
-
   //PopUp page
   let popupRef = React.createRef()
   const onShowPopup = () => {
@@ -155,14 +157,53 @@ const MapScreen = ({ navigation }) => {
   const onClosePopup = () => {
     popupRef.close()
   }
+  
+  // Choose category to show on maps
+  const [placeDataSelected, setPlaceDataSelected] = useState([
+    {id: 1, value: 0},
+    {id: 2, value: 0},
+    {id: 3, value: 0},
+    {id: 4, value: 0},
+  ]);
 
-  const [placeDataSelected, setPlaceDataSelected] = useState(0);
+  const updateFieldChanged = (index) => {
+    let newArr = [...placeDataSelected];
+    newArr[index].value = 1 - newArr[index].value;
+    setPlaceDataSelected(newArr);
+  }
 
-  //Adding direction
-  // console.log(Origin, Destination);
-  // if(Origin.latitude != null && Destination.latitude != 0) {
-  //   console.log(haversine_distance(Origin, Destination));
-  // }
+  var rest_markers = [], cafe_markers = [];
+
+  // Generate RESTAURANTS in particular area
+  const showRestaurants = () => {
+    rest_markers.length = 0;
+    for(var item of RESTS) {
+      if(haversine_distance(Origin, {latitude: item.location.lat, longitude: item.location.lng}) < 1) {
+        rest_markers.push({
+          latitude: item.location.lat,
+          longitude: item.location.lng,
+        })
+      }
+    }
+    console.log(rest_markers)
+    return 1;
+  }
+
+  // Generate CAFE in particular area
+  const showCafe = () => {
+    cafe_markers.length = 0;
+    for(var item of CAFE) {
+      if(haversine_distance(Origin, {latitude: item.location.lat, longitude: item.location.lng}) < 1) {
+        cafe_markers.push({
+          latitude: item.location.lat,
+          longitude: item.location.lng,
+        })
+      }
+    }
+    console.log(cafe_markers)
+    return 1;
+  }
+
   if(Region.latitude != null && Region.longitude != null)
   return (
     <View style={styles.container}>
@@ -184,9 +225,9 @@ const MapScreen = ({ navigation }) => {
             <MapView.Marker coordinate={Destination} />
           </View>
         )}
-        {MARKERS.map((marker, index) => (
+        {/* {MARKERS.map((marker, index) => (
           <MapView.Marker key={index} title={marker.title} coordinate={marker.location} />
-        ))}
+        ))} */}
         <MapViewDirections
           origin={Origin}
           destination={Destination}
@@ -224,19 +265,34 @@ const MapScreen = ({ navigation }) => {
       {/* Menu chọn type */}
       <SafeAreaView style={styles.PlaceTypeList}>
           {placeData.map((placeData, index) => (
-            <TouchableOpacity 
-              onPress={() => setPlaceDataSelected(1 - placeDataSelected)}
-              key={index}
-              style ={[styles.TypeBox, !placeDataSelected ? styles.ActiveBox : styles.InactiveBox]}
-              >
-              <Text>{placeData.place}</Text>
-            </TouchableOpacity>
-          ))}
+            <>
+              <TouchableOpacity 
+                onPress={() => updateFieldChanged(placeData.id - 1)}
+                key={index}
+                style ={[styles.TypeBox, placeDataSelected[placeData.id - 1].value ? styles.ActiveBox : styles.InactiveBox]}
+                >
+                <Text>{placeData.place}</Text>
+              </TouchableOpacity>
+              {(placeDataSelected[0].value == 1 && showCafe() &&
+                <>
+                  {/* <MapView.Marker coordinate={Origin} />
+                  <MapView.Marker coordinate={Destination} /> */}
+                </>
+              )}
+              {(placeDataSelected[1].value == 1 && showRestaurants() &&
+                <>
+                  {/* <MapView.Marker coordinate={Origin} />
+                  <MapView.Marker coordinate={Destination} /> */}
+                </>
+              )}
+            </>
+          )
+          )}
       </SafeAreaView>
       {/* Menu chọn type */}
 
-
-
+      {/* Hiện cửa hàng */}
+      
 
       {/* Lộ trình */}
       <SafeAreaView style = {styles.PopupBox}>
