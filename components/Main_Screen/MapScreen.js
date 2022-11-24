@@ -11,7 +11,7 @@ import MARKERS from './config/MARKERS';
 import mapStyle from '../assets/mapStyle.json';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import COLORS from './config/COLORS';
 
 //Khai báo tổng
 const placeData = [
@@ -119,10 +119,6 @@ const MapScreen = ({ navigation }) => {
   })
   const [value, onChangeText] = React.useState('Useless Multiline Placeholder');
 
-
-
-
-
   //Getting user location
   useEffect(() => {
     (async () => {
@@ -160,8 +156,7 @@ const MapScreen = ({ navigation }) => {
     popupRef.close()
   }
 
-
-
+  const [placeDataSelected, setPlaceDataSelected] = useState(0);
 
   //Adding direction
   // console.log(Origin, Destination);
@@ -230,14 +225,11 @@ const MapScreen = ({ navigation }) => {
       <SafeAreaView style={styles.PlaceTypeList}>
           {placeData.map((placeData, index) => (
             <TouchableOpacity 
-              onPress={() => {
-                placeData.selected = placeData.selected == false ? true : false;
-                console.log(placeData.selected)
-              }}
+              onPress={() => setPlaceDataSelected(1 - placeDataSelected)}
               key={index}
-              style ={[styles.TypeBox, placeData.selected ? styles.InactiveBox : styles.ActiveBox]}
+              style ={[styles.TypeBox, !placeDataSelected ? styles.ActiveBox : styles.InactiveBox]}
               >
-              <Text style={styles.TypeText}>{placeData.place}</Text>
+              <Text>{placeData.place}</Text>
             </TouchableOpacity>
           ))}
       </SafeAreaView>

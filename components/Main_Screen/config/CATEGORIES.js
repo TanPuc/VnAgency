@@ -1,5 +1,6 @@
 import TOURS from "./TOURS";
 import NEWS from "./NEWS";
+import EVENTS from "./EVENTS"
 
 export default [
   {

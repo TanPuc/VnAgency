@@ -117,11 +117,11 @@ if __name__ == "__main__":
     # print("Finished!")
 
     params = {
-        'key': 'AIzaSyBbswHuIJRTo6LsV1SrSMeBvp91hNNVAJE',
-        'address': '1 hack drive, menlo park, CA'
+        'address': '1 hack drive, menlo park, CA' + '.json',
+        'access_token': 'pk.eyJ1IjoibjFwaHVjbHEiLCJhIjoiY2xhdjJjMnR3MDFtcDNzbXplMmhoYXV5YSJ9.CvficyLaeT4s1h7Cz8gtAA'
     }
 
-    base_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
+    base_url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'
 
     r = requests.get(base_url, params=params).json()
     r.keys()
