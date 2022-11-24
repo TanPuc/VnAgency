@@ -52,7 +52,7 @@ def NEWS():
 
     final.reverse()
 
-    with open('NEWS.json', 'w', encoding="utf8") as file:
+    with open('./data/NEWS.json', 'w', encoding="utf8") as file:
         json.dump(final, file, indent=2, ensure_ascii=False)
 
 # Get events
@@ -105,13 +105,25 @@ def EVENTS():
         if(test.status_code == 200):
             final.append(event)
     
-    with open('EVENTS.json', 'w', encoding="utf8") as file:
+    with open('./data/EVENTS.json', 'w', encoding="utf8") as file:
         json.dump(final, file, indent=2, ensure_ascii=False)
 
 if __name__ == "__main__":
-    print("Crawling NEWS...")
-    NEWS()
-    print("Finished!", end="\n\n")
-    print("Crawling EVENTS...")
-    EVENTS()
-    print("Finished!")
+    # print("Crawling NEWS...")
+    # NEWS()
+    # print("Finished!", end="\n\n")
+    # print("Crawling EVENTS...")
+    # EVENTS()
+    # print("Finished!")
+
+    params = {
+        'key': 'AIzaSyBbswHuIJRTo6LsV1SrSMeBvp91hNNVAJE',
+        'address': '1 hack drive, menlo park, CA'
+    }
+
+    base_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
+
+    r = requests.get(base_url, params=params).json()
+    r.keys()
+
+    print(r)
