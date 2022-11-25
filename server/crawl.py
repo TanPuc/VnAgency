@@ -80,7 +80,7 @@ def EVENTS():
         image = str(soup.findAll('img', attrs={'class':'attachment-post-thumbnail size-post-thumbnail wp-post-image'})[0]['data-src'])
         start_date = ""
         end_date = ""
-        location = ""
+        address = ""
 
         for item in soup.find_all("div", {"class": "wrap-date wrap-pro"}):
             for date in item.find_all("span", {"class": "second_font general-content"}):
@@ -91,19 +91,35 @@ def EVENTS():
         
         for item in soup.find_all("div", {"class": "wrap-location wrap-pro"}):
             for pos in item.find_all("span", {"class": "second_font general-content"}):
-                location = pos.text
+                address = pos.text
+
+        address = str(address.strip())
         
-        event = {
-            'title': str(title),
-            'image': str(image),
-            'start_date': str(start_date),
-            'end_date': str(end_date.replace("\n", "")),
-            'location': str(location.strip()),
+        params = {
+            'key': 'AIzaSyBgXphv0S5eamMrNbQDU-I1aJ9O6Xo800s',
+            'address': address,
         }
 
-        test = requests.get(image)
-        if(test.status_code == 200):
-            final.append(event)
+        base_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
+
+        r = requests.get(base_url, params=params).json()
+        r.keys()
+
+        if(r['status'] == 'OK'):
+            event = {
+                'title': str(title),
+                'image': str(image),
+                'start_date': str(start_date),
+                'end_date': str(end_date.replace("\n", "")),
+                'address': str(address),
+                'location': {
+                    'latitude': r['results'][0]['geometry']['location']['lat'],
+                    'longitude': r['results'][0]['geometry']['location']['lng'],
+                }
+            }
+            test = requests.get(image)
+            if(test.status_code == 200):
+                final.append(event)
     
     with open('./data/EVENTS.json', 'w', encoding="utf8") as file:
         json.dump(final, file, indent=2, ensure_ascii=False)
@@ -112,19 +128,6 @@ if __name__ == "__main__":
     # print("Crawling NEWS...")
     # NEWS()
     # print("Finished!", end="\n\n")
-    # print("Crawling EVENTS...")
-    # EVENTS()
-    # print("Finished!")
-
-    params = {
-        'lat': '16.042184',
-        'lon': '108.189757',
-        'appid': 'ceaa99195cc37176f4c97b6be2447471'
-    }
-
-    base_url = 'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=44.34&lon=10.99&appid=ceaa99195cc37176f4c97b6be2447471'
-
-    r = requests.get(base_url).json()
-    r.keys()
-
-    print(r)
+    print("Crawling EVENTS...")
+    EVENTS()
+    print("Finished!")

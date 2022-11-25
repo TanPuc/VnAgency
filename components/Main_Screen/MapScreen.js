@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Location from "expo-location"
 import { Component, useEffect, useState} from 'react';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, {Circle, Marker} from 'react-native-maps';
 import { FlatList, Image, SafeAreaView, StyleSheet, View, Dimensions, StatusBar, Text, TouchableWithoutFeedback, TouchableOpacity} from 'react-native';
 import { GooglePlacesAutocomplete, GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import { BottomPopup } from '../assets/BottomPopup';
@@ -14,12 +14,13 @@ import { ScrollView } from 'react-native-gesture-handler';
 import COLORS from './config/COLORS';
 import RESTS from './config/RESTAURANTS';
 import CAFE from './config/CAFE';
+import EVENTS from './config/EVENTS';
 
 //Khai báo tổng
 const placeData = [
   {
     id: 1,
-    place: 'Cafe',
+    place: 'Quán cafe',
     selected: false,
   },
   {
@@ -29,12 +30,12 @@ const placeData = [
   },
   {
     id: 3,
-    place: 'Địa điểm check-in',
+    place: 'Khách sạn',
     selected: false,
   },
   {
     id: 4,
-    place: 'Quà lưu niệm',
+    place: 'Sự kiện',
     selected: false,
   },
 ]
@@ -172,16 +173,30 @@ const MapScreen = ({ navigation }) => {
     setPlaceDataSelected(newArr);
   }
 
-  var rest_markers = [], cafe_markers = [];
+  var rest_markers = [], cafe_markers = [], events_markers = [];
 
   // Generate RESTAURANTS in particular area
   const showRestaurants = () => {
     rest_markers.length = 0;
     for(var item of RESTS) {
-      if(item.location != null && haversine_distance(Origin, {latitude: item.location.lat, longitude: item.location.lng}) < 1) {
+      if(item.location != null && haversine_distance(Origin, {latitude: item.location.lat, longitude: item.location.lng}) < 0.5) {
         rest_markers.push({
-          latitude: item.location.lat,
-          longitude: item.location.lng,
+          title: item.title,
+          address: item.address,
+          price: item.price,
+          phone: item.phone,
+          url: item.url,
+          reviewsDistribution: {
+            oneStar: item.reviewsDistribution.oneStar,
+            twoStar: item.reviewsDistribution.twoStar,
+            threeStar: item.reviewsDistribution.threeStar,
+            fourStar: item.reviewsDistribution.fourStar,
+            fiveStar: item.reviewsDistribution.fiveStar,
+          },
+          location: {
+            latitude: item.location.lat,
+            longitude: item.location.lng,
+          },
         })
       }
     }
@@ -192,10 +207,45 @@ const MapScreen = ({ navigation }) => {
   const showCafe = () => {
     cafe_markers.length = 0;
     for(var item of CAFE) {
-      if(item.location != null && haversine_distance(Origin, {latitude: item.location.lat, longitude: item.location.lng}) < 1) {
+      if(item.location != null && haversine_distance(Origin, {latitude: item.location.lat, longitude: item.location.lng}) < 0.5) {
         cafe_markers.push({
-          latitude: item.location.lat,
-          longitude: item.location.lng,
+          title: item.title,
+          address: item.address,
+          price: item.price,
+          phone: item.phone,
+          url: item.url,
+          reviewsDistribution: {
+            oneStar: item.reviewsDistribution.oneStar,
+            twoStar: item.reviewsDistribution.twoStar,
+            threeStar: item.reviewsDistribution.threeStar,
+            fourStar: item.reviewsDistribution.fourStar,
+            fiveStar: item.reviewsDistribution.fiveStar,
+          },
+          location: {
+            latitude: item.location.lat,
+            longitude: item.location.lng,
+          },
+        })
+      }
+    }
+    return 1;
+  }
+
+  // Generate EVENTS in particular area
+  const showEvents = () => {
+    events_markers.length = 0;
+    for(var item of EVENTS) {
+      if(item.location != null) {
+        events_markers.push({
+          title: item.title,
+          image: item.image,
+          start_date: item.start_date,
+          end_date: item.end_date,
+          address: item.address,
+          location: {
+            latitude: item.location.latitude,
+            longitude: item.location.longitude,
+          },
         })
       }
     }
@@ -215,32 +265,37 @@ const MapScreen = ({ navigation }) => {
         showsUserLocation={true}
         showsBuildings={true}
         loadingEnabled={true}
-        // customMapStyle={mapStyle}
+        customMapStyle={mapStyle}
       >
-        {/* {(Origin.latitude != null &&
-          <View>
-            {cafe_markers.map((marker, index) => (
-              <MapView.Marker coordinate={marker} />
-            ))}
-          </View>
-        )} */}
+        <Circle center={Origin} radius={500} strokeWidth={5} strokeColor={COLORS.pink} />
+
+        {/* Hiện CAFE trên map */}
         {(placeDataSelected[0].value == 1 && showCafe() &&
           <View>
             {cafe_markers.map((marker, index) => (
-              <MapView.Marker key={index} coordinate={marker} />
+              <MapView.Marker title={marker.title} key={index} coordinate={marker.location} />
             ))}
           </View>
         )}
+
+        {/* Hiện RESTAURANTS trên map */}
         {(placeDataSelected[1].value == 1 && showRestaurants() &&
           <View>
             {rest_markers.map((marker, index) => (
-              <MapView.Marker key={index} coordinate={marker} />
+              <MapView.Marker title={marker.title} key={index} coordinate={marker.location} />
             ))}
           </View>
         )}
-        {/* {MARKERS.map((marker, index) => (
-          <MapView.Marker key={index} title={marker.title} coordinate={marker.location} />
-        ))} */}
+
+        {/* Hiện EVENTS trên map */}
+        {(placeDataSelected[3].value == 1 && showEvents() &&
+          <View>
+            {events_markers.map((marker, index) => (
+              <MapView.Marker title={marker.title} key={index} coordinate={marker.location} />
+            ))}
+          </View>
+        )}
+        
         <MapViewDirections
           origin={Origin}
           destination={Destination}
