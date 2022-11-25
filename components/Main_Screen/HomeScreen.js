@@ -148,6 +148,7 @@ const HomeScreen = ({ navigation }) => {
                         fontWeight: "bold",
                         marginLeft: SPACING,
                         top:'90%',
+                        alignSelf:'center'
                       }}
                     >
                       {tour.title}
@@ -262,6 +263,75 @@ const HomeScreen = ({ navigation }) => {
                     }}
                     numberOfLines={3}
                   >{tour.abstract}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>)}
+        {activeCategory === 2 && (
+          <ScrollView>
+            {CATEGORIES[activeCategory].tours.map((tour, index) => (
+              <TouchableOpacity 
+                style={{
+                  height: WIDTH * 0.3,
+                  overflow: "hidden",
+                  marginVertical: SPACING * 0.8,
+                  borderColor: 'grey',
+                  backgroundColor: 'white',
+                  // borderWidth: 0.5,
+                  borderBottomRightRadius: 15,
+                  borderTopRightRadius: 15,
+                  borderBottomLeftRadius: 8,
+                  borderTopLeftRadius: 8,
+                  flex: 1,
+                  flexWrap: 'wrap',
+                  flexShrink: 1,
+                }}
+                key={index}
+                flexDirection='row'
+              >
+                <Image source={{uri: tour.image}} style={{
+                  width: WIDTH * 0.34,
+                  height: HEIGHT * 0.14,
+                  // resizeMode: 'stretch',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderColor: 'yellow', 
+                  borderBottomLeftRadius: 8,
+                  borderTopLeftRadius: 8,
+                  borderWidth: 1,
+                }}/>
+                <View>
+                  <View>
+                    <Text style={{
+                      width: WIDTH * 0.6,
+                      paddingHorizontal: 15,
+                      paddingTop: 6,
+                      paddingBottom: 10,
+                      fontFamily: 'SourceSansPro_Bold',
+                      fontSize: 14.5,
+                      color:"#fb6d79",
+                    }}
+                    numberOfLines={2}
+                    >{tour.title}</Text>
+                  </View>
+                  <Text style={{
+                      width: WIDTH * 0.6,
+                      paddingHorizontal: 15,
+                      fontFamily: 'SourceSansPro_Bold',
+                      fontSize: 14.5,
+                      color:"#182e44",
+                    }}
+                    numberOfLines={2}
+                    >Từ: {tour.start_date}</Text>
+                    <Text style={{
+                      width: WIDTH * 0.6,
+                      paddingHorizontal: 15,
+                      fontFamily: 'SourceSansPro_Bold',
+                      fontSize: 14.5,
+                      color:"#182e44",
+                    }}
+                    numberOfLines={2}
+                    >Đến: {tour.end_date}</Text>
                 </View>
               </TouchableOpacity>
             ))}
