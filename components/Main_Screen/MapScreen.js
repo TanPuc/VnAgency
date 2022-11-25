@@ -297,7 +297,7 @@ const MapScreen = ({ navigation }) => {
         customMapStyle={mapStyle}
       >
         {(Origin.latitude != null && Origin.longitude != null && 
-          <MapView.Circle center={Origin} radius={500} strokeWidth={6} strokeColor={COLORS.dark} fillColor={'#006491'}/>
+          <MapView.Circle center={Origin} radius={500} strokeWidth={3} strokeColor={'rgba(0, 0, 0, 1)'} fillColor={'rgba(0, 0, 255, 0.2)'}/>
         )}
 
         {/* Hiện CAFE trên map */}
