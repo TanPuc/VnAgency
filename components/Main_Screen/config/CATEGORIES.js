@@ -1,6 +1,6 @@
-import TOURS from "./TOURS";
-import NEWS from "./NEWS";
-import EVENTS from "./EVENTS"
+import TOURS from "./data/TOURS";
+import NEWS from "./data/NEWS";
+import EVENTS from "./data/EVENTS";
 
 export default [
   {

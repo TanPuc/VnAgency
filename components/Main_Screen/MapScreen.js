@@ -12,9 +12,11 @@ import mapStyle from '../assets/mapStyle.json';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import COLORS from './config/COLORS';
-import RESTS from './config/RESTAURANTS';
-import CAFE from './config/CAFE';
-import EVENTS from './config/EVENTS';
+
+import RESTS from './config/data/RESTAURANTS';
+import CAFE from './config/data/CAFE';
+import EVENTS from './config/data/EVENTS';
+import HOTELS from './config/data/HOTELS';
 
 //Khai báo tổng
 const placeData = [
@@ -106,7 +108,7 @@ const MapScreen = ({ navigation }) => {
   const AspectRatio = width / height;
   const LatitudeDelta = 0.0122;
   const LongitudeDelta = LatitudeDelta * AspectRatio;
-  const [Region,setRegion] = useState({
+  const [Region, setRegion] = useState({
     latitude : null,
     longitude : null,
     latitudeDelta : null,
@@ -122,7 +124,6 @@ const MapScreen = ({ navigation }) => {
     latitude: 0,
     longitude: 0,
   })
-  const [value, onChangeText] = React.useState('Useless Multiline Placeholder');
 
   //Getting user location
   useEffect(() => {
@@ -173,13 +174,13 @@ const MapScreen = ({ navigation }) => {
     setPlaceDataSelected(newArr);
   }
 
-  var rest_markers = [], cafe_markers = [], events_markers = [];
+  var rest_markers = [], cafe_markers = [], hotels_markers = [], events_markers = [];
 
   // Generate RESTAURANTS in particular area
   const showRestaurants = () => {
     rest_markers.length = 0;
     for(var item of RESTS) {
-      if(item.location != null && haversine_distance(Origin, {latitude: item.location.lat, longitude: item.location.lng}) < 0.5) {
+      if(item.location != null && haversine_distance(Origin, {latitude: item.location.lat, longitude: item.location.lng}) <= 0.5) {
         rest_markers.push({
           title: item.title,
           address: item.address,
@@ -207,8 +208,36 @@ const MapScreen = ({ navigation }) => {
   const showCafe = () => {
     cafe_markers.length = 0;
     for(var item of CAFE) {
-      if(item.location != null && haversine_distance(Origin, {latitude: item.location.lat, longitude: item.location.lng}) < 0.5) {
+      if(item.location != null && haversine_distance(Origin, {latitude: item.location.lat, longitude: item.location.lng}) <= 0.5) {
         cafe_markers.push({
+          title: item.title,
+          address: item.address,
+          price: item.price,
+          phone: item.phone,
+          url: item.url,
+          reviewsDistribution: {
+            oneStar: item.reviewsDistribution.oneStar,
+            twoStar: item.reviewsDistribution.twoStar,
+            threeStar: item.reviewsDistribution.threeStar,
+            fourStar: item.reviewsDistribution.fourStar,
+            fiveStar: item.reviewsDistribution.fiveStar,
+          },
+          location: {
+            latitude: item.location.lat,
+            longitude: item.location.lng,
+          },
+        })
+      }
+    }
+    return 1;
+  }
+
+  // Generate HOTELS in particular area
+  const showHotels = () => {
+    hotels_markers.length = 0;
+    for(var item of HOTELS) {
+      if(item.location != null && haversine_distance(Origin, {latitude: item.location.lat, longitude: item.location.lng}) <= 0.5) {
+        hotels_markers.push({
           title: item.title,
           address: item.address,
           price: item.price,
@@ -287,6 +316,15 @@ const MapScreen = ({ navigation }) => {
           </View>
         )}
 
+        {/* Hiện HOTELS trên map */}
+        {(placeDataSelected[2].value == 1 && showHotels() &&
+          <View>
+            {hotels_markers.map((marker, index) => (
+              <MapView.Marker title={marker.title} key={index} coordinate={marker.location} />
+            ))}
+          </View>
+        )}
+
         {/* Hiện EVENTS trên map */}
         {(placeDataSelected[3].value == 1 && showEvents() &&
           <View>
@@ -299,7 +337,7 @@ const MapScreen = ({ navigation }) => {
         <MapViewDirections
           origin={Origin}
           destination={Destination}
-          apikey='AIzaSyDSCrCGcVxNCMbR-XpTHzhSgmV3uswB00E'
+          apikey='AIzaSyBgXphv0S5eamMrNbQDU-I1aJ9O6Xo800s'
           strokeWidth={4}
           strokeColor="#00b0ff"
         ></MapViewDirections>
@@ -318,11 +356,11 @@ const MapScreen = ({ navigation }) => {
               latitude: details.geometry.location.lat,
               longitude: details.geometry.location.lng,
             });
-        }}
+          }}
           onFail={error => console.log(error)}
           onNotFound={() => console.log('no results')}
           query={{
-            key: 'AIzaSyDSCrCGcVxNCMbR-XpTHzhSgmV3uswB00E',
+            key: 'AIzaSyBgXphv0S5eamMrNbQDU-I1aJ9O6Xo800s',
             language: 'en',
             components: "country:vn",
           }}
@@ -333,15 +371,13 @@ const MapScreen = ({ navigation }) => {
       {/* Menu chọn type */}
       <SafeAreaView style={styles.PlaceTypeList}>
           {placeData.map((placeData, index) => (
-            <>
-              <TouchableOpacity 
-                onPress={() => updateFieldChanged(placeData.id - 1)}
-                key={index}
-                style ={[styles.TypeBox, !placeDataSelected[placeData.id - 1].value ? styles.ActiveBox : styles.InactiveBox]}
-                >
-                <Text>{placeData.place}</Text>
-              </TouchableOpacity>
-            </>
+            <TouchableOpacity 
+              onPress={() => updateFieldChanged(placeData.id - 1)}
+              key={index}
+              style ={[styles.TypeBox, !placeDataSelected[placeData.id - 1].value ? styles.ActiveBox : styles.InactiveBox]}
+              >
+              <Text>{placeData.place}</Text>
+            </TouchableOpacity>
           )
           )}
       </SafeAreaView>

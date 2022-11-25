@@ -2,7 +2,7 @@ export default [
   {
     id: 1,
     title: "Bà Nà Hills",
-    image: require("../../../assets/places/banahills.jpg"),
+    image: require("../../../../assets/places/banahills.jpg"),
     images: [
     ],
     price: 450,
@@ -14,7 +14,7 @@ export default [
   {
     id: 2,
     title: "Chùa Linh Ứng",
-    image: require("../../../assets/places/chualinhung.jpg"),
+    image: require("../../../../assets/places/chualinhung.jpg"),
     images: [
     ],
     price: 50,
@@ -26,7 +26,7 @@ export default [
   {
     id: 3,
     title: "Công viên Châu Á",
-    image: require("../../../assets/places/sunwheel.jpg"),
+    image: require("../../../../assets/places/sunwheel.jpg"),
     images: [
     ],
     price: 300,
@@ -38,7 +38,7 @@ export default [
   // {
   //   id: 4,
   //   title: "Đèo Hải Vân",
-  //   image: require("../../../assets/places/deohaivan.jpg"),
+  //   image: require("../../../../assets/places/deohaivan.jpg"),
   //   images: [
   //   ],
   //   price: "Miễn phí",
@@ -50,7 +50,7 @@ export default [
   {
     id: 4,
     title: "Suối Mơ",
-    image: require("../../../assets/places/suoimo.jpg"),
+    image: require("../../../../assets/places/suoimo.jpg"),
     images: [
     ],
     price: 70,
@@ -62,7 +62,7 @@ export default [
   // {
   //   id: 6,
   //   title: "Đỉnh Bàn Cờ",
-  //   image: require("../../../assets/places/dinhbanco.jpg"),
+  //   image: require("../../../../assets/places/dinhbanco.jpg"),
   //   images: [
   //   ],
   //   price: "Miễn phí",
@@ -74,7 +74,7 @@ export default [
   {
     id: 5,
     title: "Ngũ Hành Sơn",
-    image: require("../../../assets/places/nguhanhson.png"),
+    image: require("../../../../assets/places/nguhanhson.png"),
     images: [
     ],
     price: 50,
@@ -86,7 +86,7 @@ export default [
   // {
   //   id: 8,
   //   title: "Núi Thần Tài",
-  //   image: require("../../../assets/places/nuithantai.jpg"),
+  //   image: require("../../../../assets/places/nuithantai.jpg"),
   //   images: [
   //   ],
   //   price: "400.000₫",

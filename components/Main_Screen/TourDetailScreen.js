@@ -3,7 +3,7 @@ import { Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, ImageBac
 import React from "react";
 import COLORS from "./config/COLORS";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import TOURS from "./config/TOURS";
+import TOURS from "./config/data/TOURS";
 
 const SPACING = 10;
 
