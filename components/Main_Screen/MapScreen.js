@@ -178,14 +178,13 @@ const MapScreen = ({ navigation }) => {
   const showRestaurants = () => {
     rest_markers.length = 0;
     for(var item of RESTS) {
-      if(haversine_distance(Origin, {latitude: item.location.lat, longitude: item.location.lng}) < 1) {
+      if(item.location != null && haversine_distance(Origin, {latitude: item.location.lat, longitude: item.location.lng}) < 1) {
         rest_markers.push({
           latitude: item.location.lat,
           longitude: item.location.lng,
         })
       }
     }
-    console.log(rest_markers)
     return 1;
   }
 
@@ -193,14 +192,13 @@ const MapScreen = ({ navigation }) => {
   const showCafe = () => {
     cafe_markers.length = 0;
     for(var item of CAFE) {
-      if(haversine_distance(Origin, {latitude: item.location.lat, longitude: item.location.lng}) < 1) {
+      if(item.location != null && haversine_distance(Origin, {latitude: item.location.lat, longitude: item.location.lng}) < 1) {
         cafe_markers.push({
           latitude: item.location.lat,
           longitude: item.location.lng,
         })
       }
     }
-    console.log(cafe_markers)
     return 1;
   }
 
@@ -219,10 +217,25 @@ const MapScreen = ({ navigation }) => {
         loadingEnabled={true}
         // customMapStyle={mapStyle}
       >
-        {(Origin.latitude != null && Destination.latitude != 0 &&
+        {/* {(Origin.latitude != null &&
           <View>
-            <MapView.Marker coordinate={Origin} />
-            <MapView.Marker coordinate={Destination} />
+            {cafe_markers.map((marker, index) => (
+              <MapView.Marker coordinate={marker} />
+            ))}
+          </View>
+        )} */}
+        {(placeDataSelected[0].value == 1 && showCafe() &&
+          <View>
+            {cafe_markers.map((marker, index) => (
+              <MapView.Marker key={index} coordinate={marker} />
+            ))}
+          </View>
+        )}
+        {(placeDataSelected[1].value == 1 && showRestaurants() &&
+          <View>
+            {rest_markers.map((marker, index) => (
+              <MapView.Marker key={index} coordinate={marker} />
+            ))}
           </View>
         )}
         {/* {MARKERS.map((marker, index) => (
@@ -269,30 +282,16 @@ const MapScreen = ({ navigation }) => {
               <TouchableOpacity 
                 onPress={() => updateFieldChanged(placeData.id - 1)}
                 key={index}
-                style ={[styles.TypeBox, placeDataSelected[placeData.id - 1].value ? styles.ActiveBox : styles.InactiveBox]}
+                style ={[styles.TypeBox, !placeDataSelected[placeData.id - 1].value ? styles.ActiveBox : styles.InactiveBox]}
                 >
                 <Text>{placeData.place}</Text>
               </TouchableOpacity>
-              {(placeDataSelected[0].value == 1 && showCafe() &&
-                <>
-                  {/* <MapView.Marker coordinate={Origin} />
-                  <MapView.Marker coordinate={Destination} /> */}
-                </>
-              )}
-              {(placeDataSelected[1].value == 1 && showRestaurants() &&
-                <>
-                  {/* <MapView.Marker coordinate={Origin} />
-                  <MapView.Marker coordinate={Destination} /> */}
-                </>
-              )}
             </>
           )
           )}
       </SafeAreaView>
       {/* Menu chọn type */}
 
-      {/* Hiện cửa hàng */}
-      
 
       {/* Lộ trình */}
       <SafeAreaView style = {styles.PopupBox}>
