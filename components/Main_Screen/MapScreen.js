@@ -296,7 +296,9 @@ const MapScreen = ({ navigation }) => {
         loadingEnabled={true}
         customMapStyle={mapStyle}
       >
-        <Circle center={Origin} radius={500} strokeWidth={5} strokeColor={COLORS.pink} />
+        {(Origin.latitude != null && Origin.longitude != null && 
+          <MapView.Circle center={Origin} radius={500} strokeWidth={6} strokeColor={COLORS.dark} fillColor={'#006491'}/>
+        )}
 
         {/* Hiện CAFE trên map */}
         {(placeDataSelected[0].value == 1 && showCafe() &&
