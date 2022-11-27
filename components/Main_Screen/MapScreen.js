@@ -1,8 +1,8 @@
 import * as React from 'react';
-import * as Location from "expo-location"
+import * as Location from "expo-location";
 import { Component, useEffect, useState} from 'react';
 import MapView, {Circle, Marker} from 'react-native-maps';
-import { FlatList, Image, SafeAreaView, StyleSheet, View, Dimensions, StatusBar, Text, TouchableWithoutFeedback, TouchableOpacity} from 'react-native';
+import { Pressable, Modal, FlatList, Image, SafeAreaView, StyleSheet, View, Dimensions, StatusBar, Text, TouchableWithoutFeedback, TouchableOpacity} from 'react-native';
 import { GooglePlacesAutocomplete, GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import { BottomPopup } from '../assets/BottomPopup';
 import Constants from 'expo-constants';
@@ -10,13 +10,14 @@ import MapViewDirections from 'react-native-maps-directions';
 import MARKERS from './config/MARKERS';
 import mapStyle from '../assets/mapStyle.json';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import COLORS from './config/COLORS';
 
 import RESTS from './config/data/RESTAURANTS';
 import CAFE from './config/data/CAFE';
 import EVENTS from './config/data/EVENTS';
 import HOTELS from './config/data/HOTELS';
+import { Button } from "react-native-web";
 
 //Khai báo tổng
 const placeData = [
@@ -45,6 +46,7 @@ const placeData = [
 
 // Function các thứ
 
+// Haversine function
 function toRadians(degrees) {
   var pi = Math.PI;
   return degrees * (pi / 180);
@@ -65,43 +67,47 @@ function haversine_distance(Origin, Destination) {
   return d;
 }
 
-function knapsack(W) {
-    const n = Object.keys(MARKERS).length - 1;
-    var dp = new Array(n + 1), val = new Array(n + 1), wt = new Array(n + 1);
-    for(var i=0;i<=n;i++) dp[i] = new Array(n + 1);
 
-    for(var i=1;i<=n;i++) {
-        wt[i] = MARKERS[i].id * 10000 - MARKERS[i].rate * 10000;
-        val[i] = MARKERS[i].id * 75000 - 378;
-    }
-
-    for(var i=0;i<=n;i++) {
-        for(var w=0;w<=W;w++){
-            if(i == 0 || w == 0) dp[i][w] = 0;
-            else if(wt[i - 1] <= w) {
-                dp[i][w] = max(val[i - 1] + dp[i - 1][w - wt[i - 1]], dp[i - 1][w]);
-            }
-            else dp[i][w] = dp[i-1][w];
-        }
-    }
-
-    var w = W, res = dp[n][W];
-    var trace = new Array(0);
-    for(var i=n;i>0 && res>0;i--) {
-        if(res == dp[i-1][w]) continue;
-        else {
-            // console.log(i - 1);
-            trace.push(i - 1);
-            res = res - val[i - 1];
-            w = w - wt[i - 1];
-        }
-    }
-
-    trace.reverse();
-
-    return trace;
+// Knapsack DP to find path
+function max(a, b) {
+  return (a > b ? a : b);
 }
 
+function knapsack(W) {
+  const n = Object.keys(MARKERS).length - 1;
+  var dp = new Array(n + 1), val = new Array(n + 1), wt = new Array(n + 1);
+  for(var i=0;i<=n;i++) dp[i] = new Array(n + 1);
+
+  for(var i=1;i<=n;i++) {
+      wt[i] = MARKERS[i].id * 10000 - MARKERS[i].rate * 10000;
+      val[i] = MARKERS[i].id * 75000 - 378;
+  }
+
+  for(var i=0;i<=n;i++) {
+      for(var w=0;w<=W;w++){
+          if(i == 0 || w == 0) dp[i][w] = 0;
+          else if(wt[i - 1] <= w) {
+              dp[i][w] = max(val[i - 1] + dp[i - 1][w - wt[i - 1]], dp[i - 1][w]);
+          }
+          else dp[i][w] = dp[i-1][w];
+      }
+  }
+
+  var w = W, res = dp[n][W];
+  var trace = new Array(0);
+  for(var i=n;i>0 && res>0;i--) {
+      if(res == dp[i-1][w]) continue;
+      else {
+          trace.push(MARKERS[i-1].title);
+          res = res - val[i - 1];
+          w = w - wt[i - 1];
+      }
+  }
+
+  trace.reverse();
+
+  console.log(trace);
+}
 
 const MapScreen = ({ navigation }) => {
   const {width, height} = Dimensions.get("window");
@@ -150,15 +156,6 @@ const MapScreen = ({ navigation }) => {
       })
     })();
   }, []);
-
-  //PopUp page
-  let popupRef = React.createRef()
-  const onShowPopup = () => {
-    popupRef.show()
-  }
-  const onClosePopup = () => {
-    popupRef.close()
-  }
   
   // Choose category to show on maps
   const [placeDataSelected, setPlaceDataSelected] = useState([
@@ -281,11 +278,44 @@ const MapScreen = ({ navigation }) => {
     return 1;
   }
 
+  // Open Bottom Popup
+  const [btmUp, setBtmUp] = useState(false);
+  const [limitPrice, onChangeLimitPrice] = useState(0);
+
   if(Region.latitude != null && Region.longitude != null)
   return (
     <View style={styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={btmUp}
+        onRequestClose={() => {
+          setModalVisible(!btmUp);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Hello World!</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={onChangeLimitPrice}
+              value={limitPrice}
+              placeholder="Giá tiền định mức"
+              keyboardType="numeric"
+            />
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => {
+                knapsack(limitPrice);
+                setBtmUp(!btmUp);
+              }}
+            >
+              <Text style={styles.textStyle}>Hide Modal</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
 
-      {/* Map chính */}
       <MapView
         style={styles.map}
         provider={'google'}
@@ -296,12 +326,11 @@ const MapScreen = ({ navigation }) => {
         loadingEnabled={true}
         customMapStyle={mapStyle}
       >
-        {(Origin.latitude != null && Origin.longitude != null && 
+        {((Origin.latitude != null && Origin.longitude != null) ? 
           <MapView.Circle center={Origin} radius={500} strokeWidth={3} strokeColor={'rgba(0, 0, 0, 1)'} fillColor={'rgba(0, 0, 255, 0.2)'}/>
-        )}
+        : null)}
 
-        {/* Hiện CAFE trên map */}
-        {(placeDataSelected[0].value == 1 && showCafe() &&
+        {((placeDataSelected[0].value == 1 && showCafe()) ?
           <View>
             {cafe_markers.map((marker, index) => (
               <Marker
@@ -312,34 +341,31 @@ const MapScreen = ({ navigation }) => {
                 </Marker>
             ))}
           </View>
-        )}
+        : null)}
 
-        {/* Hiện RESTAURANTS trên map */}
-        {(placeDataSelected[1].value == 1 && showRestaurants() &&
+        {((placeDataSelected[1].value == 1 && showRestaurants()) ?
           <View>
             {rest_markers.map((marker, index) => (
               <MapView.Marker key={index} coordinate={marker} icon={require('../../assets/markers/hotel.png')} />
             ))}
           </View>
-        )}
+        : null)}
 
-        {/* Hiện HOTELS trên map */}
-        {(placeDataSelected[2].value == 1 && showHotels() &&
+        {((placeDataSelected[2].value == 1 && showHotels()) ?
           <View>
             {hotels_markers.map((marker, index) => (
               <MapView.Marker title={marker.title} key={index} coordinate={marker.location} />
             ))}
           </View>
-        )}
+        : null)}
 
-        {/* Hiện EVENTS trên map */}
-        {(placeDataSelected[3].value == 1 && showEvents() &&
+        {((placeDataSelected[3].value == 1 && showEvents()) ?
           <View>
             {events_markers.map((marker, index) => (
               <MapView.Marker title={marker.title} key={index} coordinate={marker.location} />
             ))}
           </View>
-        )}
+        : null)}
         
         <MapViewDirections
           origin={Origin}
@@ -349,9 +375,7 @@ const MapScreen = ({ navigation }) => {
           strokeColor="#00b0ff"
         ></MapViewDirections>
       </MapView>
-      {/* Map chính */}
 
-      {/* Search bar */}
       <SafeAreaView style = {styles.searchContainer}> 
         <GooglePlacesAutocomplete
           placeholder='Tìm kiếm'
@@ -373,9 +397,7 @@ const MapScreen = ({ navigation }) => {
           }}
         />
       </SafeAreaView>
-    {/* Search bar */}
 
-      {/* Menu chọn type */}
       <SafeAreaView style={styles.PlaceTypeList}>
           {placeData.map((placeData, index) => (
             <TouchableOpacity 
@@ -385,15 +407,11 @@ const MapScreen = ({ navigation }) => {
               >
               <Text>{placeData.place}</Text>
             </TouchableOpacity>
-          )
-          )}
+          ))}
       </SafeAreaView>
-      {/* Menu chọn type */}
 
-
-      {/* Lộ trình */}
       <SafeAreaView style = {styles.PopupBox}>
-        <TouchableWithoutFeedback onPress={onShowPopup}>
+        <TouchableOpacity onPress={() => setBtmUp(!btmUp)}>
             <Text style={{
               alignSelf: 'flex-start',
               paddingLeft:'8%',
@@ -402,16 +420,8 @@ const MapScreen = ({ navigation }) => {
               color: '#888',
               fontWeight:'bold',
             }}>Lộ trình <MaterialCommunityIcons name="map-marker-path" size={18}/> </Text>
-
-        </TouchableWithoutFeedback>
-        <BottomPopup
-          title = "Lộ trình du lịch"
-          image = "require('../../assets/path.png')"
-          ref = {(target) => popupRef = target}
-          onTouchOutside = {onClosePopup}
-        />
+        </TouchableOpacity>
       </SafeAreaView>
-      {/* Lộ trình */}
     </View>
   );
 }
@@ -473,7 +483,6 @@ const styles = StyleSheet.create({
   ActiveBox: {
     backgroundColor: 'white',
   },
-
   PopupBox: {
     position:'absolute',
     width: 80,
@@ -488,6 +497,55 @@ const styles = StyleSheet.create({
     shadowOffset: {width: -2, height: 4},
     shadowOpacity: 0.2,
     shadowRadius: 3,
-  }
+  },
+
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  },
+
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
 });
 export default MapScreen;
