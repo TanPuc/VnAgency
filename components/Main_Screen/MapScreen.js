@@ -6,7 +6,6 @@ import { Pressable, Modal, FlatList, Image, SafeAreaView, StyleSheet, View, Dime
 import { GooglePlacesAutocomplete, GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import Constants from 'expo-constants';
 import MapViewDirections from 'react-native-maps-directions';
-import MARKERS from './config/data/MARKERS';
 import mapStyle from '../assets/mapStyle.json';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
@@ -16,6 +15,7 @@ import RESTS from './config/data/RESTAURANTS';
 import CAFE from './config/data/CAFE';
 import EVENTS from './config/data/EVENTS';
 import HOTELS from './config/data/HOTELS';
+import MARKERS from './config/data/MARKERS';
 import { Button } from 'react-native-web';
 
 //Khai báo tổng
