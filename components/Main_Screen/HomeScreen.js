@@ -110,24 +110,6 @@ const HomeScreen = ({ navigation }) => {
                   padding: SPACING,
                 }}
               >
-                {/* <TouchableOpacity
-                  style={{
-                    alignSelf: "flex-end",
-                    padding: SPACING / 2,
-                    backgroundColor: COLORS.white,
-                    borderRadius: SPACING * 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    top: '20%',
-                  }}
-                  onPress={Knapsack}
-                >
-                  <Ionicons
-                    name="heart-outline"
-                    color='#fb6d79'
-                    size={SPACING * 3}
-                  />
-                </TouchableOpacity> */}
                 <View style={{
                   position: 'absolute',
                   top:"95%",
@@ -142,17 +124,15 @@ const HomeScreen = ({ navigation }) => {
                   backgroundColor: "#fb6d79",
                 }}><Text style={{
                         position:'absolute',
-                        fontSize: SPACING * 2,
-                        paddingTop: 5,
+                        fontSize: SPACING * 1.65,
+                        paddingTop: 7,
                         color: COLORS.white,
                         fontWeight: "bold",
                         marginLeft: SPACING,
                         top:'90%',
                         alignSelf:'center'
                       }}
-                    >
-                      {tour.title}
-                    </Text>
+                    >{tour.title}</Text>
                 </View>
                 <View style={{
                   position: 'absolute',
@@ -174,7 +154,7 @@ const HomeScreen = ({ navigation }) => {
                   paddingLeft: 20,
                   // left: '70%',
                   // top: '90%',
-                }}><Text>Rate: </Text>{tour.rating}</Text></View>
+                }}><Text>Rate: </Text>{tour.rate}</Text></View>
                 <View style={{
                   position: 'absolute',
                   width: 70,
@@ -203,7 +183,7 @@ const HomeScreen = ({ navigation }) => {
                 </View>
                 </View>
               <Image
-                source={tour.image}
+                source={{uri: tour.image}}
                 style={{ width: "100%", height: "100%" }}
               />
             </TouchableOpacity>
