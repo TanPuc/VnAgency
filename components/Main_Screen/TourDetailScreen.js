@@ -3,7 +3,7 @@ import { Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, ImageBac
 import React from "react";
 import COLORS from "./config/COLORS";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import TOURS from "./config/data/TOURS";
+import TOURS from "./config/data/MARKERS";
 
 const SPACING = 10;
 
@@ -16,7 +16,7 @@ const TourDetailScreen = ({ navigation, route }) => {
     <>
       <ScrollView>
         <ImageBackground
-          source={tour.image}
+          source={{uri: tour.image}}
           style={{ width: "100%", height: 500 }}
         >
           <SafeAreaView>
@@ -124,9 +124,9 @@ const TourDetailScreen = ({ navigation, route }) => {
                   color: COLORS.dark,
                 }}
               >
-                {tour.price}<Text>.000đ</Text>
+                {tour.price != 0 ? tour.price + ".000đ" : "Miễn phí"}
               </Text>
-              <Text>/người</Text>
+              <Text>{tour.price != 0 ? "/người" : ""}</Text>
             </View>
           </View>
           <View style={{ marginVertical: SPACING * 2 }}>
@@ -181,7 +181,7 @@ const TourDetailScreen = ({ navigation, route }) => {
                     Thời gian
                   </Text>
                   <Text style={{ fontSize: SPACING * 1.6, fontWeight: "700" }}>
-                    {tour.duration}
+                    {tour.duration} giờ
                   </Text>
                 </View>
               </View>
@@ -215,7 +215,7 @@ const TourDetailScreen = ({ navigation, route }) => {
                     Đánh giá
                   </Text>
                   <Text style={{ fontSize: SPACING * 1.6, fontWeight: "700" }}>
-                    {tour.rating} trên 5
+                    {tour.rate} trên 5
                   </Text>
                 </View>
               </View>
