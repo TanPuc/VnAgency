@@ -119,6 +119,10 @@ export class BottomPopup extends React.Component {
         )
     }
 
+    showPath = () => {
+
+    }
+
     renderContent = () => {
         const {data} = this.props
         return (
@@ -146,10 +150,10 @@ export class BottomPopup extends React.Component {
                     height: '20%',
                   }}
                   title="Kết quả"
-                //   onPress={knapsack(800)}
-                >
-                    {/* <Text>Kết quả</Text> */}
-                </Button>
+                  onPress={() => {
+                    
+                  }}
+                />
             </View>
         )
     }
