@@ -1,4 +1,4 @@
-import TOURS from "./data/TOURS";
+import TOURS from "./data/MARKERS";
 import NEWS from "./data/NEWS";
 import EVENTS from "./data/EVENTS";
 
