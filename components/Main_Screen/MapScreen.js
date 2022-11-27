@@ -10,7 +10,7 @@ import MapViewDirections from 'react-native-maps-directions';
 import MARKERS from './config/MARKERS';
 import mapStyle from '../assets/mapStyle.json';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import COLORS from './config/COLORS';
 
 import RESTS from './config/data/RESTAURANTS';
@@ -106,7 +106,7 @@ function knapsack(W) {
 
   trace.reverse();
 
-  return trace;
+  console.log(trace);
 }
 
 const MapScreen = ({ navigation }) => {
@@ -280,6 +280,7 @@ const MapScreen = ({ navigation }) => {
 
   // Open Bottom Popup
   const [btmUp, setBtmUp] = useState(false);
+  const [limitPrice, onChangeLimitPrice] = useState(0);
 
   if(Region.latitude != null && Region.longitude != null)
   return (
@@ -295,9 +296,19 @@ const MapScreen = ({ navigation }) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Hello World!</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={onChangeLimitPrice}
+              value={limitPrice}
+              placeholder="Giá tiền định mức"
+              keyboardType="numeric"
+            />
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setBtmUp(!btmUp)}
+              onPress={() => {
+                knapsack(limitPrice);
+                setBtmUp(!btmUp);
+              }}
             >
               <Text style={styles.textStyle}>Hide Modal</Text>
             </Pressable>
@@ -523,7 +534,14 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center"
-  }
+  },
+
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
 });
 
 export default MapScreen;
