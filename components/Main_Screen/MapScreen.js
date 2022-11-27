@@ -2,12 +2,11 @@ import * as React from 'react';
 import * as Location from "expo-location";
 import { Component, useEffect, useState} from 'react';
 import MapView, {Circle, Marker} from 'react-native-maps';
-import { Pressable, Modal, FlatList, Image, SafeAreaView, StyleSheet, View, Dimensions, StatusBar, Text, TouchableWithoutFeedback, TouchableOpacity} from 'react-native';
+import { Pressable, Modal, FlatList, Image, SafeAreaView, StyleSheet, View, Dimensions, StatusBar, Text, TouchableOpacity} from 'react-native';
 import { GooglePlacesAutocomplete, GooglePlaceDetail } from 'react-native-google-places-autocomplete';
-import { BottomPopup } from '../assets/BottomPopup';
 import Constants from 'expo-constants';
 import MapViewDirections from 'react-native-maps-directions';
-import MARKERS from './config/MARKERS';
+import MARKERS from './config/data/MARKERS';
 import mapStyle from '../assets/mapStyle.json';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
@@ -17,7 +16,7 @@ import RESTS from './config/data/RESTAURANTS';
 import CAFE from './config/data/CAFE';
 import EVENTS from './config/data/EVENTS';
 import HOTELS from './config/data/HOTELS';
-import { Button } from "react-native-web";
+import { Button } from 'react-native-web';
 
 //Khai báo tổng
 const placeData = [
@@ -67,7 +66,6 @@ function haversine_distance(Origin, Destination) {
   return d;
 }
 
-
 // Knapsack DP to find path
 function max(a, b) {
   return (a > b ? a : b);
@@ -79,34 +77,40 @@ function knapsack(W) {
   for(var i=0;i<=n;i++) dp[i] = new Array(n + 1);
 
   for(var i=1;i<=n;i++) {
-      wt[i] = MARKERS[i].id * 10000 - MARKERS[i].rate * 10000;
-      val[i] = MARKERS[i].id * 75000 - 378;
+    wt[i] = MARKERS[i].id * 10000 - MARKERS[i].rate * 10000;
+    val[i] = MARKERS[i].id * 75000 - 378;
   }
 
   for(var i=0;i<=n;i++) {
-      for(var w=0;w<=W;w++){
-          if(i == 0 || w == 0) dp[i][w] = 0;
-          else if(wt[i - 1] <= w) {
-              dp[i][w] = max(val[i - 1] + dp[i - 1][w - wt[i - 1]], dp[i - 1][w]);
-          }
-          else dp[i][w] = dp[i-1][w];
+    for(var w=0;w<=W;w++){
+      if(i == 0 || w == 0) dp[i][w] = 0;
+      else if(wt[i - 1] <= w) {
+        dp[i][w] = max(val[i - 1] + dp[i - 1][w - wt[i - 1]], dp[i - 1][w]);
       }
+      else dp[i][w] = dp[i-1][w];
+    }
   }
 
   var w = W, res = dp[n][W];
   var trace = new Array(0);
   for(var i=n;i>0 && res>0;i--) {
-      if(res == dp[i-1][w]) continue;
-      else {
-          trace.push(MARKERS[i-1].title);
-          res = res - val[i - 1];
-          w = w - wt[i - 1];
-      }
+    if(res == dp[i-1][w]) continue;
+    else {
+      trace.push({
+        title: MARKERS[i-1].title,
+        location: {
+          latitude: MARKERS[i-1].location.latitude,
+          longitude: MARKERS[i-1].location.longitude,
+        }
+      });
+      res = res - val[i - 1];
+      w = w - wt[i - 1];
+    }
   }
 
   trace.reverse();
 
-  console.log(trace);
+  return trace;
 }
 
 const MapScreen = ({ navigation }) => {
@@ -171,7 +175,7 @@ const MapScreen = ({ navigation }) => {
     setPlaceDataSelected(newArr);
   }
 
-  var rest_markers = [], cafe_markers = [], hotels_markers = [], events_markers = [];
+  var rest_markers = [], cafe_markers = [], hotels_markers = [], events_markers = [], knapsack_trace = [];
 
   // Generate RESTAURANTS in particular area
   const showRestaurants = () => {
@@ -277,6 +281,19 @@ const MapScreen = ({ navigation }) => {
     }
     return 1;
   }
+  
+  const showPath = (W) => {
+    knapsack_trace.length = 0;
+    knapsack_trace = knapsack(W);
+    knapsack_trace.unshift({
+      title: 'HOME',
+      location: {
+        latitude: Origin.latitude,
+        longitude: Origin.longitude,
+      }
+    });
+    console.log(knapsack_trace);
+  }
 
   // Open Bottom Popup
   const [btmUp, setBtmUp] = useState(false);
@@ -295,7 +312,7 @@ const MapScreen = ({ navigation }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
+            <MaterialCommunityIcons name="window-close" size={17} style={styles.closeBtn} onPress={() => setBtmUp(!btmUp)}/>
             <TextInput
               style={styles.input}
               onChangeText={onChangeLimitPrice}
@@ -306,11 +323,11 @@ const MapScreen = ({ navigation }) => {
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => {
-                knapsack(limitPrice);
+                showPath(limitPrice);
                 setBtmUp(!btmUp);
               }}
             >
-              <Text style={styles.textStyle}>Hide Modal</Text>
+              <Text style={styles.textStyle}>Kết quả</Text>
             </Pressable>
           </View>
         </View>
@@ -333,12 +350,7 @@ const MapScreen = ({ navigation }) => {
         {((placeDataSelected[0].value == 1 && showCafe()) ?
           <View>
             {cafe_markers.map((marker, index) => (
-              <Marker
-                key={index}
-                coordinate={marker.location}
-                icon={require('../../assets/markers/coffee.png')}
-                >
-                </Marker>
+              <MapView.Marker title={marker.title} key={index} coordinate={marker.location} icon={require('../../assets/markers/coffee.png')}/>
             ))}
           </View>
         : null)}
@@ -547,6 +559,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
+
+  closeBtn: {
+    paddingLeft: 170,
+    paddingBottom: 20,
+  }
 });
 
 export default MapScreen;
