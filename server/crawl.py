@@ -125,9 +125,21 @@ def EVENTS():
         json.dump(final, file, indent=2, ensure_ascii=False)
 
 if __name__ == "__main__":
-    # print("Crawling NEWS...")
-    # NEWS()
-    # print("Finished!", end="\n\n")
+    print("Crawling NEWS...")
+    NEWS()
+    print("Finished!", end="\n\n")
     print("Crawling EVENTS...")
     EVENTS()
     print("Finished!")
+
+    # params = {
+    #     'key': 'AIzaSyBgXphv0S5eamMrNbQDU-I1aJ9O6Xo800s',
+    #     'address': 'Bãi biển Tiên Sa',
+    # }
+
+    # base_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
+
+    # r = requests.get(base_url, params=params).json()
+    # r.keys()
+
+    # print(r);
