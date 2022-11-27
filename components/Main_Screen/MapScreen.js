@@ -346,7 +346,7 @@ const MapScreen = ({ navigation }) => {
         {((placeDataSelected[1].value == 1 && showRestaurants()) ?
           <View>
             {rest_markers.map((marker, index) => (
-              <MapView.Marker key={index} coordinate={marker} icon={require('../../assets/markers/hotel.png')} />
+              <MapView.Marker key={index} coordinate={marker} icon={require('../../assets/markers/restaurant.png')}/>
             ))}
           </View>
         : null)}
@@ -354,7 +354,7 @@ const MapScreen = ({ navigation }) => {
         {((placeDataSelected[2].value == 1 && showHotels()) ?
           <View>
             {hotels_markers.map((marker, index) => (
-              <MapView.Marker title={marker.title} key={index} coordinate={marker.location} />
+              <MapView.Marker title={marker.title} key={index} coordinate={marker.location} icon={require('../../assets/markers/hotel.png')}/>
             ))}
           </View>
         : null)}
@@ -362,7 +362,7 @@ const MapScreen = ({ navigation }) => {
         {((placeDataSelected[3].value == 1 && showEvents()) ?
           <View>
             {events_markers.map((marker, index) => (
-              <MapView.Marker title={marker.title} key={index} coordinate={marker.location} />
+              <MapView.Marker title={marker.title} key={index} coordinate={marker.location} icon={require('../../assets/markers/event.png')} />
             ))}
           </View>
         : null)}

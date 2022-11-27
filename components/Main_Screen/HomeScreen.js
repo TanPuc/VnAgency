@@ -60,11 +60,11 @@ const HomeScreen = ({ navigation }) => {
 
           
         </View>
-        <ScrollView style={{ marginVertical: SPACING * 2 }} horizontal>
+        <View style={{flexDirection: 'row', marginVertical: SPACING * 2 }} horizontal>
           {CATEGORIES.map((category, index) => (
             <TouchableOpacity
               onPress={() => setActiveCategory(index)}
-              style={{ marginRight: SPACING * 1.7 }}
+              style={{ marginRight: SPACING * 2 }}
               key={category.id}
             >
               <Text
@@ -77,7 +77,7 @@ const HomeScreen = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           ))}
-        </ScrollView>
+        </View>
         {activeCategory === 0 && (
         <ScrollView
           horizontal
@@ -163,7 +163,6 @@ const HomeScreen = ({ navigation }) => {
                   paddingBottom: 20,
                   borderWidth: 1,
                   borderColor: '#fb6d79',
-                  borderBottomLeftRadius: 25,
                   borderWidth: 1,
                   backgroundColor: "#fb6d79",
                 }}><Text style={{
@@ -215,25 +214,32 @@ const HomeScreen = ({ navigation }) => {
             {CATEGORIES[activeCategory].tours.map((tour, index) => (
               <TouchableOpacity 
                 style={{
-                  height: WIDTH * 0.25,
-                  overflow: "hidden",
-                  borderTopLeftRadius: SPACING * 3,
-                  borderBottomEndRadius: SPACING * 3,
-                  marginVertical: SPACING * 0.8,
-                  borderColor: 'grey',
+                  height: HEIGHT * 0.12,
+                  borderRadius: SPACING * 2.5,
+                  marginVertical: SPACING * 0.4,
                   backgroundColor: 'white',
-                  borderWidth: 0.5,
-                  flex: 1,
                   flexWrap: 'wrap',
-                  flexShrink: 1,
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 1,
+                  },
+                  shadowOpacity: 0.22,
+                  shadowRadius: 2.22,
+
+                  elevation: 3,
                 }}
                 key={index}
                 flexDirection='row'
                 onPress={() => Linking.openURL(tour.link)}
               >
                 <Image source={{uri: tour.image}} style={{
-                  width: WIDTH * 0.34,
-                  height: HEIGHT * 0.14,
+                  marginTop: 5,
+                  marginLeft: 6,
+                  width: WIDTH * 0.32,
+                  height: HEIGHT * 0.11,
+                  borderColor: 'white',
+                  borderRadius: SPACING * 2,
                   resizeMode: 'stretch',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -295,10 +301,9 @@ const HomeScreen = ({ navigation }) => {
                   // resizeMode: 'stretch',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  borderColor: 'yellow', 
-                  borderBottomLeftRadius: 8,
-                  borderTopLeftRadius: 8,
-                  borderWidth: 1,
+                  borderColor: 'black', 
+                  borderRadius: 8,
+                  borderWidth: 4,
                 }}/>
                 <View>
                   <View>
