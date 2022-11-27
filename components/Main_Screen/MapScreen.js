@@ -335,7 +335,7 @@ const MapScreen = ({ navigation }) => {
             {cafe_markers.map((marker, index) => (
               <Marker
                 key={index}
-                coordinate={marker}
+                coordinate={marker.location}
                 icon={require('../../assets/markers/coffee.png')}
                 >
                 </Marker>
@@ -346,7 +346,7 @@ const MapScreen = ({ navigation }) => {
         {((placeDataSelected[1].value == 1 && showRestaurants()) ?
           <View>
             {rest_markers.map((marker, index) => (
-              <MapView.Marker key={index} coordinate={marker} icon={require('../../assets/markers/restaurant.png')}/>
+              <MapView.Marker title={marker.title} key={index} coordinate={marker.location} icon={require('../../assets/markers/restaurant.png')}/>
             ))}
           </View>
         : null)}
@@ -548,4 +548,5 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
+
 export default MapScreen;
