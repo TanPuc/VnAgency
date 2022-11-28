@@ -16,7 +16,6 @@ import CAFE from './config/data/CAFE';
 import EVENTS from './config/data/EVENTS';
 import HOTELS from './config/data/HOTELS';
 import MARKERS from './config/data/MARKERS';
-import { Button } from 'react-native-web';
 
 //Khai báo tổng
 const placeData = [
@@ -77,7 +76,7 @@ function knapsack(W) {
   for(var i=0;i<=n;i++) dp[i] = new Array(n + 1);
 
   for(var i=1;i<=n;i++) {
-    wt[i] = MARKERS[i].id * 10000 - MARKERS[i].rate * 10000;
+    wt[i] = MARKERS[i].id * 1000 - MARKERS[i].rate * 1000;
     val[i] = MARKERS[i].id * 75000 - 378;
   }
 
@@ -382,7 +381,7 @@ const MapScreen = ({ navigation }) => {
         <MapViewDirections
           origin={Origin}
           destination={Destination}
-          apikey='AIzaSyBgXphv0S5eamMrNbQDU-I1aJ9O6Xo800s'
+          apikey='AIzaSyChUrRD1H7NaUhpRKqHBOweLZ9Zm9Stgx0'
           strokeWidth={4}
           strokeColor="#00b0ff"
         ></MapViewDirections>
@@ -403,7 +402,7 @@ const MapScreen = ({ navigation }) => {
           onFail={error => console.log(error)}
           onNotFound={() => console.log('no results')}
           query={{
-            key: 'AIzaSyBgXphv0S5eamMrNbQDU-I1aJ9O6Xo800s',
+            key: 'AIzaSyChUrRD1H7NaUhpRKqHBOweLZ9Zm9Stgx0',
             language: 'en',
             components: "country:vn",
           }}

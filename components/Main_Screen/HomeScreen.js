@@ -150,7 +150,7 @@ const HomeScreen = ({ navigation }) => {
                   paddingLeft: 20,
                   // left: '70%',
                   // top: '90%',
-                }}><Text>Rate: </Text>{tour.rating} <AntDesign name="star" size={24} color="white" /></Text></View>
+                }}><Text>Rate: </Text>{tour.rate} <AntDesign name="star" size={24} color="white" /></Text></View>
                 <View style={{
                   position: 'absolute',
                   width: 70,
@@ -272,6 +272,7 @@ const HomeScreen = ({ navigation }) => {
                 }}
                 key={index}
                 flexDirection='row'
+                onPress={() => Linking.openURL(tour.link)}
               >
                 <Image source={{uri: tour.image}} style={{
                   width: HEIGHT * 0.1,

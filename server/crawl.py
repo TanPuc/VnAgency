@@ -96,7 +96,7 @@ def EVENTS():
         address = str(address.strip())
         
         params = {
-            'key': 'AIzaSyBgXphv0S5eamMrNbQDU-I1aJ9O6Xo800s',
+            'key': 'AIzaSyChUrRD1H7NaUhpRKqHBOweLZ9Zm9Stgx0',
             'address': address,
         }
 
@@ -112,6 +112,7 @@ def EVENTS():
                 'start_date': str(start_date),
                 'end_date': str(end_date.replace("\n", "")),
                 'address': str(address),
+                'link': str(link),
                 'location': {
                     'latitude': r['results'][0]['geometry']['location']['lat'],
                     'longitude': r['results'][0]['geometry']['location']['lng'],
