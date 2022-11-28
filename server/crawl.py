@@ -131,15 +131,3 @@ if __name__ == "__main__":
     print("Crawling EVENTS...")
     EVENTS()
     print("Finished!")
-
-    # params = {
-    #     'key': 'AIzaSyBgXphv0S5eamMrNbQDU-I1aJ9O6Xo800s',
-    #     'address': 'Bãi biển Tiên Sa',
-    # }
-
-    # base_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
-
-    # r = requests.get(base_url, params=params).json()
-    # r.keys()
-
-    # print(r);
