@@ -4,6 +4,8 @@ import CATEGORIES from "./config/CATEGORIES";
 import COLORS from "./config/COLORS";
 import ADVANTURES from "./config/ADVANTURES";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { Foundation } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { auth } from "../assets/Firebase.js";
 
 const WIDTH = Dimensions.get("screen").width;
@@ -43,8 +45,6 @@ const HomeScreen = ({ navigation }) => {
           >
             Trang chủ
           </Text>
-          
-          {/* Drawer */}
           <TouchableOpacity onPress={handleSignOut}>
             <Image
               style={{
@@ -55,10 +55,7 @@ const HomeScreen = ({ navigation }) => {
               source={require("../../assets/Avatar.png")}
             />
           </TouchableOpacity>
-          {/* Drawer */}
 
-
-          
         </View>
         <View style={{flexDirection: 'row', marginVertical: SPACING * 2 }} horizontal>
           {CATEGORIES.map((category, index) => (
@@ -117,10 +114,7 @@ const HomeScreen = ({ navigation }) => {
                   height: 30,
                   paddingTop: 20,
                   paddingBottom: 20,
-                  borderWidth: 1,
-                  borderColor: '#fb6d79',
                   borderTopRightRadius: 25,
-                  borderWidth: 1,
                   backgroundColor: "#fb6d79",
                 }}><Text style={{
                         position:'absolute',
@@ -137,7 +131,7 @@ const HomeScreen = ({ navigation }) => {
                 <View style={{
                   position: 'absolute',
                   alignSelf:'flex-end',
-                  width: "40%",
+                  width: "50%",
                   height: 30,
                   paddingTop: 20,
                   paddingBottom: 20,
@@ -145,6 +139,8 @@ const HomeScreen = ({ navigation }) => {
                   borderColor: '#fb6d79',
                   borderWidth: 1,
                   backgroundColor: "#fb6d79",
+                  borderBottomLeftRadius:25,
+                  overflow:"hidden",
                 }}><Text style={{
                   color: "white",
                   fontSize: SPACING * 2,
@@ -154,17 +150,14 @@ const HomeScreen = ({ navigation }) => {
                   paddingLeft: 20,
                   // left: '70%',
                   // top: '90%',
-                }}><Text>Rate: </Text>{tour.rate}</Text></View>
+                }}><Text>Rate: </Text>{tour.rating} <AntDesign name="star" size={24} color="white" /></Text></View>
                 <View style={{
                   position: 'absolute',
                   width: 70,
                   height: 10,
                   paddingTop: 20,
                   paddingBottom: 20,
-                  borderWidth: 1,
-                  borderColor: '#fb6d79',
                   borderBottomRightRadius: 25,
-                  borderWidth: 1,
                   backgroundColor: "#fb6d79",
                 }}>
                   <Text
@@ -176,7 +169,7 @@ const HomeScreen = ({ navigation }) => {
                       fontWeight:'bold',
                       color: COLORS.white,
                       paddingLeft: SPACING,
-                      paddingTop: '5%',
+                      paddingTop: 5,
                       color: "#fff",
                     }}
                   ><Text>No.</Text>{tour.id}</Text>
@@ -258,65 +251,86 @@ const HomeScreen = ({ navigation }) => {
             {CATEGORIES[activeCategory].tours.map((tour, index) => (
               <TouchableOpacity 
                 style={{
-                  height: WIDTH * 0.3,
-                  overflow: "hidden",
+                  height: HEIGHT * 0.1,
+                  // overflow: "hidden",
                   marginVertical: SPACING * 0.8,
                   borderColor: 'grey',
                   backgroundColor: 'white',
                   // borderWidth: 0.5,
-                  borderBottomRightRadius: 15,
-                  borderTopRightRadius: 15,
-                  borderBottomLeftRadius: 8,
-                  borderTopLeftRadius: 8,
+                  // justifyContent: "center",
+                  borderRadius: 15,
                   flex: 1,
                   flexWrap: 'wrap',
-                  flexShrink: 1,
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 1,
+                  },
+                  shadowOpacity: 0.22,
+                  shadowRadius: 2.22,
+                  // flexShrink: 1,
                 }}
                 key={index}
                 flexDirection='row'
               >
                 <Image source={{uri: tour.image}} style={{
-                  width: WIDTH * 0.34,
-                  height: HEIGHT * 0.14,
+                  width: HEIGHT * 0.1,
+                  height: HEIGHT * 0.1,
                   // resizeMode: 'stretch',
-                  alignItems: 'center',
+                  alignSelf: 'center',
                   justifyContent: 'center',
-                  borderColor: 'black', 
-                  borderRadius: 8,
-                  borderWidth: 4,
+                  // borderColor: 'black', 
+                  borderRadius: 15,
+                  // borderWidth: 4,
                 }}/>
-                <View>
+                <View flexDirection='row'>
                   <View>
                     <Text style={{
-                      width: WIDTH * 0.6,
-                      paddingHorizontal: 15,
-                      paddingTop: 6,
+                      width: WIDTH * 0.5,
+                      height: HEIGHT * 0.1,
+                      paddingHorizontal: 8,
+                      paddingTop: 12,
                       paddingBottom: 10,
                       fontFamily: 'SourceSansPro_Bold',
                       fontSize: 14.5,
-                      color:"#fb6d79",
+                      color:"#182e44",
+                      // borderColor: 'black',
+                      // borderWidth: 2,
                     }}
-                    numberOfLines={2}
+                    numberOfLines={4}
                     >{tour.title}</Text>
-                  </View>
-                  <Text style={{
-                      width: WIDTH * 0.6,
-                      paddingHorizontal: 15,
-                      fontFamily: 'SourceSansPro_Bold',
-                      fontSize: 14.5,
-                      color:"#182e44",
-                    }}
-                    numberOfLines={2}
-                    >Từ: {tour.start_date}</Text>
                     <Text style={{
-                      width: WIDTH * 0.6,
-                      paddingHorizontal: 15,
+                      position: 'absolute',
+                      width: WIDTH * 0.5,
+                      height: HEIGHT * 0.1,
+                      paddingHorizontal: 8,
+                      paddingTop: 48,
+                      fontFamily: 'SourceSansPro_Bold',
+                      fontSize: 10,
+                      color:"#0e7886",
+                      }}
+                      numberOfLines4><Foundation name="marker" size={24} color="#fb6d79" /><Text>  </Text>{tour.address}</Text>
+                  </View>
+                  <View>
+                    <Text style={{
+                      width: WIDTH * 0.185,
+                      overflow: 'hidden',
+                      height: HEIGHT * 0.1,
+                      backgroundColor: '#182e44',
+                      borderRadius: 15,
                       fontFamily: 'SourceSansPro_Bold',
                       fontSize: 14.5,
-                      color:"#182e44",
+                      paddingTop: 35,
+                      paddingBottom: 35,
+                      paddingLeft: 8,
+
+                      color:"white",
+                      // borderColor: 'black',
+                      // borderWidth: 2,
                     }}
-                    numberOfLines={2}
-                    >Đến: {tour.end_date}</Text>
+                    numberOfLines={4}
+                    >{tour.start_date}</Text>
+                  </View>
                 </View>
               </TouchableOpacity>
             ))}
@@ -340,17 +354,6 @@ const HomeScreen = ({ navigation }) => {
             >
               Tiện ích
             </Text>
-            {/* <TouchableOpacity>
-              <Text
-                style={{
-                  fontSize: SPACING * 1.4,
-                  fontWeight: "500",
-                  color: COLORS.primary,
-                }}
-              >
-                Hiện tất cả
-              </Text>
-            </TouchableOpacity> */}
           </View>
           <ScrollView
             horizontal

@@ -14,8 +14,10 @@ import {
 } from 'react-native';
 import COLORS from "./config/COLORS";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-const {width} = Dimensions.get('screen');
 import houses from './config/HOUSES';
+
+
+const {width} = Dimensions.get('screen');
 const HotelBooking = ({ navigation }) => {
   const optionsList = [
     {title: 'Đặt phòng', img: require('../../assets/hotels/house1.jpg')},
