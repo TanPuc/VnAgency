@@ -1,17 +1,5 @@
 [
   {
-    "title": "Lễ hội Du lịch Golf Đà Nẵng nhân giải đấu Asian Development tour tại Đà Nẵng",
-    "image": "https://danangfantasticity.com/wp-content/uploads/2021/12/vinpearl-golf-nam-hoi-an-03.jpg",
-    "start_date": "",
-    "end_date": "",
-    "address": "Đà Nẵng",
-    "link": "https://danangfantasticity.com/event/le-hoi-du-lich-golf-da-nang-nhan-giai-dau-asian-development-tour-tai-da-nang",
-    "location": {
-      "latitude": 16.0544563,
-      "longitude": 108.0717219
-    }
-  },
-  {
     "title": "Chương trình Khai trương mùa du lịch Biển 2022",
     "image": "https://danangfantasticity.com/wp-content/uploads/2022/04/0.jpg",
     "start_date": "28 Tháng Tư, 2022",
@@ -28,7 +16,7 @@
     "image": "https://danangfantasticity.com/wp-content/uploads/2018/12/ngam-phao-hoa-tung-bung-nam-moi-2019-tai-nha-hang-cao-nhat-thanh-pho-da-nang.jpg",
     "start_date": "",
     "end_date": "",
-    "address": "Khu vực vỉa hè đường Bạch Đằng nối dài, quận Hải Châu (Từ Tàu Rồng sông Hàn đến cầu Bán Nguyệt).",
+    "address": "Khu vực vỉa hè đường Bạch Đằng nối dài, quận Hải Châu",
     "link": "https://danangfantasticity.com/event/to-chuc-le-hoi-da-nang-chao-nam-moi-2023",
     "location": {
       "latitude": 16.0598132,
@@ -69,18 +57,6 @@
     "location": {
       "latitude": 16.0219157,
       "longitude": 108.217274
-    }
-  },
-  {
-    "title": "Chương trình Đà Nẵng chào mừng mở lại đường bay quốc tế",
-    "image": "https://danangfantasticity.com/wp-content/uploads/2022/03/z3293745988443_8717c3e5f0368a58d08822af195e39d0.jpg",
-    "start_date": "",
-    "end_date": "",
-    "address": "Sân bay Quốc tế Đà Nẵng",
-    "link": "https://danangfantasticity.com/event/chuong-trinh-da-nang-chao-mung-mo-lai-duong-bay-quoc-te",
-    "location": {
-      "latitude": 16.0554407,
-      "longitude": 108.2023592
     }
   },
   {

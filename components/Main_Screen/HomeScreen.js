@@ -312,26 +312,28 @@ const HomeScreen = ({ navigation }) => {
                       }}
                       numberOfLines4><Foundation name="marker" size={24} color="#fb6d79" /><Text>  </Text>{tour.address}</Text>
                   </View>
-                  <View>
-                    <Text style={{
-                      width: WIDTH * 0.185,
-                      overflow: 'hidden',
-                      height: HEIGHT * 0.1,
-                      backgroundColor: '#182e44',
-                      borderRadius: 15,
-                      fontFamily: 'SourceSansPro_Bold',
-                      fontSize: 14.5,
-                      paddingTop: 35,
-                      paddingBottom: 35,
-                      paddingLeft: 8,
+                  {(tour.start_date != "" ? 
+                    <View>
+                      <Text style={{
+                        width: WIDTH * 0.185,
+                        overflow: 'hidden',
+                        height: HEIGHT * 0.1,
+                        backgroundColor: '#182e44',
+                        borderRadius: 15,
+                        fontFamily: 'SourceSansPro_Bold',
+                        fontSize: 14.5,
+                        paddingTop: 35,
+                        paddingBottom: 35,
+                        paddingLeft: 8,
 
-                      color:"white",
-                      // borderColor: 'black',
-                      // borderWidth: 2,
-                    }}
-                    numberOfLines={4}
-                    >{tour.start_date}</Text>
-                  </View>
+                        color:"white",
+                        // borderColor: 'black',
+                        // borderWidth: 2,
+                      }}
+                      numberOfLines={4}
+                      >{tour.start_date}</Text>
+                    </View>
+                  : null)}
                 </View>
               </TouchableOpacity>
             ))}
