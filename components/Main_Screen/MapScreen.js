@@ -28,7 +28,6 @@ import { ScrollView, TextInput } from "react-native-gesture-handler";
 import GestureRecognizer from "react-native-swipe-gestures";
 import COLORS from "./config/COLORS";
 
-
 import RESTS from "./config/data/RESTAURANTS";
 import CAFE from "./config/data/CAFE";
 import EVENTS from "./config/data/EVENTS";
@@ -77,9 +76,9 @@ function haversine_distance(Origin, Destination) {
   a =
     Math.sin(dlat / 2) * Math.sin(dlat / 2) +
     Math.cos(toRadians(lat1)) *
-      Math.cos(toRadians(lat2)) *
-      Math.sin(dlon / 2) *
-      Math.sin(dlon / 2);
+    Math.cos(toRadians(lat2)) *
+    Math.sin(dlon / 2) *
+    Math.sin(dlon / 2);
   c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   d = radius * c;
 
@@ -220,7 +219,7 @@ const MapScreen = ({ navigation }) => {
   const showRestaurants = () => {
     rest_markers.length = 0;
     for (var item of RESTS) {
-      if (item.location != null && haversine_distance(Origin, {latitude: item.location.lat, longitude: item.location.lng}) <= 0.5) {
+      if (item.location != null && haversine_distance(Origin, { latitude: item.location.lat, longitude: item.location.lng }) <= 0.5) {
         rest_markers.push({
           title: item.title,
           address: item.address,
@@ -283,9 +282,9 @@ const MapScreen = ({ navigation }) => {
     hotels_markers.length = 0;
     for (var item of HOTELS) {
       if (item.location != null && haversine_distance(Origin, {
-          latitude: item.location.lat,
-          longitude: item.location.lng,
-        }) <= 0.5) {
+        latitude: item.location.lat,
+        longitude: item.location.lng,
+      }) <= 0.5) {
         hotels_markers.push({
           title: item.title,
           address: item.address,
@@ -351,9 +350,9 @@ const MapScreen = ({ navigation }) => {
   if (Region.latitude != null && Region.longitude != null)
     return (
       <View style={styles.container}>
-        <GestureRecognizer style={{flex: 1}} onSwipeDown={() => setBtmUp(!btmUp)}>
+        <GestureRecognizer style={{ flex: 1 }} onSwipeDown={() => setBtmUp(!btmUp)}>
           <Modal
-          // style={styles.Modal}
+            // style={styles.Modal}
             animationType="slide"
             transparent={true}
             visible={btmUp}
@@ -465,14 +464,18 @@ const MapScreen = ({ navigation }) => {
 
           <MapViewDirections
             origin={Origin}
-            destination={{latitude: "16.0581055",
-            longitude: "108.2232435"}}
+            destination={{
+              latitude: "16.0581055",
+              longitude: "108.2232435"
+            }}
             apikey={'AIzaSyChUrRD1H7NaUhpRKqHBOweLZ9Zm9Stgx0'}
             strokeWidth={4}
             strokeColor="#59bfff"
           />
-          <Marker coordinate={{latitude: "16.0581055",
-            longitude: "108.2232435"}}><Text style={{fontSize:24,}}>1</Text><FontAwesome name="map-marker" size={35} color="black" /></Marker>
+          <Marker coordinate={{
+            latitude: "16.0581055",
+            longitude: "108.2232435"
+          }}><Text style={{ fontSize: 24, }}>1</Text><FontAwesome name="map-marker" size={35} color="black" /></Marker>
           {/* <MapViewDirections
             origin={{latitude: "16.0581055",
             longitude: "108.2232435"}}
@@ -695,7 +698,7 @@ const styles = StyleSheet.create({
     // position: 'absolute',
     // top: '8%',
     // right: '5%',
-    alignSelf:'flex-end',
+    alignSelf: 'flex-end',
   },
 });
 
