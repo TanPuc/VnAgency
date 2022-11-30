@@ -73,7 +73,7 @@ function nextTime(hour, minute, plus) {
     minute -= 60;
   }
   while (hour >= 24) hour -= 24;
-  return { hour, minute }
+  return { hour, minute };
 }
 
 // Haversine function
@@ -416,7 +416,18 @@ const MapScreen = ({ navigation }) => {
                   placeholder="Giá tiền định mức"
                   keyboardType="numeric"
                 />
-                {limitPrice != 0 ? (<Text style={{color:'black', position:'absolute', marginLeft:320, marginTop:42}}>VND</Text>) : null }
+                {limitPrice != 0 ? (
+                  <Text
+                    style={{
+                      color: "black",
+                      position: "absolute",
+                      marginLeft: 320,
+                      marginTop: 42,
+                    }}
+                  >
+                    VND
+                  </Text>
+                ) : null}
                 <Pressable
                   style={styles.button}
                   onPress={() => {
@@ -473,11 +484,14 @@ const MapScreen = ({ navigation }) => {
                             shadowRadius: 2.22,
                             justifyContent: "space-between",
                           }}
-                          flexDirection='row'
+                          flexDirection="row"
                           onPress={() => {
                             setStartPoint({
-                              latitude: knapsack_trace[marker.id - 1].location.latitude,
-                              longitude: knapsack_trace[marker.id - 1].location.longitude,
+                              latitude:
+                                knapsack_trace[marker.id - 1].location.latitude,
+                              longitude:
+                                knapsack_trace[marker.id - 1].location
+                                  .longitude,
                             });
                             setEndPoint({
                               latitude: marker.location.latitude,
@@ -486,45 +500,49 @@ const MapScreen = ({ navigation }) => {
                             setBtmUp(!btmUp);
                           }}
                         >
-                          <Text
-                            numberOfLines={2}
-                            style={{
-                              width: "40%",
-                              alignSelf: "flex-start",
-                              fontSize: 18,
-                              padding: 15,
-                              fontWeight: "bold",
-                              color: "#332FD0",
-                              paddingRight: 8,
-                              // borderWidth:2,
-                            }}
-                          >
-                            {knapsack_trace[marker.id - 1].title}
-                          </Text>
-                          <Text
-                            style={{
-                              paddingTop: 15,
-                              fontSize: 20,
-                              alignSelf: "center",
-                              color: "#332FD0",
-                            }}
-                          >
-                            ----->
-                          </Text>
-                          <Text
-                            style={{
-                              width: "45%",
-                              alignSelf: "flex-end",
-                              // borderWidth:2,
-                              fontSize: 18,
-                              padding: 15,
-                              fontWeight: "bold",
-                              color: "#332FD0",
-                              paddingRight: 8,
-                            }}
-                          >
-                            {marker.title}
-                          </Text>
+                          <View flexDirection='row'>
+                            <Text
+                              numberOfLines={2}
+                              style={{
+                                width: "40%",
+                                alignSelf: "flex-start",
+                                fontSize: 18,
+                                padding: 12,
+                                fontWeight: "bold",
+                                color: "#332FD0",
+                                paddingRight: 8,
+                                // borderWidth:2,
+                              }}
+                            >
+                              {knapsack_trace[marker.id - 1].title}
+                            </Text>
+                            <Text
+                              style={{
+                                paddingTop: 12,
+                                fontSize: 20,
+                                alignSelf: "flex-start",
+                                color: "#332FD0",
+                                // borderWidth: 2,
+                              }}
+                            >
+                              ----->
+                            </Text>
+                            <Text
+                              style={{
+                                width: "45%",
+                                alignSelf: "flex-start",
+                                // borderWidth:2,
+                                fontSize: 18,
+                                padding: 12,
+                                fontWeight: "bold",
+                                color: "#332FD0",
+                                paddingLeft: 8,
+                              }}
+                            >
+                              {marker.title}
+                            </Text>
+                          </View>
+                          <View><Text style={{color:'#182e44', fontSize:15, left: 20, bottom: 15, position:'absolute',}}>Chi phí: <Text style={{fontSize: 20, fontWeight:'bold', color:'#332fd0'}}>{knapsack_trace[marker.id].price}</Text></Text></View>
                         </TouchableOpacity>
                       )}
                     </View>
@@ -622,7 +640,7 @@ const MapScreen = ({ navigation }) => {
           <MapViewDirections
             origin={startPoint}
             destination={endPoint}
-            apikey={'AIzaSyChUrRD1H7NaUhpRKqHBOweLZ9Zm9Stgx0'}
+            apikey={"AIzaSyChUrRD1H7NaUhpRKqHBOweLZ9Zm9Stgx0"}
             strokeWidth={4}
             strokeColor="#59bfff"
           />
