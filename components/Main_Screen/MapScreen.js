@@ -68,12 +68,12 @@ const placeData = [
 // Calculate time
 function nextTime(hour, minute, plus) {
   minute += plus * 60;
-  while(minute >= 60) {
-      hour++;
-      minute -= 60;
+  while (minute >= 60) {
+    hour++;
+    minute -= 60;
   }
-  while(hour >= 24) hour -= 24;
-  return {hour, minute}
+  while (hour >= 24) hour -= 24;
+  return { hour, minute }
 }
 
 // Haversine function
@@ -352,6 +352,9 @@ const MapScreen = ({ navigation }) => {
   const [limitPrice, onChangeLimitPrice] = useState(0);
   const [copyLimitPrice, setCopyLimitPrice] = useState(0);
 
+  const [startPoint, setStartPoint] = useState({ latitude: 0, longitude: 0 });
+  const [endPoint, setEndPoint] = useState({ latitude: 0, longitude: 0 });
+
   const showKnapsackPath = (W) => {
     knapsack_trace.length = 0;
     knapsack_trace = knapsack(W);
@@ -432,6 +435,17 @@ const MapScreen = ({ navigation }) => {
                             shadowRadius: 2.22,
                           }}
                           flexDirection='row'
+                          onPress={() => {
+                            setStartPoint({
+                              latitude: knapsack_trace[marker.id - 1].location.latitude,
+                              longitude: knapsack_trace[marker.id - 1].location.longitude,
+                            });
+                            setEndPoint({
+                              latitude: marker.location.latitude,
+                              longitude: marker.location.longitude,
+                            });
+                            setBtmUp(!btmUp);
+                          }}
                         >
                           <Text>{knapsack_trace[marker.id - 1].title}</Text>
                           <Text>{marker.title}</Text>
@@ -517,12 +531,21 @@ const MapScreen = ({ navigation }) => {
             </View>
           ) : null}
 
+          <View>
+            <MapView.Marker
+              title={"Điểm bắt đầu"}
+              coordinate={startPoint}
+              pinColor={"rgba(255, 0, 0, 1)"}
+            />
+            <MapView.Marker
+              title={"Điểm kết thúc"}
+              coordinate={endPoint}
+              pinColor={"rgba(47, 61, 255, 1)"}
+            />
+          </View>
           <MapViewDirections
-            origin={Origin}
-            destination={{
-              latitude: 16.0581055,
-              longitude: 108.2232435
-            }}
+            origin={startPoint}
+            destination={endPoint}
             apikey={'AIzaSyChUrRD1H7NaUhpRKqHBOweLZ9Zm9Stgx0'}
             strokeWidth={4}
             strokeColor="#59bfff"
