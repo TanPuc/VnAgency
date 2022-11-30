@@ -152,8 +152,8 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <ScrollView>
-      <View style={{ padding: SPACING * 2 }}>
-        <View
+      <SafeAreaView style={{margin:20}}>
+        <SafeAreaView
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
@@ -179,7 +179,7 @@ const HomeScreen = ({ navigation }) => {
               source={require("../../assets/Avatar.png")}
             />
           </TouchableOpacity>
-        </View>
+        </SafeAreaView>
         <View
           style={{ flexDirection: "row", marginVertical: SPACING * 2 }}
           horizontal
@@ -629,7 +629,7 @@ const HomeScreen = ({ navigation }) => {
             ))} */}
           </View>
         )}
-      </View>
+      </SafeAreaView>
     </ScrollView>
   );
 };

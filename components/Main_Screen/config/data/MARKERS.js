@@ -20,7 +20,6 @@ export default [
     title: "Núi Ngũ Hành Sơn",
     price: 40,
     rate: 4.3,
-    duration: '1.5',
     image: 'https://lh5.googleusercontent.com/p/AF1QipNe7ENszkITk31WqGfRG40Piijyo5Me5wZN5BsP=w408-h306-k-no',
     images: [
     ],
@@ -36,7 +35,7 @@ export default [
     title: "Đèo Hải Vân",
     price: 0,
     rate: 4.7,
-    duration: '3',
+    duration: 3,
     image: 'https://statics.vinpearl.com/hai-van-pass-thumb_1648380282.jpg',
     images: [
     ],

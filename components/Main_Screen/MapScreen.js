@@ -24,7 +24,7 @@ import Constants from "expo-constants";
 import MapViewDirections from "react-native-maps-directions";
 import mapStyle from "../assets/mapStyle.json";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome } from "@expo/vector-icons";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import COLORS from "./config/COLORS";
 
@@ -35,7 +35,7 @@ import HOTELS from "./config/data/HOTELS";
 import MARKERS from "./config/data/MARKERS";
 
 const WIDTH = Dimensions.get("screen").width;
-const HEIGHT = Dimensions.get('screen').height;
+const HEIGHT = Dimensions.get("screen").height;
 const SPACING = 10;
 
 //Khai báo tổng
@@ -91,9 +91,9 @@ function haversine_distance(Origin, Destination) {
   a =
     Math.sin(dlat / 2) * Math.sin(dlat / 2) +
     Math.cos(toRadians(lat1)) *
-    Math.cos(toRadians(lat2)) *
-    Math.sin(dlon / 2) *
-    Math.sin(dlon / 2);
+      Math.cos(toRadians(lat2)) *
+      Math.sin(dlon / 2) *
+      Math.sin(dlon / 2);
   c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   d = radius * c;
 
@@ -126,7 +126,8 @@ function knapsack(W) {
     }
   }
 
-  var w = W, res = dp[n][W];
+  var w = W,
+    res = dp[n][W];
   var trace = new Array(0);
   for (var i = n; i > 0 && res > 0; i--) {
     if (res == dp[i - 1][w]) continue;
@@ -146,7 +147,8 @@ function knapsack(W) {
 
   trace.reverse();
 
-  var add_id = [], i = 1;
+  var add_id = [],
+    i = 1;
 
   for (var item in trace) {
     add_id.push({
@@ -236,7 +238,13 @@ const MapScreen = ({ navigation }) => {
   const showRestaurants = () => {
     rest_markers.length = 0;
     for (var item of RESTS) {
-      if (item.location != null && haversine_distance(Origin, { latitude: item.location.lat, longitude: item.location.lng }) <= 0.5) {
+      if (
+        item.location != null &&
+        haversine_distance(Origin, {
+          latitude: item.location.lat,
+          longitude: item.location.lng,
+        }) <= 0.5
+      ) {
         rest_markers.push({
           title: item.title,
           address: item.address,
@@ -298,10 +306,13 @@ const MapScreen = ({ navigation }) => {
   const showHotels = () => {
     hotels_markers.length = 0;
     for (var item of HOTELS) {
-      if (item.location != null && haversine_distance(Origin, {
-        latitude: item.location.lat,
-        longitude: item.location.lng,
-      }) <= 0.5) {
+      if (
+        item.location != null &&
+        haversine_distance(Origin, {
+          latitude: item.location.lat,
+          longitude: item.location.lng,
+        }) <= 0.5
+      ) {
         hotels_markers.push({
           title: item.title,
           address: item.address,
@@ -372,7 +383,7 @@ const MapScreen = ({ navigation }) => {
 
   if (Region.latitude != null && Region.longitude != null)
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Modal
           animationType="slide"
           transparent={true}
@@ -384,48 +395,75 @@ const MapScreen = ({ navigation }) => {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <MaterialCommunityIcons
-                name="window-close"
-                size={17}
-                style={styles.closeBtn}
-                onPress={() => setBtmUp(!btmUp)}
-              />
-              <TextInput
-                style={styles.MoneyInput}
-                onChangeText={onChangeLimitPrice}
-                value={limitPrice}
-                placeholderTextColor='black'
-                placeholder="Giá tiền định mức"
-                keyboardType="numeric"
-              />
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => {
-                  Keyboard.dismiss();
-                  if (limitPrice > 0) {
-                    setListOnModal(false);
-                    setCopyLimitPrice(limitPrice);
-                    setListOnModal(true);
-                  }
+              <View
+                style={{
+                  backgroundColor: "#332FD0",
+                  borderBottomLeftRadius: 40,
+                  borderBottomRightRadius: 25,
                 }}
               >
-                <Text style={styles.textStyle}>Kết quả</Text>
-              </Pressable>
+                <MaterialCommunityIcons
+                  name="window-close"
+                  size={17}
+                  style={styles.closeBtn}
+                  onPress={() => setBtmUp(!btmUp)}
+                />
+                <TextInput
+                  style={styles.MoneyInput}
+                  onChangeText={onChangeLimitPrice}
+                  value={limitPrice}
+                  placeholderTextColor="black"
+                  placeholder="Giá tiền định mức"
+                  keyboardType="numeric"
+                />
+                {limitPrice != 0 ? (<Text style={{color:'black', position:'absolute', marginLeft:320, marginTop:42}}>VND</Text>) : null }
+                <Pressable
+                  style={styles.button}
+                  onPress={() => {
+                    Keyboard.dismiss();
+                    if (limitPrice > 0) {
+                      setListOnModal(false);
+                      setCopyLimitPrice(limitPrice);
+                      setListOnModal(true);
+                    }
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "#332FD0",
+                      fontWeight: "bold",
+                      alignSelf: "center",
+                    }}
+                  >
+                    Kết quả
+                  </Text>
+                </Pressable>
+              </View>
 
               {listOnModal == 1 && showKnapsackPath(copyLimitPrice) > 1 ? (
-                <ScrollView keyboardShouldPersistTaps='handled'>
+                <ScrollView
+                  style={{ padding: 20 }}
+                  keyboardShouldPersistTaps="handled"
+                >
                   {knapsack_trace.map((marker, index) => (
-                    <View key={index}>
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        overflow: "hidden",
+                      }}
+                      key={index}
+                    >
                       {marker.id != 0 && (
                         <TouchableOpacity
                           style={{
+                            width: WIDTH * 0.88,
                             height: HEIGHT * 0.1,
                             marginVertical: SPACING * 0.8,
-                            borderColor: 'grey',
-                            backgroundColor: 'white',
+                            backgroundColor: "white",
                             borderRadius: 15,
                             flex: 1,
-                            flexWrap: 'wrap',
+                            flexWrap: "wrap",
                             shadowColor: "#000",
                             shadowOffset: {
                               width: 0,
@@ -433,6 +471,7 @@ const MapScreen = ({ navigation }) => {
                             },
                             shadowOpacity: 0.22,
                             shadowRadius: 2.22,
+                            justifyContent: "space-between",
                           }}
                           flexDirection='row'
                           onPress={() => {
@@ -447,8 +486,45 @@ const MapScreen = ({ navigation }) => {
                             setBtmUp(!btmUp);
                           }}
                         >
-                          <Text>{knapsack_trace[marker.id - 1].title}</Text>
-                          <Text>{marker.title}</Text>
+                          <Text
+                            numberOfLines={2}
+                            style={{
+                              width: "40%",
+                              alignSelf: "flex-start",
+                              fontSize: 18,
+                              padding: 15,
+                              fontWeight: "bold",
+                              color: "#332FD0",
+                              paddingRight: 8,
+                              // borderWidth:2,
+                            }}
+                          >
+                            {knapsack_trace[marker.id - 1].title}
+                          </Text>
+                          <Text
+                            style={{
+                              paddingTop: 15,
+                              fontSize: 20,
+                              alignSelf: "center",
+                              color: "#332FD0",
+                            }}
+                          >
+                            ----->
+                          </Text>
+                          <Text
+                            style={{
+                              width: "45%",
+                              alignSelf: "flex-end",
+                              // borderWidth:2,
+                              fontSize: 18,
+                              padding: 15,
+                              fontWeight: "bold",
+                              color: "#332FD0",
+                              paddingRight: 8,
+                            }}
+                          >
+                            {marker.title}
+                          </Text>
                         </TouchableOpacity>
                       )}
                     </View>
@@ -607,7 +683,7 @@ const MapScreen = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
         </SafeAreaView>
-      </View>
+      </SafeAreaView>
     );
 };
 
@@ -685,16 +761,15 @@ const styles = StyleSheet.create({
   },
 
   centeredView: {
-    marginTop: '40%',
+    marginTop: "40%",
   },
   modalView: {
-    flexDirection: 'column',
+    flexDirection: "column",
     // margin: 20,
-    height: '100%',
+    height: "100%",
     backgroundColor: "white",
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    padding: 20,
     // alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -709,6 +784,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     marginTop: 10,
+    backgroundColor: "white",
     // marginRight: 20,
     margin: 80,
     marginBottom: 10,
@@ -738,8 +814,8 @@ const styles = StyleSheet.create({
     margin: 50,
     marginBottom: 10,
     borderRadius: 10,
-    backgroundColor: 'white',
-    borderColor: '#c8cacc',
+    backgroundColor: "white",
+    borderColor: "#c8cacc",
     borderWidth: 2,
   },
 
@@ -749,7 +825,9 @@ const styles = StyleSheet.create({
     // position: 'absolute',
     // top: '8%',
     // right: '5%',
-    alignSelf: 'flex-end',
+    paddingTop: 8,
+    paddingRight: 8,
+    alignSelf: "flex-end",
   },
 });
 
