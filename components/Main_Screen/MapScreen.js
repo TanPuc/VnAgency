@@ -1,8 +1,9 @@
 import * as React from "react";
 import * as Location from "expo-location";
 import { Component, useEffect, useState } from "react";
-import MapView, { Circle, Marker, Polyline } from "react-native-maps";
+import MapView, { Circle, Marker } from "react-native-maps";
 import {
+  Keyboard,
   Pressable,
   Modal,
   FlatList,
@@ -25,7 +26,6 @@ import mapStyle from "../assets/mapStyle.json";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome } from '@expo/vector-icons';
 import { ScrollView, TextInput } from "react-native-gesture-handler";
-import GestureRecognizer from "react-native-swipe-gestures";
 import COLORS from "./config/COLORS";
 
 import RESTS from "./config/data/RESTAURANTS";
@@ -33,6 +33,10 @@ import CAFE from "./config/data/CAFE";
 import EVENTS from "./config/data/EVENTS";
 import HOTELS from "./config/data/HOTELS";
 import MARKERS from "./config/data/MARKERS";
+
+const WIDTH = Dimensions.get("screen").width;
+const HEIGHT = Dimensions.get('screen').height;
+const SPACING = 10;
 
 //Khai báo tổng
 const placeData = [
@@ -60,6 +64,17 @@ const placeData = [
 //Khai báo tổng
 
 // Function các thứ
+
+// Calculate time
+function nextTime(hour, minute, plus) {
+  minute += plus * 60;
+  while(minute >= 60) {
+      hour++;
+      minute -= 60;
+  }
+  while(hour >= 24) hour -= 24;
+  return {hour, minute}
+}
 
 // Haversine function
 function toRadians(degrees) {
@@ -118,6 +133,7 @@ function knapsack(W) {
     else {
       trace.push({
         title: MARKERS[i - 1].title,
+        duration: MARKERS[i - 1].duration,
         location: {
           latitude: MARKERS[i - 1].location.latitude,
           longitude: MARKERS[i - 1].location.longitude,
@@ -136,6 +152,7 @@ function knapsack(W) {
     add_id.push({
       id: i,
       title: trace[item].title,
+      duration: trace[item].duration,
       location: {
         latitude: trace[item].location.latitude,
         longitude: trace[item].location.longitude,
@@ -329,66 +346,104 @@ const MapScreen = ({ navigation }) => {
     return 1;
   };
 
-  const showPath = (W) => {
+  // Open Bottom Popup
+  const [btmUp, setBtmUp] = useState(false);
+  const [listOnModal, setListOnModal] = useState(false);
+  const [limitPrice, onChangeLimitPrice] = useState(0);
+  const [copyLimitPrice, setCopyLimitPrice] = useState(0);
+
+  const showKnapsackPath = (W) => {
     knapsack_trace.length = 0;
     knapsack_trace = knapsack(W);
     knapsack_trace.unshift({
       id: 0,
-      title: "HOME",
+      title: "Vị trí hiện tại",
       location: {
         latitude: Origin.latitude,
         longitude: Origin.longitude,
       },
     });
     console.log(knapsack_trace);
+    return knapsack_trace.length;
   };
-
-  // Open Bottom Popup
-  const [btmUp, setBtmUp] = useState(false);
-  const [limitPrice, onChangeLimitPrice] = useState(0);
 
   if (Region.latitude != null && Region.longitude != null)
     return (
       <View style={styles.container}>
-        <GestureRecognizer style={{ flex: 1 }} onSwipeDown={() => setBtmUp(!btmUp)}>
-          <Modal
-            // style={styles.Modal}
-            animationType="slide"
-            transparent={true}
-            visible={btmUp}
-            onRequestClose={() => {
-              setModalVisible(!btmUp);
-            }}
-          >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <MaterialCommunityIcons
-                  name="window-close"
-                  size={17}
-                  style={styles.closeBtn}
-                  onPress={() => setBtmUp(!btmUp)}
-                />
-                <TextInput
-                  style={styles.MoneyInput}
-                  onChangeText={onChangeLimitPrice}
-                  value={limitPrice}
-                  placeholderTextColor='black'
-                  placeholder="Giá tiền định mức"
-                  keyboardType="numeric"
-                />
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => {
-                    showPath(limitPrice);
-                    setBtmUp(!btmUp);
-                  }}
-                >
-                  <Text style={styles.textStyle}>Kết quả</Text>
-                </Pressable>
-              </View>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={btmUp}
+          onRequestClose={() => {
+            Keyboard.dismiss();
+            setModalVisible(!btmUp);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <MaterialCommunityIcons
+                name="window-close"
+                size={17}
+                style={styles.closeBtn}
+                onPress={() => setBtmUp(!btmUp)}
+              />
+              <TextInput
+                style={styles.MoneyInput}
+                onChangeText={onChangeLimitPrice}
+                value={limitPrice}
+                placeholderTextColor='black'
+                placeholder="Giá tiền định mức"
+                keyboardType="numeric"
+              />
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => {
+                  Keyboard.dismiss();
+                  if (limitPrice > 0) {
+                    setListOnModal(false);
+                    setCopyLimitPrice(limitPrice);
+                    setListOnModal(true);
+                  }
+                }}
+              >
+                <Text style={styles.textStyle}>Kết quả</Text>
+              </Pressable>
+
+              {listOnModal == 1 && showKnapsackPath(copyLimitPrice) > 1 ? (
+                <ScrollView keyboardShouldPersistTaps='handled'>
+                  {knapsack_trace.map((marker, index) => (
+                    <View key={index}>
+                      {marker.id != 0 && (
+                        <TouchableOpacity
+                          style={{
+                            height: HEIGHT * 0.1,
+                            marginVertical: SPACING * 0.8,
+                            borderColor: 'grey',
+                            backgroundColor: 'white',
+                            borderRadius: 15,
+                            flex: 1,
+                            flexWrap: 'wrap',
+                            shadowColor: "#000",
+                            shadowOffset: {
+                              width: 0,
+                              height: 1,
+                            },
+                            shadowOpacity: 0.22,
+                            shadowRadius: 2.22,
+                          }}
+                          flexDirection='row'
+                        >
+                          <Text>{knapsack_trace[marker.id - 1].title}</Text>
+                          <Text>{marker.title}</Text>
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                  ))}
+                </ScrollView>
+              ) : null}
             </View>
-          </Modal>
-        </GestureRecognizer>
+          </View>
+        </Modal>
 
         <MapView
           style={styles.map}
@@ -465,40 +520,13 @@ const MapScreen = ({ navigation }) => {
           <MapViewDirections
             origin={Origin}
             destination={{
-              latitude: "16.0581055",
-              longitude: "108.2232435"
+              latitude: 16.0581055,
+              longitude: 108.2232435
             }}
             apikey={'AIzaSyChUrRD1H7NaUhpRKqHBOweLZ9Zm9Stgx0'}
             strokeWidth={4}
             strokeColor="#59bfff"
           />
-          <Marker coordinate={{
-            latitude: "16.0581055",
-            longitude: "108.2232435"
-          }}><Text style={{ fontSize: 24, }}>1</Text><FontAwesome name="map-marker" size={35} color="black" /></Marker>
-          {/* <MapViewDirections
-            origin={{latitude: "16.0581055",
-            longitude: "108.2232435"}}
-            destination={{latitude: "16.0388189",
-            longitude: "108.2448648",}}
-            apikey={'AIzaSyChUrRD1H7NaUhpRKqHBOweLZ9Zm9Stgx0'}
-            strokeWidth={4}
-            strokeColor="#59bfff"
-          />
-          <Marker coordinate={{latitude: "16.0388189",
-            longitude: "108.2448648",}}><Text style={{fontSize:24,}}>2</Text><FontAwesome name="map-marker" size={35} color="black" /></Marker>
-          <MapViewDirections
-            origin={{latitude: "16.0388189",
-            longitude: "108.2448648",}}
-            destination={{latitude: "16.06291",
-            longitude: "108.229815",}}
-            apikey={'AIzaSyChUrRD1H7NaUhpRKqHBOweLZ9Zm9Stgx0'}
-            strokeWidth={4}
-            strokeColor="#59bfff"
-          />
-          <Marker coordinate={{latitude: "16.06291",
-            longitude: "108.229815",}}><Text style={{fontSize:24,}}>3</Text><FontAwesome name="map-marker" size={35} color="black" /></Marker> */}
-
         </MapView>
         <SafeAreaView style={styles.PlaceTypeList}>
           {placeData.map((placeData, index) => (
