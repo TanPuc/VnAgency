@@ -129,8 +129,9 @@ function knapsack(W) {
   for (var i = 0; i <= n; i++) dp[i] = new Array(n + 1);
 
   for (var i = 1; i <= n; i++) {
-    wt[i] = MARKERS[i].price;
-    val[i] = MARKERS[i].rate;
+    wt[i] = parseInt(MARKERS[i].price);
+    val[i] = parseInt(MARKERS[i].rate);
+    // console.log(wt[i] + " " + val[i]);
   }
 
   for (var i = 0; i <= n; i++) {
@@ -138,11 +139,13 @@ function knapsack(W) {
       if (i == 0 || w == 0) dp[i][w] = 0;
       else if (wt[i - 1] <= w) {
         dp[i][w] = max(val[i - 1] + dp[i - 1][w - wt[i - 1]], dp[i - 1][w]);
-      } else dp[i][w] = dp[i - 1][w];
+      }
+      else dp[i][w] = dp[i - 1][w];
     }
   }
 
   var w = W, res = dp[n][W];
+  console.log(res);
   var trace = new Array(0);
   for (var i = n; i > 0 && res > 0; i--) {
     if (res == dp[i - 1][w]) continue;
@@ -386,10 +389,9 @@ const MapScreen = ({ navigation }) => {
   const showKnapsackPath = (W) => {
     knapsack_trace.length = 0;
     time.length = 0;
-    knapsack_trace = knapsack(W);
+    knapsack_trace = knapsack(W / 1000);
 
-    var nextHour = hour,
-      nextMinute = minute;
+    var nextHour = hour, nextMinute = minute;
     for (var id in knapsack_trace) {
       var han = nextTime(nextHour, nextMinute, knapsack_trace[id].duration);
       time.push({
@@ -412,7 +414,7 @@ const MapScreen = ({ navigation }) => {
       hour: addZeroNine(hour, minute).hour,
       minute: addZeroNine(hour, minute).minute,
     });
-    
+
     return knapsack_trace.length;
   };
 
@@ -434,8 +436,6 @@ const MapScreen = ({ navigation }) => {
               <View
                 style={{
                   backgroundColor: "#332FD0",
-                  // borderBottomLeftRadius: 40,
-                  // borderBottomRightRadius: 25,
                   borderRadius: 20,
                 }}
               >
@@ -462,9 +462,7 @@ const MapScreen = ({ navigation }) => {
                       marginLeft: 320,
                       marginTop: 42,
                     }}
-                  >
-                    VNĐ
-                  </Text>
+                  >VNĐ</Text>
                 ) : null}
                 <Pressable
                   style={styles.button}
@@ -565,22 +563,22 @@ const MapScreen = ({ navigation }) => {
                               borderRadius: 2,
                               width: "8%",
                               top: 21,
-                              left:155,
+                              left: 155,
                               alignSelf: "center",
                               borderColor: "#332fd0",
                             }}></View>
                             <FontAwesome name="arrow-right" size={24} color="black" style={{
-                                width: 24,
-                                paddingTop: 12,
-                                fontSize: 20,
-                                alignSelf: "flex-start",
-                                textAlign: "center",
-                                color: "#332FD0",
-                                paddingLeft:8,
-                                marginLeft: 20,
-                                marginRight: 8,
-                                // borderWidth: 2,
-                              }} />
+                              width: 24,
+                              paddingTop: 12,
+                              fontSize: 20,
+                              alignSelf: "flex-start",
+                              textAlign: "center",
+                              color: "#332FD0",
+                              paddingLeft: 8,
+                              marginLeft: 20,
+                              marginRight: 8,
+                              // borderWidth: 2,
+                            }} />
                             <Text
                               style={{
                                 width: "45%",
