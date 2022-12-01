@@ -440,7 +440,7 @@ const MapScreen = ({ navigation }) => {
           }}
         >
           <View style={styles.centeredView}>
-            <View style={styles.modalView}>
+            <ScrollView style={styles.modalView}>
               <View
                 style={{
                   backgroundColor: "#332FD0",
@@ -707,7 +707,7 @@ const MapScreen = ({ navigation }) => {
                   ))}
                 </ScrollView>
               ) : null}
-            </View>
+            </ScrollView>
           </View>
         </Modal>
 
@@ -937,6 +937,8 @@ const styles = StyleSheet.create({
   },
 
   centeredView: {
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
     marginTop: "40%",
   },
   modalView: {
