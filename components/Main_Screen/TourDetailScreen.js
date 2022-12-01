@@ -226,65 +226,34 @@ const TourDetailScreen = ({ navigation, route }) => {
           </View>
         </View>
       </ScrollView>
-      <View
-        flexDirection='row'
-        style={{ position: "absolute", bottom: SPACING * 2, width: "100%", alignItems: 'center', justifyContent: 'center' }}
+      <TouchableOpacity
+        style={{
+          backgroundColor: COLORS.pink,
+          padding: SPACING * 1,
+          marginBottom: SPACING,
+          marginHorizontal: SPACING,
+          borderRadius: SPACING * 2,
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: 'center'
+        }}
       >
-        <TouchableOpacity 
+        <Text
           style={{
-            backgroundColor: COLORS.green,
-            padding: SPACING * 1,
-            marginHorizontal: SPACING,
-            borderRadius: SPACING * 2,
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: 'center'
+            color: COLORS.white,
+            fontSize: SPACING * 2,
+            fontWeight: "bold",
+            marginHorizontal: SPACING * 3.6,
           }}
         >
-          <Text
-            style={{
-              color: COLORS.white,
-              fontSize: SPACING * 2,
-              fontWeight: "bold",
-              marginHorizontal: SPACING * 2,
-            }}
-          >
-            Dẫn đường
-          </Text>
-          <Ionicons
-            name="compass-outline"
-            size={SPACING * 2.5}
-            color={COLORS.white}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            backgroundColor: COLORS.pink,
-            padding: SPACING * 1,
-            marginHorizontal: SPACING,
-            borderRadius: SPACING * 2,
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: 'center'
-          }}
-        >
-          <Text
-            style={{
-              color: COLORS.white,
-              fontSize: SPACING * 2,
-              fontWeight: "bold",
-              marginHorizontal: SPACING * 3.6,
-            }}
-          >
-            Đặt vé
-          </Text>
-          <Ionicons
-            name="arrow-forward"
-            size={SPACING * 2.5}
-            color={COLORS.white}
-          />
-        </TouchableOpacity>
-      </View>
+          Đặt vé
+        </Text>
+        <Ionicons
+          name="arrow-forward"
+          size={SPACING * 2.5}
+          color={COLORS.white}
+        />
+      </TouchableOpacity>
     </>
   );
 };

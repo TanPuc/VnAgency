@@ -110,9 +110,9 @@ function haversine_distance(Origin, Destination) {
   a =
     Math.sin(dlat / 2) * Math.sin(dlat / 2) +
     Math.cos(toRadians(lat1)) *
-      Math.cos(toRadians(lat2)) *
-      Math.sin(dlon / 2) *
-      Math.sin(dlon / 2);
+    Math.cos(toRadians(lat2)) *
+    Math.sin(dlon / 2) *
+    Math.sin(dlon / 2);
   c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   d = radius * c;
 
@@ -120,20 +120,16 @@ function haversine_distance(Origin, Destination) {
 }
 
 // Knapsack DP to find path
-function max(a, b) {
-  return a > b ? a : b;
-}
+function max(a, b) { return a > b ? a : b; }
 
 function knapsack(W) {
   const n = Object.keys(MARKERS).length - 1;
-  var dp = new Array(n + 1),
-    val = new Array(n + 1),
-    wt = new Array(n + 1);
+  var dp = new Array(n + 1), val = new Array(n + 1), wt = new Array(n + 1);
   for (var i = 0; i <= n; i++) dp[i] = new Array(n + 1);
 
   for (var i = 1; i <= n; i++) {
-    wt[i] = MARKERS[i].id * 1000 - MARKERS[i].rate * 1000;
-    val[i] = MARKERS[i].id * 75000 - 378;
+    wt[i] = MARKERS[i].price;
+    val[i] = MARKERS[i].rate;
   }
 
   for (var i = 0; i <= n; i++) {
@@ -145,8 +141,7 @@ function knapsack(W) {
     }
   }
 
-  var w = W,
-    res = dp[n][W];
+  var w = W, res = dp[n][W];
   var trace = new Array(0);
   for (var i = n; i > 0 && res > 0; i--) {
     if (res == dp[i - 1][w]) continue;
@@ -167,8 +162,7 @@ function knapsack(W) {
 
   trace.reverse();
 
-  var add_id = [],
-    i = 1;
+  var add_id = [], i = 1;
 
   for (var item in trace) {
     add_id.push({
@@ -249,11 +243,8 @@ const MapScreen = ({ navigation }) => {
     setPlaceDataSelected(newArr);
   };
 
-  var rest_markers = [],
-    cafe_markers = [],
-    hotels_markers = [],
-    events_markers = [],
-    knapsack_trace = [];
+  var rest_markers = [], cafe_markers = [],
+    hotels_markers = [], events_markers = [], knapsack_trace = [];
 
   // Generate RESTAURANTS in particular area
   const showRestaurants = () => {
@@ -420,9 +411,7 @@ const MapScreen = ({ navigation }) => {
       hour: addZeroNine(hour, minute).hour,
       minute: addZeroNine(hour, minute).minute,
     });
-
-    // console.log(time);
-    // console.log(knapsack_trace);
+    
     return knapsack_trace.length;
   };
 
@@ -446,7 +435,7 @@ const MapScreen = ({ navigation }) => {
                   backgroundColor: "#332FD0",
                   // borderBottomLeftRadius: 40,
                   // borderBottomRightRadius: 25,
-                  borderRadius:20,
+                  borderRadius: 20,
                 }}
               >
                 <MaterialCommunityIcons
@@ -464,22 +453,6 @@ const MapScreen = ({ navigation }) => {
                   placeholder="Giá tiền định mức"
                   keyboardType="numeric"
                 />
-                <TextInput
-                  style={styles.MoneyInput}
-                  onChangeText={onChangeHour}
-                  value={hour}
-                  placeholderTextColor="black"
-                  placeholder="Giờ"
-                  keyboardType="numeric"
-                />
-                <TextInput
-                  style={styles.MoneyInput}
-                  onChangeText={onChangeMinute}
-                  value={minute}
-                  placeholderTextColor="black"
-                  placeholder="Phút"
-                  keyboardType="numeric"
-                />
                 {limitPrice != 0 ? (
                   <Text
                     style={{
@@ -489,31 +462,7 @@ const MapScreen = ({ navigation }) => {
                       marginTop: 42,
                     }}
                   >
-                    VND
-                  </Text>
-                ) : null}
-                {hour != 0 ? (
-                  <Text
-                    style={{
-                      color: "black",
-                      position: "absolute",
-                      marginLeft: 320,
-                      marginTop: 95,
-                    }}
-                  >
-                    Giờ
-                  </Text>
-                ) : null}
-                {minute != 0 ? (
-                  <Text
-                    style={{
-                      color: "black",
-                      position: "absolute",
-                      marginLeft: 320,
-                      marginTop: 150,
-                    }}
-                  >
-                    Phút
+                    VNĐ
                   </Text>
                 ) : null}
                 <Pressable
@@ -521,6 +470,9 @@ const MapScreen = ({ navigation }) => {
                   onPress={() => {
                     Keyboard.dismiss();
                     if (limitPrice > 0) {
+                      var today = new Date();
+                      onChangeHour(today.getHours());
+                      onChangeMinute(today.getMinutes());
                       setListOnModal(false);
                       setCopyLimitPrice(limitPrice);
                       setListOnModal(true);
@@ -662,7 +614,7 @@ const MapScreen = ({ navigation }) => {
                               Chi phí:{" "}
                               <Text
                                 style={{
-                                  fontSize: 20,
+                                  fontSize: 17,
                                   fontWeight: "bold",
                                   color: "#332fd0",
                                 }}
@@ -678,25 +630,25 @@ const MapScreen = ({ navigation }) => {
                                 style={{
                                   width: "50%",
                                   color: "#332fd0",
-                                  fontSize:15,
+                                  fontSize: 15,
                                   // borderWidth: 2,
-                                  textAlign:'center',
-                                  fontWeight:"bold",
+                                  textAlign: 'center',
+                                  fontWeight: "bold",
                                 }}
                               >
-                                <Text style={{fontWeight:'normal', color:'#182e44'}}>Bắt đầu: </Text>{time[marker.id - 1].hour}:
+                                <Text style={{ fontWeight: 'normal', color: '#182e44' }}>Bắt đầu: </Text>{time[marker.id - 1].hour}:
                                 {time[marker.id - 1].minute}
                               </Text>
                               <Text style={{
                                 width: "50%",
                                 color: "#332fd0",
-                                fontSize:15,
+                                fontSize: 15,
                                 // borderWidth: 2,
-                                textAlign:'center',
-                                fontWeight:"bold",
+                                textAlign: 'center',
+                                fontWeight: "bold",
                               }}
                               >
-                                <Text style={{fontWeight:'normal', color:'#182e44'}}>Kết thúc: </Text>{time[marker.id].hour}:
+                                <Text style={{ fontWeight: 'normal', color: '#182e44' }}>Kết thúc: </Text>{time[marker.id].hour}:
                                 {time[marker.id].minute}
                               </Text>
                             </View>
