@@ -65,14 +65,33 @@ const placeData = [
 
 // Function các thứ
 
+function addZeroNine(hour, minute) {
+  let hour_text = hour.toString(),
+    minute_text = minute.toString();
+  if (hour < 10) {
+    hour_text = "0" + hour_text;
+  }
+  if (minute < 10) {
+    minute_text = "0" + minute_text;
+  }
+  hour = hour_text;
+  minute = minute_text;
+  return { hour, minute };
+}
+
 // Calculate time
 function nextTime(hour, minute, plus) {
+  hour = parseInt(hour);
+  minute = parseInt(minute);
+  plus = parseFloat(plus);
   minute += plus * 60;
   while (minute >= 60) {
     hour++;
     minute -= 60;
   }
   while (hour >= 24) hour -= 24;
+  hour = addZeroNine(hour, minute).hour;
+  minute = addZeroNine(hour, minute).minute;
   return { hour, minute };
 }
 
@@ -135,6 +154,7 @@ function knapsack(W) {
       trace.push({
         title: MARKERS[i - 1].title,
         duration: MARKERS[i - 1].duration,
+        price: parseInt(MARKERS[i - 1].price),
         location: {
           latitude: MARKERS[i - 1].location.latitude,
           longitude: MARKERS[i - 1].location.longitude,
@@ -155,6 +175,7 @@ function knapsack(W) {
       id: i,
       title: trace[item].title,
       duration: trace[item].duration,
+      price: trace[item].price,
       location: {
         latitude: trace[item].location.latitude,
         longitude: trace[item].location.longitude,
@@ -362,13 +383,31 @@ const MapScreen = ({ navigation }) => {
   const [listOnModal, setListOnModal] = useState(false);
   const [limitPrice, onChangeLimitPrice] = useState(0);
   const [copyLimitPrice, setCopyLimitPrice] = useState(0);
+  const [hour, onChangeHour] = useState(0);
+  const [minute, onChangeMinute] = useState(0);
 
   const [startPoint, setStartPoint] = useState({ latitude: 0, longitude: 0 });
   const [endPoint, setEndPoint] = useState({ latitude: 0, longitude: 0 });
 
+  var time = [];
+
   const showKnapsackPath = (W) => {
     knapsack_trace.length = 0;
+    time.length = 0;
     knapsack_trace = knapsack(W);
+
+    var nextHour = hour,
+      nextMinute = minute;
+    for (var id in knapsack_trace) {
+      var han = nextTime(nextHour, nextMinute, knapsack_trace[id].duration);
+      time.push({
+        hour: han.hour,
+        minute: han.minute,
+      });
+      nextHour = han.hour;
+      nextMinute = han.minute;
+    }
+
     knapsack_trace.unshift({
       id: 0,
       title: "Vị trí hiện tại",
@@ -377,13 +416,19 @@ const MapScreen = ({ navigation }) => {
         longitude: Origin.longitude,
       },
     });
-    console.log(knapsack_trace);
+    time.unshift({
+      hour: addZeroNine(hour, minute).hour,
+      minute: addZeroNine(hour, minute).minute,
+    });
+
+    // console.log(time);
+    // console.log(knapsack_trace);
     return knapsack_trace.length;
   };
 
   if (Region.latitude != null && Region.longitude != null)
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <Modal
           animationType="slide"
           transparent={true}
@@ -391,6 +436,7 @@ const MapScreen = ({ navigation }) => {
           onRequestClose={() => {
             Keyboard.dismiss();
             setModalVisible(!btmUp);
+            setListOnModal(0);
           }}
         >
           <View style={styles.centeredView}>
@@ -398,14 +444,16 @@ const MapScreen = ({ navigation }) => {
               <View
                 style={{
                   backgroundColor: "#332FD0",
-                  borderBottomLeftRadius: 40,
-                  borderBottomRightRadius: 25,
+                  // borderBottomLeftRadius: 40,
+                  // borderBottomRightRadius: 25,
+                  borderRadius:20,
                 }}
               >
                 <MaterialCommunityIcons
                   name="window-close"
                   size={17}
                   style={styles.closeBtn}
+                  color={"white"}
                   onPress={() => setBtmUp(!btmUp)}
                 />
                 <TextInput
@@ -414,6 +462,22 @@ const MapScreen = ({ navigation }) => {
                   value={limitPrice}
                   placeholderTextColor="black"
                   placeholder="Giá tiền định mức"
+                  keyboardType="numeric"
+                />
+                <TextInput
+                  style={styles.MoneyInput}
+                  onChangeText={onChangeHour}
+                  value={hour}
+                  placeholderTextColor="black"
+                  placeholder="Giờ"
+                  keyboardType="numeric"
+                />
+                <TextInput
+                  style={styles.MoneyInput}
+                  onChangeText={onChangeMinute}
+                  value={minute}
+                  placeholderTextColor="black"
+                  placeholder="Phút"
                   keyboardType="numeric"
                 />
                 {limitPrice != 0 ? (
@@ -426,6 +490,30 @@ const MapScreen = ({ navigation }) => {
                     }}
                   >
                     VND
+                  </Text>
+                ) : null}
+                {hour != 0 ? (
+                  <Text
+                    style={{
+                      color: "black",
+                      position: "absolute",
+                      marginLeft: 320,
+                      marginTop: 95,
+                    }}
+                  >
+                    Giờ
+                  </Text>
+                ) : null}
+                {minute != 0 ? (
+                  <Text
+                    style={{
+                      color: "black",
+                      position: "absolute",
+                      marginLeft: 320,
+                      marginTop: 150,
+                    }}
+                  >
+                    Phút
                   </Text>
                 ) : null}
                 <Pressable
@@ -468,8 +556,8 @@ const MapScreen = ({ navigation }) => {
                       {marker.id != 0 && (
                         <TouchableOpacity
                           style={{
-                            width: WIDTH * 0.88,
-                            height: HEIGHT * 0.1,
+                            width: WIDTH * 0.9,
+                            height: HEIGHT * 0.15,
                             marginVertical: SPACING * 0.8,
                             backgroundColor: "white",
                             borderRadius: 15,
@@ -500,7 +588,7 @@ const MapScreen = ({ navigation }) => {
                             setBtmUp(!btmUp);
                           }}
                         >
-                          <View flexDirection='row'>
+                          <View flexDirection="row">
                             <Text
                               numberOfLines={2}
                               style={{
@@ -509,9 +597,11 @@ const MapScreen = ({ navigation }) => {
                                 fontSize: 18,
                                 padding: 12,
                                 fontWeight: "bold",
+                                textAlign: "center",
                                 color: "#332FD0",
                                 paddingRight: 8,
                                 // borderWidth:2,
+                                // fontSize: 14,
                               }}
                             >
                               {knapsack_trace[marker.id - 1].title}
@@ -521,28 +611,96 @@ const MapScreen = ({ navigation }) => {
                                 paddingTop: 12,
                                 fontSize: 20,
                                 alignSelf: "flex-start",
+                                textAlign: "center",
                                 color: "#332FD0",
+                                marginLeft: 8,
+                                marginRight: 8,
                                 // borderWidth: 2,
                               }}
                             >
-                              ----->
+                              --->
                             </Text>
                             <Text
                               style={{
                                 width: "45%",
                                 alignSelf: "flex-start",
                                 // borderWidth:2,
+                                // borderColor:'#332fd0',
+                                borderRadius: 25,
+                                textAlign: "center",
                                 fontSize: 18,
                                 padding: 12,
                                 fontWeight: "bold",
                                 color: "#332FD0",
-                                paddingLeft: 8,
+                                paddingLeft: 20,
+                                // fontSize: 14,
                               }}
                             >
                               {marker.title}
                             </Text>
                           </View>
-                          <View><Text style={{color:'#182e44', fontSize:15, left: 20, bottom: 15, position:'absolute',}}>Chi phí: <Text style={{fontSize: 20, fontWeight:'bold', color:'#332fd0'}}>{knapsack_trace[marker.id].price}</Text></Text></View>
+                          <View
+                            style={{
+                              position: "absolute",
+                              borderBottomWidth: 3,
+                              width: "90%",
+                              top: 66,
+                              alignSelf: "center",
+                              borderColor: "#332fd0",
+                            }}
+                          ></View>
+                          <View>
+                            <Text
+                              style={{
+                                color: "#182e44",
+                                fontSize: 15,
+                                left: 40,
+                                bottom: 35,
+                                position: "absolute",
+                              }}
+                            >
+                              Chi phí:{" "}
+                              <Text
+                                style={{
+                                  fontSize: 20,
+                                  fontWeight: "bold",
+                                  color: "#332fd0",
+                                }}
+                              >
+                                {knapsack_trace[marker.id].price != 0
+                                  ? knapsack_trace[marker.id].price + ".000₫"
+                                  : "Miễn phí"}
+                              </Text>
+                            </Text>
+
+                            <View style={{ width: "100%", bottom: 10 }} flexDirection="row">
+                              <Text
+                                style={{
+                                  width: "50%",
+                                  color: "#332fd0",
+                                  fontSize:15,
+                                  // borderWidth: 2,
+                                  textAlign:'center',
+                                  fontWeight:"bold",
+                                }}
+                              >
+                                <Text style={{fontWeight:'normal', color:'#182e44'}}>Bắt đầu: </Text>{time[marker.id - 1].hour}:
+                                {time[marker.id - 1].minute}
+                              </Text>
+                              <Text style={{
+                                width: "50%",
+                                color: "#332fd0",
+                                fontSize:15,
+                                // borderWidth: 2,
+                                textAlign:'center',
+                                fontWeight:"bold",
+                              }}
+                              >
+                                <Text style={{fontWeight:'normal', color:'#182e44'}}>Kết thúc: </Text>{time[marker.id].hour}:
+                                {time[marker.id].minute}
+                              </Text>
+                            </View>
+                          </View>
                         </TouchableOpacity>
                       )}
                     </View>
@@ -563,15 +721,15 @@ const MapScreen = ({ navigation }) => {
           loadingEnabled={true}
           customMapStyle={mapStyle}
         >
-          {Origin.latitude != null && Origin.longitude != null ? (
+          {/* {Origin.latitude != null && Origin.longitude != null ? (
             <MapView.Circle
               center={Origin}
               radius={500}
-              strokeWidth={4}
-              strokeColor={"rgba(0, 0, 0, 1)"}
+              // strokeWidth={4}
+              // strokeColor={"rgba(0, 0, 0, 1)"}
               fillColor={"rgba(0, 0, 255, 0.2)"}
             />
-          ) : null}
+          ) : null} */}
 
           {placeDataSelected[0].value == 1 && showCafe() ? (
             <View>
@@ -701,7 +859,7 @@ const MapScreen = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
         </SafeAreaView>
-      </SafeAreaView>
+      </View>
     );
 };
 
@@ -786,6 +944,7 @@ const styles = StyleSheet.create({
     // margin: 20,
     height: "100%",
     backgroundColor: "white",
+    // borderRadius: 20,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     // alignItems: "center",
