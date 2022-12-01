@@ -27,6 +27,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import COLORS from "./config/COLORS";
+import { Entypo } from '@expo/vector-icons';
 
 import RESTS from "./config/data/RESTAURANTS";
 import CAFE from "./config/data/CAFE";
@@ -558,20 +559,28 @@ const MapScreen = ({ navigation }) => {
                             >
                               {knapsack_trace[marker.id - 1].title}
                             </Text>
-                            <Text
-                              style={{
+                            <View style={{
+                              position: "absolute",
+                              borderBottomWidth: 4.3,
+                              borderRadius: 2,
+                              width: "8%",
+                              top: 21,
+                              left:155,
+                              alignSelf: "center",
+                              borderColor: "#332fd0",
+                            }}></View>
+                            <FontAwesome name="arrow-right" size={24} color="black" style={{
+                                width: 24,
                                 paddingTop: 12,
                                 fontSize: 20,
                                 alignSelf: "flex-start",
                                 textAlign: "center",
                                 color: "#332FD0",
-                                marginLeft: 8,
+                                paddingLeft:8,
+                                marginLeft: 20,
                                 marginRight: 8,
                                 // borderWidth: 2,
-                              }}
-                            >
-                              --->
-                            </Text>
+                              }} />
                             <Text
                               style={{
                                 width: "45%",
