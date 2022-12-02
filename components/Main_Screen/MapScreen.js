@@ -27,14 +27,16 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import COLORS from "./config/COLORS";
-import { Entypo } from '@expo/vector-icons';
+import { Entypo } from "@expo/vector-icons";
 
 import RESTS from "./config/data/RESTAURANTS";
 import CAFE from "./config/data/CAFE";
 import EVENTS from "./config/data/EVENTS";
 import HOTELS from "./config/data/HOTELS";
 import MARKERS from "./config/data/MARKERS";
-import ATM from "./config/data/ATM";
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
@@ -117,9 +119,9 @@ function haversine_distance(Origin, Destination) {
   a =
     Math.sin(dlat / 2) * Math.sin(dlat / 2) +
     Math.cos(toRadians(lat1)) *
-    Math.cos(toRadians(lat2)) *
-    Math.sin(dlon / 2) *
-    Math.sin(dlon / 2);
+      Math.cos(toRadians(lat2)) *
+      Math.sin(dlon / 2) *
+      Math.sin(dlon / 2);
   c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   d = radius * c;
 
@@ -127,11 +129,15 @@ function haversine_distance(Origin, Destination) {
 }
 
 // Knapsack DP to find path
-function max(a, b) { return a > b ? a : b; }
+function max(a, b) {
+  return a > b ? a : b;
+}
 
 function knapsack(W) {
   const n = Object.keys(MARKERS).length - 1;
-  var dp = new Array(n + 1), val = new Array(n + 1), wt = new Array(n + 1);
+  var dp = new Array(n + 1),
+    val = new Array(n + 1),
+    wt = new Array(n + 1);
   for (var i = 0; i <= n; i++) dp[i] = new Array(n + 1);
 
   for (var i = 1; i <= n; i++) {
@@ -145,13 +151,13 @@ function knapsack(W) {
       if (i == 0 || w == 0) dp[i][w] = 0;
       else if (wt[i - 1] <= w) {
         dp[i][w] = max(val[i - 1] + dp[i - 1][w - wt[i - 1]], dp[i - 1][w]);
-      }
-      else dp[i][w] = dp[i - 1][w];
+      } else dp[i][w] = dp[i - 1][w];
     }
   }
 
-  var w = W, res = dp[n][W];
-  console.log(res);
+  var w = W,
+    res = dp[n][W];
+  // console.log(res);
   var trace = new Array(0);
   for (var i = n; i > 0 && res > 0; i--) {
     if (res == dp[i - 1][w]) continue;
@@ -172,7 +178,8 @@ function knapsack(W) {
 
   trace.reverse();
 
-  var add_id = [], i = 1;
+  var add_id = [],
+    i = 1;
 
   for (var item in trace) {
     add_id.push({
@@ -254,7 +261,7 @@ const MapScreen = ({ navigation }) => {
     setPlaceDataSelected(newArr);
   };
 
-  var rest_markers = [], cafe_markers = [], atm_markers = [],
+  var rest_markers = [], cafe_markers = [],
     hotels_markers = [], events_markers = [], knapsack_trace = [];
 
   // Generate RESTAURANTS in particular area
@@ -421,6 +428,7 @@ const MapScreen = ({ navigation }) => {
   const [hour, onChangeHour] = useState(0);
   const [minute, onChangeMinute] = useState(0);
 
+  const [text, setText] = useState('');
   const [startPoint, setStartPoint] = useState({ latitude: 0, longitude: 0 });
   const [endPoint, setEndPoint] = useState({ latitude: 0, longitude: 0 });
 
@@ -431,7 +439,8 @@ const MapScreen = ({ navigation }) => {
     time.length = 0;
     knapsack_trace = knapsack(W / 1000);
 
-    var nextHour = hour, nextMinute = minute;
+    var nextHour = hour,
+      nextMinute = minute;
     for (var id in knapsack_trace) {
       var han = nextTime(nextHour, nextMinute, knapsack_trace[id].duration);
       time.push({
@@ -475,7 +484,7 @@ const MapScreen = ({ navigation }) => {
             <ScrollView style={styles.modalView}>
               <View
                 style={{
-                  backgroundColor: "#332FD0",
+                  backgroundColor: "#ff757c",
                   borderRadius: 20,
                 }}
               >
@@ -502,7 +511,9 @@ const MapScreen = ({ navigation }) => {
                       marginLeft: 320,
                       marginTop: 42,
                     }}
-                  >VNĐ</Text>
+                  >
+                    VNĐ
+                  </Text>
                 ) : null}
                 <Pressable
                   style={styles.button}
@@ -520,7 +531,7 @@ const MapScreen = ({ navigation }) => {
                 >
                   <Text
                     style={{
-                      color: "#332FD0",
+                      color: "#ff757c",
                       fontWeight: "bold",
                       alignSelf: "center",
                     }}
@@ -589,7 +600,7 @@ const MapScreen = ({ navigation }) => {
                                 padding: 12,
                                 fontWeight: "bold",
                                 textAlign: "center",
-                                color: "#332FD0",
+                                color: "#0e7886",
                                 paddingRight: 8,
                                 // borderWidth:2,
                                 // fontSize: 14,
@@ -597,40 +608,47 @@ const MapScreen = ({ navigation }) => {
                             >
                               {knapsack_trace[marker.id - 1].title}
                             </Text>
-                            <View style={{
-                              position: "absolute",
-                              borderBottomWidth: 4.3,
-                              borderRadius: 2,
-                              width: "8%",
-                              top: 21,
-                              left: 155,
-                              alignSelf: "center",
-                              borderColor: "#332fd0",
-                            }}></View>
-                            <FontAwesome name="arrow-right" size={24} color="black" style={{
-                              width: 24,
-                              paddingTop: 12,
-                              fontSize: 20,
-                              alignSelf: "flex-start",
-                              textAlign: "center",
-                              color: "#332FD0",
-                              paddingLeft: 8,
-                              marginLeft: 20,
-                              marginRight: 8,
-                              // borderWidth: 2,
-                            }} />
+                            <View
+                              style={{
+                                position: "absolute",
+                                borderBottomWidth: 4.3,
+                                borderRadius: 2,
+                                width: "8%",
+                                top: 21,
+                                left: 155,
+                                alignSelf: "center",
+                                borderColor: "#0e7886",
+                              }}
+                            ></View>
+                            <FontAwesome
+                              name="arrow-right"
+                              size={24}
+                              color="black"
+                              style={{
+                                width: 24,
+                                paddingTop: 12,
+                                fontSize: 20,
+                                alignSelf: "flex-start",
+                                textAlign: "center",
+                                color: "#0e7886",
+                                paddingLeft: 8,
+                                marginLeft: 20,
+                                marginRight: 8,
+                                // borderWidth: 2,
+                              }}
+                            />
                             <Text
                               style={{
                                 width: "45%",
                                 alignSelf: "flex-start",
                                 // borderWidth:2,
-                                // borderColor:'#332fd0',
+                                // borderColor:'#ff757c',
                                 borderRadius: 25,
                                 textAlign: "center",
                                 fontSize: 18,
                                 padding: 12,
                                 fontWeight: "bold",
-                                color: "#332FD0",
+                                color: "#0e7886",
                                 paddingLeft: 20,
                                 // fontSize: 14,
                               }}
@@ -645,7 +663,7 @@ const MapScreen = ({ navigation }) => {
                               width: "90%",
                               top: 66,
                               alignSelf: "center",
-                              borderColor: "#332fd0",
+                              borderColor: "#ff757c",
                             }}
                           ></View>
                           <View>
@@ -663,7 +681,7 @@ const MapScreen = ({ navigation }) => {
                                 style={{
                                   fontSize: 17,
                                   fontWeight: "bold",
-                                  color: "#332fd0",
+                                  color: "#ff757c",
                                 }}
                               >
                                 {knapsack_trace[marker.id].price != 0
@@ -672,31 +690,50 @@ const MapScreen = ({ navigation }) => {
                               </Text>
                             </Text>
 
-                            <View style={{ width: "100%", bottom: 10 }} flexDirection="row">
+                            <View
+                              style={{ width: "100%", bottom: 10 }}
+                              flexDirection="row"
+                            >
                               <Text
                                 style={{
                                   width: "50%",
-                                  color: "#332fd0",
+                                  color: "#ff757c",
                                   fontSize: 15,
                                   // borderWidth: 2,
-                                  textAlign: 'center',
+                                  textAlign: "center",
                                   fontWeight: "bold",
                                 }}
                               >
-                                <Text style={{ fontWeight: 'normal', color: '#182e44' }}>Bắt đầu: </Text>{time[marker.id - 1].hour}:
+                                <Text
+                                  style={{
+                                    fontWeight: "normal",
+                                    color: "#182e44",
+                                  }}
+                                >
+                                  Bắt đầu:{" "}
+                                </Text>
+                                {time[marker.id - 1].hour}:
                                 {time[marker.id - 1].minute}
                               </Text>
-                              <Text style={{
-                                width: "50%",
-                                color: "#332fd0",
-                                fontSize: 15,
-                                // borderWidth: 2,
-                                textAlign: 'center',
-                                fontWeight: "bold",
-                              }}
+                              <Text
+                                style={{
+                                  width: "50%",
+                                  color: "#0e7886",
+                                  fontSize: 15,
+                                  // borderWidth: 2,
+                                  textAlign: "center",
+                                  fontWeight: "bold",
+                                }}
                               >
-                                <Text style={{ fontWeight: 'normal', color: '#182e44' }}>Kết thúc: </Text>{time[marker.id].hour}:
-                                {time[marker.id].minute}
+                                <Text
+                                  style={{
+                                    fontWeight: "normal",
+                                    color: "#182e44",
+                                  }}
+                                >
+                                  Kết thúc:{" "}
+                                </Text>
+                                {time[marker.id].hour}:{time[marker.id].minute}
                               </Text>
                             </View>
                           </View>
@@ -729,6 +766,29 @@ const MapScreen = ({ navigation }) => {
               fillColor={"rgba(0, 0, 255, 0.2)"}
             />
           ) : null} */}
+          {Destination.longitude != 0 && Destination.latitude != 0 ? (
+            <>
+              <View>
+                <MapView.Marker
+                  title={"Diam bắt đầu"}
+                  coordinate={Origin}
+                  pinColor={"rgba(255, 0, 0, 1)"}
+                />
+                <MapView.Marker
+                  title={"Điểm kết thúc"}
+                  coordinate={Destination}
+                  pinColor={"rgba(47, 61, 255, 1)"}
+                />
+              </View>
+              <MapViewDirections
+                origin={Origin}
+                destination={Destination}
+                apikey={"AIzaSyBZWmSm5vzDN4oG59ma-yrXtgBm0LyfwjE"}
+                strokeWidth={4}
+                strokeColor="#59bfff"
+              ></MapViewDirections>
+            </>
+          ) : null}
 
           {placeDataSelected[0].value == 1 && showCafe() ? (
             <View>
@@ -794,7 +854,6 @@ const MapScreen = ({ navigation }) => {
               ))}
             </View>
           ) : null}
-
           <View>
             <MapView.Marker
               title={"Điểm bắt đầu"}
@@ -810,7 +869,7 @@ const MapScreen = ({ navigation }) => {
           <MapViewDirections
             origin={startPoint}
             destination={endPoint}
-            apikey={"AIzaSyChUrRD1H7NaUhpRKqHBOweLZ9Zm9Stgx0"}
+            apikey={"AIzaSyBZWmSm5vzDN4oG59ma-yrXtgBm0LyfwjE"}
             strokeWidth={4}
             strokeColor="#59bfff"
           />
@@ -838,7 +897,8 @@ const MapScreen = ({ navigation }) => {
             fetchDetails={true}
             GooglePlacesDetailsQuery={{ rankby: "distance" }}
             onPress={(data, details = null) => {
-              console.log(details.geometry.location);
+              // console.log(text);
+              // console.log(details.geometry.location);
               setDestination({
                 latitude: details.geometry.location.lat,
                 longitude: details.geometry.location.lng,
@@ -847,7 +907,7 @@ const MapScreen = ({ navigation }) => {
             onFail={(error) => console.log(error)}
             onNotFound={() => console.log("no results")}
             query={{
-              key: "AIzaSyChUrRD1H7NaUhpRKqHBOweLZ9Zm9Stgx0",
+              key: "AIzaSyBZWmSm5vzDN4oG59ma-yrXtgBm0LyfwjE",
               language: "en",
               components: "country:vn",
             }}
@@ -998,6 +1058,7 @@ const styles = StyleSheet.create({
   },
 
   MoneyInput: {
+    paddingLeft: 10,
     height: 40,
     // marginBottom: 20,
     marginTop: 5,

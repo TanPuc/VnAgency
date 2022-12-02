@@ -23,6 +23,9 @@ import { AntDesign } from "@expo/vector-icons";
 import { auth } from "../assets/Firebase.js";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import houses from "./config/HOUSES";
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
@@ -349,9 +352,8 @@ const HomeScreen = ({ navigation }) => {
                     width: 0,
                     height: 1,
                   },
-                  shadowOpacity: 0.22,
+                  shadowOpacity: 0.11,
                   shadowRadius: 2.22,
-
                   elevation: 3,
                 }}
                 key={index}
@@ -377,8 +379,8 @@ const HomeScreen = ({ navigation }) => {
                     <Text
                       style={{
                         width: WIDTH * 0.6,
-                        paddingHorizontal: 15,
-                        paddingTop: 6,
+                        paddingHorizontal: 10,
+                        paddingTop: 20,
                         paddingBottom: 1,
                         fontFamily: "SourceSansPro_Bold",
                         fontSize: 14.5,
@@ -392,13 +394,13 @@ const HomeScreen = ({ navigation }) => {
                   <Text
                     style={{
                       width: WIDTH * 0.58,
-                      paddingHorizontal: 15,
-                      paddingVertical: 6,
+                      paddingHorizontal: 10,
+                      paddingVertical: 10,
                       fontFamily: "SourceSansPro_Regular",
                       fontSize: 13.5,
                       color: "#182e44",
                     }}
-                    numberOfLines={3}
+                    numberOfLines={1}
                   >
                     {tour.abstract}
                   </Text>
@@ -498,7 +500,7 @@ const HomeScreen = ({ navigation }) => {
                           fontSize: 14.5,
                           paddingTop: 35,
                           paddingBottom: 35,
-                          paddingLeft: 8,
+                          paddingLeft: 14,
 
                           color: "white",
                           // borderColor: 'black',
