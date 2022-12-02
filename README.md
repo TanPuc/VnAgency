@@ -16,15 +16,6 @@ A simple React Native app summarizing tourism data from news to illustrate on ma
 </br>
 </p>
 
-## Feautures
-- Login/Logout screens:
-![image](https://user-images.githubusercontent.com/58034112/205369744-0896f145-f646-49f6-bd50-5345976238b7.png)
-![image](https://user-images.githubusercontent.com/58034112/205369754-42f8b373-c6f7-4cbe-954a-0a5953ead7f2.png)
-![image](https://user-images.githubusercontent.com/58034112/205369792-913dd81e-66c4-4b8f-b58f-e33e55f85ed2.png)
-<br>
-- Home screen:
-
-
 ## APIs and libraries
 - [Google Maps Platform](https://developers.google.com/maps)
 - [Firebase](https://firebase.google.com/docs/reference)
