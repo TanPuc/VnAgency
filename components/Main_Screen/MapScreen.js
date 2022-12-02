@@ -34,6 +34,7 @@ import CAFE from "./config/data/CAFE";
 import EVENTS from "./config/data/EVENTS";
 import HOTELS from "./config/data/HOTELS";
 import MARKERS from "./config/data/MARKERS";
+import ATM from "./config/data/ATM";
 
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
@@ -58,6 +59,11 @@ const placeData = [
   },
   {
     id: 4,
+    place: "ATM",
+    selected: false,
+  },
+  {
+    id: 5,
     place: "Sự kiện",
     selected: false,
   },
@@ -239,6 +245,7 @@ const MapScreen = ({ navigation }) => {
     { id: 2, value: 0 },
     { id: 3, value: 0 },
     { id: 4, value: 0 },
+    { id: 5, value: 0 },
   ]);
 
   const updateFieldChanged = (index) => {
@@ -247,7 +254,7 @@ const MapScreen = ({ navigation }) => {
     setPlaceDataSelected(newArr);
   };
 
-  var rest_markers = [], cafe_markers = [],
+  var rest_markers = [], cafe_markers = [], atm_markers = [],
     hotels_markers = [], events_markers = [], knapsack_trace = [];
 
   // Generate RESTAURANTS in particular area
@@ -330,6 +337,39 @@ const MapScreen = ({ navigation }) => {
         }) <= 0.5
       ) {
         hotels_markers.push({
+          title: item.title,
+          address: item.address,
+          price: item.price,
+          phone: item.phone,
+          url: item.url,
+          reviewsDistribution: {
+            oneStar: item.reviewsDistribution.oneStar,
+            twoStar: item.reviewsDistribution.twoStar,
+            threeStar: item.reviewsDistribution.threeStar,
+            fourStar: item.reviewsDistribution.fourStar,
+            fiveStar: item.reviewsDistribution.fiveStar,
+          },
+          location: {
+            latitude: item.location.lat,
+            longitude: item.location.lng,
+          },
+        });
+      }
+    }
+    return 1;
+  };
+
+  const showATM = () => {
+    atm_markers.length = 0;
+    for (var item of ATM) {
+      if (
+        item.location != null &&
+        haversine_distance(Origin, {
+          latitude: item.location.lat,
+          longitude: item.location.lng,
+        }) <= 0.5
+      ) {
+        atm_markers.push({
           title: item.title,
           address: item.address,
           price: item.price,
@@ -729,7 +769,20 @@ const MapScreen = ({ navigation }) => {
             </View>
           ) : null}
 
-          {placeDataSelected[3].value == 1 && showEvents() ? (
+          {placeDataSelected[3].value == 1 && showATM() ? (
+            <View>
+              {atm_markers.map((marker, index) => (
+                <MapView.Marker
+                  title={marker.title}
+                  key={index}
+                  coordinate={marker.location}
+                  icon={require("../../assets/markers/event.png")}
+                />
+              ))}
+            </View>
+          ) : null}
+
+          {placeDataSelected[4].value == 1 && showEvents() ? (
             <View>
               {events_markers.map((marker, index) => (
                 <MapView.Marker
