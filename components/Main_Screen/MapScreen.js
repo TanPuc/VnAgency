@@ -3,6 +3,7 @@ import * as Location from "expo-location";
 import { Component, useEffect, useState } from "react";
 import MapView, { Circle, Marker } from "react-native-maps";
 import {
+  Button,
   Keyboard,
   Pressable,
   Modal,
@@ -47,7 +48,7 @@ const SPACING = 10;
 const placeData = [
   {
     id: 1,
-    place: "Quán cafe",
+    place: "Quán café",
     selected: false,
   },
   {
@@ -120,9 +121,9 @@ function haversine_distance(Origin, Destination) {
   a =
     Math.sin(dlat / 2) * Math.sin(dlat / 2) +
     Math.cos(toRadians(lat1)) *
-      Math.cos(toRadians(lat2)) *
-      Math.sin(dlon / 2) *
-      Math.sin(dlon / 2);
+    Math.cos(toRadians(lat2)) *
+    Math.sin(dlon / 2) *
+    Math.sin(dlon / 2);
   c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   d = radius * c;
 
@@ -440,8 +441,7 @@ const MapScreen = ({ navigation }) => {
     time.length = 0;
     knapsack_trace = knapsack(W / 1000);
 
-    var nextHour = hour,
-      nextMinute = minute;
+    var nextHour = hour, nextMinute = minute;
     for (var id in knapsack_trace) {
       var han = nextTime(nextHour, nextMinute, knapsack_trace[id].duration);
       time.push({
@@ -536,8 +536,7 @@ const MapScreen = ({ navigation }) => {
                       fontWeight: "bold",
                       alignSelf: "center",
                     }}
-                  >
-                    Kết quả
+                  >Kết quả
                   </Text>
                 </Pressable>
               </View>
@@ -578,11 +577,8 @@ const MapScreen = ({ navigation }) => {
                           flexDirection="row"
                           onPress={() => {
                             setStartPoint({
-                              latitude:
-                                knapsack_trace[marker.id - 1].location.latitude,
-                              longitude:
-                                knapsack_trace[marker.id - 1].location
-                                  .longitude,
+                              latitude: knapsack_trace[marker.id - 1].location.latitude,
+                              longitude: knapsack_trace[marker.id - 1].location.longitude,
                             });
                             setEndPoint({
                               latitude: marker.location.latitude,
@@ -713,8 +709,7 @@ const MapScreen = ({ navigation }) => {
                                 >
                                   Bắt đầu:{" "}
                                 </Text>
-                                {time[marker.id - 1].hour}:
-                                {time[marker.id - 1].minute}
+                                {time[marker.id - 1].hour}:{time[marker.id - 1].minute}
                               </Text>
                               <Text
                                 style={{
@@ -758,20 +753,11 @@ const MapScreen = ({ navigation }) => {
           loadingEnabled={true}
           customMapStyle={mapStyle}
         >
-          {/* {Origin.latitude != null && Origin.longitude != null ? (
-            <MapView.Circle
-              center={Origin}
-              radius={500}
-              // strokeWidth={4}
-              // strokeColor={"rgba(0, 0, 0, 1)"}
-              fillColor={"rgba(0, 0, 255, 0.2)"}
-            />
-          ) : null} */}
           {Destination.longitude != 0 && Destination.latitude != 0 ? (
             <>
               <View>
                 <MapView.Marker
-                  title={"Diam bắt đầu"}
+                  title={"Điểm bắt đầu"}
                   coordinate={Origin}
                   pinColor={"rgba(255, 0, 0, 1)"}
                 />
@@ -786,7 +772,7 @@ const MapScreen = ({ navigation }) => {
                 destination={Destination}
                 apikey={"AIzaSyBZWmSm5vzDN4oG59ma-yrXtgBm0LyfwjE"}
                 strokeWidth={4}
-                strokeColor="#59bfff"
+                strokeColor="#ff757c"
               ></MapViewDirections>
             </>
           ) : null}
@@ -872,7 +858,7 @@ const MapScreen = ({ navigation }) => {
             destination={endPoint}
             apikey={"AIzaSyBZWmSm5vzDN4oG59ma-yrXtgBm0LyfwjE"}
             strokeWidth={4}
-            strokeColor="#59bfff"
+            strokeColor="#15bdb1"
           />
         </MapView>
         <SafeAreaView style={styles.PlaceTypeList}>

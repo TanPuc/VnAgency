@@ -12,6 +12,7 @@ import {
   Image,
   Pressable,
   ScrollView,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import CATEGORIES from "./config/CATEGORIES";
@@ -34,16 +35,27 @@ const { width } = Dimensions.get("screen");
 
 const HomeScreen = ({ navigation }) => {
   const [activeCategory, setActiveCategory] = useState(0);
-  const handleSignOut = () => {
-    auth
-      .signOut()
-      .then(() => {
-        navigation.replace("SignIn");
-        console.log("Logged out");
-      })
-      .catch((error) => alert(error.message));
-  };
-  const openDrawer = () => {};
+  const askIfSignOut = () => {
+    Alert.alert(
+      "Đăng xuất",
+      "Bạn có chắc chắn muốn đăng xuất?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => {
+          auth
+            .signOut()
+            .then(() => {
+              navigation.replace("SignIn");
+              console.log("Logged out");
+            })
+            .catch((error) => alert(error.message));
+        }}
+      ]
+    );
+  }
   const optionsList = [
     { title: "Đặt phòng", img: require("../../assets/hotels/house1.jpg") },
     { title: "Thuê nhà", img: require("../../assets/hotels/house2.jpg") },
@@ -172,7 +184,7 @@ const HomeScreen = ({ navigation }) => {
           >
             Trang chủ
           </Text>
-          <TouchableOpacity onPress={handleSignOut}>
+          <TouchableOpacity onPress={askIfSignOut}>
             <Image
               style={{
                 height: SPACING * 5,
