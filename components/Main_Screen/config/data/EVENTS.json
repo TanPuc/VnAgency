@@ -2,8 +2,8 @@
   {
     "title": "Chương trình Khai trương mùa du lịch Biển 2022",
     "image": "https://danangfantasticity.com/wp-content/uploads/2022/04/0.jpg",
-    "start_date": "28 Tháng Tư, 2022",
-    "end_date": "3 Tháng Năm, 2022",
+    "start_date": "28-1-22",
+    "end_date": "03-1-22",
     "address": "Công viên biển Đông; các bãi biển ĐN và Bán đảo Sơn Trà",
     "link": "https://danangfantasticity.com/event/chuong-trinh-khai-truong-mua-du-lich-bien-2022",
     "location": {
@@ -26,8 +26,8 @@
   {
     "title": "Chương trình kích cầu du lịch Đà Nẵng",
     "image": "https://danangfantasticity.com/wp-content/uploads/2022/04/tan-huong-da-nang-voi-cac-goi-kich-cau-hap-dan.jpg",
-    "start_date": "7 Tháng Tư, 2022",
-    "end_date": "30 Tháng Tám, 2022",
+    "start_date": "07-1-22",
+    "end_date": "30-1-22",
     "address": "Các khu, điểm du lịch Đà Nẵng",
     "link": "https://danangfantasticity.com/event/chuong-trinh-kich-cau-du-lich-da-nang",
     "location": {
@@ -38,8 +38,8 @@
   {
     "title": "Lễ hội giao lưu văn hóa Việt Nam – Nhật Bản",
     "image": "https://danangfantasticity.com/wp-content/uploads/2022/05/le-hoi-giao-luu-van-hoa-viet-nam-nhat-ban-scaled.jpg",
-    "start_date": "15 Tháng Bảy, 2022",
-    "end_date": "17 Tháng Bảy, 2022",
+    "start_date": "15-1-22",
+    "end_date": "17-1-22",
     "address": "Công viên biển Đông",
     "link": "https://danangfantasticity.com/event/le-hoi-giao-luu-van-hoa-viet-nam-nhat-ban",
     "location": {
@@ -50,8 +50,8 @@
   {
     "title": "Tuần lễ du lịch sức khỏe (Trong dịp ngày quốc tế yoga)",
     "image": "https://danangfantasticity.com/wp-content/uploads/2022/05/tuan-le-du-lich-suc-khoe-trong-dip-ngay-quoc-te-yoga-01.jpeg",
-    "start_date": "15 Tháng Sáu, 2022",
-    "end_date": "21 Tháng Sáu, 2022",
+    "start_date": "15-1-22",
+    "end_date": "21-1-22",
     "address": "Trung tâm Hội chợ Triển lãm Đà Nẵng và Sun World Đà Nẵng",
     "link": "https://danangfantasticity.com/event/tuan-le-du-lich-suc-khoe-trong-dip-ngay-quoc-te-yoga",
     "location": {
@@ -72,10 +72,10 @@
     }
   },
   {
-    "title": "Diễn đàn phát triển đường bay Châu Á – Routes Asia 2022",
+    "title": "Diễn đàn phát triển đường1y Châu Á – Routes Asia 2022",
     "image": "https://danangfantasticity.com/wp-content/uploads/2022/04/dien-dan-phat-trien-duong-bay-chau-a-2022-routes-asia-2022-co-hoi-lon-cho-nganh-du-lich-da-nang-vuon-tam-the-gioi1.jpg",
-    "start_date": "6 Tháng Sáu, 2022",
-    "end_date": "8 Tháng Sáu, 2022",
+    "start_date": "06-1-22",
+    "end_date": "08-1-22",
     "address": "Trung tâm Hội chợ Triển lãm Đà Nẵng, Khu vực công viên APEC/ Khu vực biển khách sạn 05 sao, Khu nghỉ dưỡng Sheraton Grand Đà Nẵng",
     "link": "https://danangfantasticity.com/event/dien-dan-phat-trien-duong-bay-chau-a-routes-asia-2022",
     "location": {
@@ -86,8 +86,8 @@
   {
     "title": "Sự kiện đường chạy nước \"Revive Water Run 2022\"",
     "image": "https://danangfantasticity.com/wp-content/uploads/2022/05/race-banner-rivive-water-run-da-nang.png",
-    "start_date": "28 Tháng Năm, 2022",
-    "end_date": "28 Tháng Sáu, 2021",
+    "start_date": "28-1-22",
+    "end_date": "28-1-21",
     "address": "Công viên Biển Đông",
     "link": "https://danangfantasticity.com/event/su-kien-duong-chay-nuoc-revive-water-run-2022",
     "location": {
@@ -98,8 +98,8 @@
   {
     "title": "Cuộc thi IRONMAN 70.3 Việt Nam, SPRINT và IRONKID",
     "image": "https://danangfantasticity.com/wp-content/uploads/2022/05/ironman-2022-da-nang-scaled.jpg",
-    "start_date": "5 Tháng Năm, 2022",
-    "end_date": "8 Tháng Bảy, 2021",
+    "start_date": "05-1-22",
+    "end_date": "08-1-21",
     "address": "Bãi tắm Sơn Thủy và trên các tuyến đường",
     "link": "https://danangfantasticity.com/event/cuoc-thi-ironman-70-3-viet-nam-sprint-va-ironkid",
     "location": {
@@ -110,9 +110,9 @@
   {
     "title": "Đón chuyến bay đầu tiên 2022",
     "image": "https://danangfantasticity.com/wp-content/uploads/2022/02/da-nang-don-chuyen-bay-dau-tien.jpg",
-    "start_date": "1 Tháng Hai, 2022",
-    "end_date": "10 Tháng Tư, 2022",
-    "address": "Sảnh ngoài Ga đến quốc nội - Sân bay quốc tế Đà Nẵng",
+    "start_date": "01-1-22",
+    "end_date": "10-1-22",
+    "address": "Sảnh ngoài Ga đến quốc nội - Sân1y quốc tế Đà Nẵng",
     "link": "https://danangfantasticity.com/event/don-chuyen-bay-dau-tien-2022",
     "location": {
       "latitude": 16.0554407,
@@ -146,8 +146,8 @@
   {
     "title": "Lễ hội giao lưu văn hóa Việt Nam – Hàn Quốc",
     "image": "https://danangfantasticity.com/wp-content/uploads/2022/05/le-hoi-giao-luu-van-hoa-viet-nam-han-quoc.jpg",
-    "start_date": "1 Tháng Chín, 2022",
-    "end_date": "4 Tháng Chín, 2022",
+    "start_date": "01-1-22",
+    "end_date": "04-1-22",
     "address": "Khu vực phía Đông, cầu Rồng",
     "link": "https://danangfantasticity.com/event/le-hoi-giao-luu-van-hoa-viet-nam-han-quoc",
     "location": {
