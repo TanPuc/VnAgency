@@ -34,6 +34,7 @@ import CAFE from "./config/data/CAFE";
 import EVENTS from "./config/data/EVENTS";
 import HOTELS from "./config/data/HOTELS";
 import MARKERS from "./config/data/MARKERS";
+import ATM from './config/data/ATM';
 import { LogBox } from "react-native";
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
@@ -261,7 +262,7 @@ const MapScreen = ({ navigation }) => {
     setPlaceDataSelected(newArr);
   };
 
-  var rest_markers = [], cafe_markers = [],
+  var rest_markers = [], cafe_markers = [], atm_markers = [],
     hotels_markers = [], events_markers = [], knapsack_trace = [];
 
   // Generate RESTAURANTS in particular area
@@ -836,7 +837,7 @@ const MapScreen = ({ navigation }) => {
                   title={marker.title}
                   key={index}
                   coordinate={marker.location}
-                  icon={require("../../assets/markers/event.png")}
+                  icon={require("../../assets/markers/atm.png")}
                 />
               ))}
             </View>
