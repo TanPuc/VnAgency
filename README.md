@@ -12,9 +12,8 @@ VnAgency
 </p>
 
 <p align="center">
-A summarization website for essays, scientific papers, thesis, web pages, etc. brings convenience in learning for students and teachers.</br>
+A simple React Native app summarizing tourism data from news to illustrate on map in <a href="https://en.wikipedia.org/wiki/Da_Nang">Danang City</a>, brings convenience for travelers.</br>
 </br>
-<strong>Chromium-based extension available <a href="https://github.com/PL508/Quidk-extension">here</a>.</strong>
 </p>
 
 ## Functionality
