@@ -376,7 +376,7 @@ const MapScreen = ({ navigation }) => {
         haversine_distance(Origin, {
           latitude: item.location.lat,
           longitude: item.location.lng,
-        }) <= 0.5
+        }) <= 1
       ) {
         atm_markers.push({
           title: item.title,
