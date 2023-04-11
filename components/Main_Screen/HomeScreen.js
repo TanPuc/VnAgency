@@ -4,7 +4,6 @@ import {
   Linking,
   SafeAreaView,
   View,
-  StatusBar,
   Text,
   TextInput,
   FlatList,
@@ -18,7 +17,7 @@ import React, { useEffect, useState } from "react";
 import CATEGORIES from "./config/CATEGORIES";
 import COLORS from "./config/COLORS";
 import ADVANTURES from "./config/ADVANTURES";
-import Ionicons from "@expo/vector-icons/Ionicons";
+// import Ionicons from "@expo/vector-icons/Ionicons";
 import { Foundation } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { auth } from "../assets/Firebase.js";
@@ -33,6 +32,139 @@ const HEIGHT = Dimensions.get("screen").height;
 const SPACING = 10;
 const { width } = Dimensions.get("screen");
 
+function TourCardRender (tour){
+  const tours = Array(tour);
+  tours.sort((a, b) => a.rate - b.rate);
+  // console.log(tour);
+  tour = Object(tours);
+  return(
+    <>
+      {Object(tour).map((tour, index) => (
+      <TouchableOpacity
+        style={{
+          width: WIDTH * 0.7,
+          height: WIDTH * 0.9,
+          overflow: "hidden",
+          borderRadius: 8,
+          marginRight: SPACING * 2,
+        }}
+        key={index}
+        onPress={() => {
+          navigation.navigate("TourDetailScreen", {
+            tour_id: tour.id - 1,
+          });
+        }}
+      >
+        <View
+          style={{
+            position: "absolute",
+            zIndex: 1,
+            height: "100%",
+            width: "100%",
+            backgroundColor: COLORS.transparent,
+            justifyContent: "space-between",
+            padding: SPACING,
+          }}
+        >
+          <View
+            style={{
+              position: "absolute",
+              top: "95%",
+              width: "80%",
+              height: 30,
+              paddingTop: 20,
+              paddingBottom: 20,
+              borderTopRightRadius: 25,
+              backgroundColor: "#fb6d79",
+            }}
+          >
+            <Text
+              style={{
+                position: "absolute",
+                fontSize: SPACING * 1.65,
+                paddingTop: 7,
+                color: COLORS.white,
+                fontWeight: "bold",
+                marginLeft: SPACING,
+                top: "90%",
+                alignSelf: "center",
+              }}
+            >
+              {tour.title}
+            </Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              alignSelf: "flex-end",
+              width: "50%",
+              height: 30,
+              paddingTop: 20,
+              paddingBottom: 20,
+              borderWidth: 1,
+              borderColor: "#fb6d79",
+              borderWidth: 1,
+              backgroundColor: "#fb6d79",
+              borderBottomLeftRadius: 25,
+              overflow: "hidden",
+            }}
+          >
+            <Text
+              style={{
+                color: "white",
+                fontSize: SPACING * 2,
+                position: "absolute",
+                fontFamily: "SourceSansPro_Bold",
+                paddingTop: 5,
+                paddingLeft: 20,
+                // left: '70%',
+                // top: '90%',
+              }}
+            >
+              <Text>Rate: </Text>
+              {tour.rate}{" "}
+              <AntDesign name="star" size={24} color="white" />
+            </Text>
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              width: 70,
+              height: 10,
+              paddingTop: 20,
+              paddingBottom: 20,
+              borderBottomRightRadius: 25,
+              backgroundColor: "#fb6d79",
+            }}
+          >
+            <Text
+              style={{
+                width: 80,
+                height: 50,
+                position: "absolute",
+                fontSize: SPACING * 2,
+                fontWeight: "bold",
+                color: COLORS.white,
+                paddingLeft: SPACING,
+                paddingTop: 5,
+                color: "#fff",
+              }}
+            >
+              <Text>No.</Text>
+              {tour.id}
+            </Text>
+          </View>
+        </View>
+        <Image
+          source={{ uri: tour.image }}
+          style={{ width: "100%", height: "100%" }}
+        />
+      </TouchableOpacity>
+    ))}
+    </>
+  )
+}
+
 const HomeScreen = ({ navigation }) => {
   const [activeCategory, setActiveCategory] = useState(0);
   const askIfSignOut = () => {
@@ -44,15 +176,17 @@ const HomeScreen = ({ navigation }) => {
           text: "Cancel",
           style: "cancel"
         },
-        { text: "OK", onPress: () => {
-          auth
-            .signOut()
-            .then(() => {
-              navigation.replace("SignIn");
-              console.log("Logged out");
-            })
-            .catch((error) => alert(error.message));
-        }}
+        {
+          text: "OK", onPress: () => {
+            auth
+              .signOut()
+              .then(() => {
+                navigation.replace("SignIn");
+                console.log("Logged out");
+              })
+              .catch((error) => alert(error.message));
+          }
+        }
       ]
     );
   }
@@ -85,23 +219,23 @@ const HomeScreen = ({ navigation }) => {
     );
   };
 
-  const ListOptions = () => {
-    return (
-      <View style={styles.optionListsContainer}>
-        {optionsList.map((option, index) => (
-          <View style={styles.optionsCard} key={index}>
-            {/* House image */}
-            <Image source={option.img} style={styles.optionsCardImage} />
+  // const ListOptions = () => {
+  //   return (
+  //     <View style={styles.optionListsContainer}>
+  //       {optionsList.map((option, index) => (
+  //         <View style={styles.optionsCard} key={index}>
+  //           {/* House image */}
+  //           <Image source={option.img} style={styles.optionsCardImage} />
 
-            {/* Option title */}
-            <Text style={{ marginTop: 10, fontSize: 18, fontWeight: "bold" }}>
-              {option.title}
-            </Text>
-          </View>
-        ))}
-      </View>
-    );
-  };
+  //           {/* Option title */}
+  //           <Text style={{ marginTop: 10, fontSize: 18, fontWeight: "bold" }}>
+  //             {option.title}
+  //           </Text>
+  //         </View>
+  //       ))}
+  //     </View>
+  //   );
+  // };
   const Card = ({ house }) => {
     return (
       <Pressable
@@ -167,7 +301,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <ScrollView>
-      <SafeAreaView style={{margin:20}}>
+      <SafeAreaView style={{ margin: 20 }}>
         <SafeAreaView
           style={{
             flexDirection: "row",
@@ -216,7 +350,7 @@ const HomeScreen = ({ navigation }) => {
             </TouchableOpacity>
           ))}
         </View>
-        {activeCategory === 0 && (
+        {activeCategory === 0 ? (
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -225,130 +359,9 @@ const HomeScreen = ({ navigation }) => {
             pagingEnabled
             style={{ marginVertical: SPACING * 2 }}
           >
-            {CATEGORIES[activeCategory].tours.map((tour, index) => (
-              <TouchableOpacity
-                style={{
-                  width: WIDTH * 0.7,
-                  height: WIDTH * 0.9,
-                  overflow: "hidden",
-                  borderRadius: SPACING * 2,
-                  marginRight: SPACING * 2,
-                }}
-                key={index}
-                onPress={() => {
-                  navigation.navigate("TourDetailScreen", {
-                    tour_id: tour.id - 1,
-                  });
-                }}
-              >
-                <View
-                  style={{
-                    position: "absolute",
-                    zIndex: 1,
-                    height: "100%",
-                    width: "100%",
-                    backgroundColor: COLORS.transparent,
-                    justifyContent: "space-between",
-                    padding: SPACING,
-                  }}
-                >
-                  <View
-                    style={{
-                      position: "absolute",
-                      top: "95%",
-                      width: "80%",
-                      height: 30,
-                      paddingTop: 20,
-                      paddingBottom: 20,
-                      borderTopRightRadius: 25,
-                      backgroundColor: "#fb6d79",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        position: "absolute",
-                        fontSize: SPACING * 1.65,
-                        paddingTop: 7,
-                        color: COLORS.white,
-                        fontWeight: "bold",
-                        marginLeft: SPACING,
-                        top: "90%",
-                        alignSelf: "center",
-                      }}
-                    >
-                      {tour.title}
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      position: "absolute",
-                      alignSelf: "flex-end",
-                      width: "50%",
-                      height: 30,
-                      paddingTop: 20,
-                      paddingBottom: 20,
-                      borderWidth: 1,
-                      borderColor: "#fb6d79",
-                      borderWidth: 1,
-                      backgroundColor: "#fb6d79",
-                      borderBottomLeftRadius: 25,
-                      overflow: "hidden",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        color: "white",
-                        fontSize: SPACING * 2,
-                        position: "absolute",
-                        fontFamily: "SourceSansPro_Bold",
-                        paddingTop: 5,
-                        paddingLeft: 20,
-                        // left: '70%',
-                        // top: '90%',
-                      }}
-                    >
-                      <Text>Rate: </Text>
-                      {tour.rate}{" "}
-                      <AntDesign name="star" size={24} color="white" />
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      position: "absolute",
-                      width: 70,
-                      height: 10,
-                      paddingTop: 20,
-                      paddingBottom: 20,
-                      borderBottomRightRadius: 25,
-                      backgroundColor: "#fb6d79",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        width: 80,
-                        height: 50,
-                        position: "absolute",
-                        fontSize: SPACING * 2,
-                        fontWeight: "bold",
-                        color: COLORS.white,
-                        paddingLeft: SPACING,
-                        paddingTop: 5,
-                        color: "#fff",
-                      }}
-                    >
-                      <Text>No.</Text>
-                      {tour.id}
-                    </Text>
-                  </View>
-                </View>
-                <Image
-                  source={{ uri: tour.image }}
-                  style={{ width: "100%", height: "100%" }}
-                />
-              </TouchableOpacity>
-            ))}
+          <TourCardRender tour = {CATEGORIES[activeCategory].tours}/>
           </ScrollView>
-        )}
+        ) : null}
         {activeCategory === 1 && (
           <ScrollView>
             {CATEGORIES[activeCategory].tours.map((tour, index) => (

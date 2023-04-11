@@ -14,9 +14,9 @@ const TourDetailScreen = ({ navigation, route }) => {
 
   return (
     <>
-      <ScrollView>
+      <View>
         <ImageBackground
-          source={{uri: tour.image}}
+          source={{ uri: tour.image }}
           style={{ width: "100%", height: 500 }}
         >
           <SafeAreaView>
@@ -37,7 +37,7 @@ const TourDetailScreen = ({ navigation, route }) => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-                onPress={() => {navigation.navigate('HomeScreen')}}
+                onPress={() => { navigation.navigate('HomeScreen') }}
               >
                 <Ionicons
                   name="chevron-back"
@@ -100,7 +100,7 @@ const TourDetailScreen = ({ navigation, route }) => {
           style={{
             backgroundColor: COLORS.white,
             padding: SPACING * 2,
-            borderRadius: SPACING * 3,
+            borderRadius: 15,
             bottom: SPACING * 3,
           }}
         >
@@ -224,36 +224,38 @@ const TourDetailScreen = ({ navigation, route }) => {
               <Text style={{ color: COLORS.dark }}>{tour.description}</Text>
             </View>
           </View>
+          {tour.price != 0 ? (
+          <TouchableOpacity
+            style={{
+              backgroundColor: COLORS.pink,
+              padding: SPACING * 1,
+              marginBottom: SPACING,
+              marginHorizontal: SPACING,
+              borderRadius: SPACING * 2,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: 'center'
+            }}
+          >
+            <Text
+              style={{
+                color: COLORS.white,
+                fontSize: SPACING * 2,
+                fontWeight: "bold",
+                marginHorizontal: SPACING * 3.6,
+              }}
+            >
+              Đặt vé
+            </Text>
+            <Ionicons
+              name="arrow-forward"
+              size={SPACING * 2.5}
+              color={COLORS.white}
+            />
+          </TouchableOpacity>) : null}
         </View>
-      </ScrollView>
-      <TouchableOpacity
-        style={{
-          backgroundColor: COLORS.pink,
-          padding: SPACING * 1,
-          marginBottom: SPACING,
-          marginHorizontal: SPACING,
-          borderRadius: SPACING * 2,
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: 'center'
-        }}
-      >
-        <Text
-          style={{
-            color: COLORS.white,
-            fontSize: SPACING * 2,
-            fontWeight: "bold",
-            marginHorizontal: SPACING * 3.6,
-          }}
-        >
-          Đặt vé
-        </Text>
-        <Ionicons
-          name="arrow-forward"
-          size={SPACING * 2.5}
-          color={COLORS.white}
-        />
-      </TouchableOpacity>
+      </View>
+
     </>
   );
 };
