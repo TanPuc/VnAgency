@@ -770,7 +770,7 @@ const MapScreen = ({ navigation }) => {
               <MapViewDirections
                 origin={Origin}
                 destination={Destination}
-                apikey={"AIzaSyBZWmSm5vzDN4oG59ma-yrXtgBm0LyfwjE"}
+                apikey={"AIzaSyBbswHuIJRTo6LsV1SrSMeBvp91hNNVAJE"}
                 strokeWidth={4}
                 strokeColor="#ff757c"
               ></MapViewDirections>

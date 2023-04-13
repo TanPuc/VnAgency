@@ -252,10 +252,38 @@ const TourDetailScreen = ({ navigation, route }) => {
               size={SPACING * 2.5}
               color={COLORS.white}
             />
-          </TouchableOpacity>) : null}
+          </TouchableOpacity>) : (
+            <TouchableOpacity
+            style={{
+              backgroundColor: COLORS.pink,
+              padding: SPACING * 1,
+              marginBottom: SPACING,
+              marginHorizontal: SPACING,
+              borderRadius: SPACING * 2,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: 'center'
+            }}
+          >
+            <Text
+              style={{
+                color: COLORS.white,
+                fontSize: SPACING * 2,
+                fontWeight: "bold",
+                marginHorizontal: SPACING * 3.6,
+              }}
+            >
+              Dẫn đường
+            </Text>
+            <Ionicons
+              name="arrow-forward"
+              size={SPACING * 2.5}
+              color={COLORS.white}
+            />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
-
     </>
   );
 };
