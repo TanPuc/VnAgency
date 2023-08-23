@@ -842,12 +842,12 @@ const MapScreen = ({ navigation }) => {
             </View>
           ) : null}
           <View>
-            <MapView.Marker
+            <Marker
               title={"Điểm bắt đầu"}
               coordinate={startPoint}
               pinColor={"rgba(255, 0, 0, 1)"}
             />
-            <MapView.Marker
+            <Marker
               title={"Điểm kết thúc"}
               coordinate={endPoint}
               pinColor={"rgba(47, 61, 255, 1)"}
