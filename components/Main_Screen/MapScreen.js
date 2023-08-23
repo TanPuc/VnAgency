@@ -756,12 +756,12 @@ const MapScreen = ({ navigation }) => {
           {Destination.longitude != 0 && Destination.latitude != 0 ? (
             <>
               <View>
-                <MapView.Marker
+                <Marker
                   title={"Điểm bắt đầu"}
                   coordinate={Origin}
                   pinColor={"rgba(255, 0, 0, 1)"}
                 />
-                <MapView.Marker
+                <Marker
                   title={"Điểm kết thúc"}
                   coordinate={Destination}
                   pinColor={"rgba(47, 61, 255, 1)"}
@@ -780,7 +780,7 @@ const MapScreen = ({ navigation }) => {
           {placeDataSelected[0].value == 1 && showCafe() ? (
             <View>
               {cafe_markers.map((marker, index) => (
-                <MapView.Marker
+                <Marker
                   title={marker.title}
                   key={index}
                   coordinate={marker.location}
@@ -793,7 +793,7 @@ const MapScreen = ({ navigation }) => {
           {placeDataSelected[1].value == 1 && showRestaurants() ? (
             <View>
               {rest_markers.map((marker, index) => (
-                <MapView.Marker
+                <Marker
                   title={marker.title}
                   key={index}
                   coordinate={marker.location}
@@ -806,7 +806,7 @@ const MapScreen = ({ navigation }) => {
           {placeDataSelected[2].value == 1 && showHotels() ? (
             <View>
               {hotels_markers.map((marker, index) => (
-                <MapView.Marker
+                <Marker
                   title={marker.title}
                   key={index}
                   coordinate={marker.location}
@@ -819,7 +819,7 @@ const MapScreen = ({ navigation }) => {
           {placeDataSelected[3].value == 1 && showATM() ? (
             <View>
               {atm_markers.map((marker, index) => (
-                <MapView.Marker
+                <Marker
                   title={marker.title}
                   key={index}
                   coordinate={marker.location}
@@ -832,7 +832,7 @@ const MapScreen = ({ navigation }) => {
           {placeDataSelected[4].value == 1 && showEvents() ? (
             <View>
               {events_markers.map((marker, index) => (
-                <MapView.Marker
+                <Marker
                   title={marker.title}
                   key={index}
                   coordinate={marker.location}
