@@ -12,7 +12,7 @@ VnAgency
 </p>
 
 <p align="center">
-A simple React Native app summarizing tourism data from news to illustrate on map in <a href="https://en.wikipedia.org/wiki/Da_Nang">Danang City</a>, brings convenience for travelers.</br>
+A simple React Native app summarizing tourism data from news to illustrate on map in Da Nang, Vietnam, brings convenience for travelers.</br>
 </br>
 </p>
 
